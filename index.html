@@ -88,18 +88,17 @@
                 <div id="menu-bar" class="menu-bar">
                     <div id="menu-bar-sticky-container">
                         <div class="left-buttons">
+                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                         <i class="fa fa-bars"></i>
                          <a class="navbar-brand" href="index.html">
 
   <nav class="navbar navbar-transparent navbar-fixed-top" role="navigation">
     <section class="container">
       <section>
         <a class="navbar-brand" href="index.html">
-        <br>
-       <img src="img/logo.png" style="width:100%;max-width:200px;" alt="logo">
-        </a>
-        <br>
+        
                             
-                            </button>
+                             </button>
                             <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                                 <i class="fa fa-paint-brush"></i>
                             </button>
@@ -113,8 +112,14 @@
                             
                             <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                                 <i class="fa fa-search"></i>
+                                
                             </button>
-                            
+                    
+       <img src="img/logo.png" style="width:100%;max-width:200px;" alt="logo">
+        </a>
+        <br>
+
+   
                         </div>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -129,12 +134,11 @@
         </nav>
 
                 
+      
                             
                         </div>
                     </div>
                 </div>
-
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
                         <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
@@ -185,13 +189,16 @@ If you really like to research, you will be much more successful in this busines
 
 
                     </main>
-
-                    <nav class="nav-wrapper" aria-label="Page navigation">
-
+                   <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="#comingsoon" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
                         
 
                         
-                            <a rel="next" href="#comingsoon" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="#" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -203,9 +210,13 @@ If you really like to research, you will be much more successful in this busines
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="#" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a href="#comingsoon" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="#" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
