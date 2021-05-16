@@ -87,9 +87,9 @@
                 
                 <div id="menu-bar" class="menu-bar">
                     <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                         <i class="fa fa-bars"></i>
+                      
+
+                     
                          <a class="navbar-brand" href="index.html">
 
   <nav class="navbar navbar-transparent navbar-fixed-top" role="navigation">
@@ -99,8 +99,8 @@
         
                             
                              </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
+                          
+                             
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                                 <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
@@ -110,8 +110,8 @@
                                 <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
                             </ul>
                             
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
+                            <button align="right" id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i align="right" class="fa fa-search"></i>
                                 
                             </button>
                     
@@ -140,8 +140,8 @@
                     </div>
                 </div>
                 <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    <form align="right" id="searchbar-outer" class="searchbar-outer">
+                        <input align="right" type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,14 +152,14 @@
                 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+               <!-- <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
-                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : 0);
                     });
                 </script>
-
+-->
                 <div id="content" class="content">
                     <main>
                         <h1>
