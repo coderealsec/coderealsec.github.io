@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Linux1</title>
+<meta charset="utf-8">
+<link href="./style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="txtdiv"><pre>
+                                                                                           
+ #     #    #    ######  #     # #     #    ####### #     # ####### ######  
+ #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
+ #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
+ ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
+ #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
+ #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
+ #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+
+
+  ----{ CodeREALSEC @ harunoner.com <*> }----
+
+    
+3 / X
+
+SSH Nedir?
+SSH (Secure Shell), ağ üzerinden güvenli ve şifrelenmiş bir bağlantı oluşturmanıza olanak tanıyan bir ağ protokolüdür. 
+Bu protokol sayesinde uzak sunuculara güvenli bir şekilde bağlanabilir, dosya transferi yapabilir ve komutlar gönderebilirsiniz.
+
+SSH Bağlantısı Oluşturma:
+Uzak bir sunucuya SSH ile bağlanmak için aşağıdaki komutu kullanabilirsiniz:
+
+ssh kullanici@harunoner.com 
+kullanici sizin kullanıcı adınızı, harunoner.com ise uzak sunucunun IP adresini temsil eder.
+
+Şifre Doğrulaması veya Anahtar Tabanlı Kimlik Doğrulama:
+SSH bağlantısını oluştururken genellikle şifrenizi girmeniz istenir. Ancak daha güvenli bir seçenek olan anahtar tabanlı kimlik doğrulama da tercih edilebilir. 
+Bu yöntemde, bir anahtar çifti oluşturur ve genel anahtarı uzak sunucuya eklersiniz.
+
+scp dosya.txt kullanici@harunoner.com:/dizin/
+Bu komut, dosya.txt dosyasını belirttiğiniz uzak dizine kopyalar.
+
+SSH keygen nasıl kullanılır ve SSH keygen genel olarak baktığımızda ise;
+
+ssh-keygen komutu;
+Bu komutu çalıştırdığınızda, varsayılan olarak ~/.ssh/id_rsa adlı bir özel anahtar ve ~/.ssh/id_rsa.pub adlı bir genel anahtar oluşturulacaktır.
+
+ssh-copy-id komutu, genel anahtarın uzak sunucuya kopyalanmasını kolaylaştırır. Bu, anahtar tabanlı kimlik doğrulamanın bir parçasıdır ve şifre gerektirmeden SSH erişimi sağlar.
+
+Kullanımı:
+ssh-copy-id kullanici@harunoner.com
+
+ssh-add komutu, SSH anahtarlarını SSH kimlik doğrulama ajanına eklemek ve yönetmek için kullanılır. Bu ajan, oturum boyunca anahtarları bellekte tutar ve gerekli olduğunda kullanır.
+ssh-add ~/.ssh/anahtar-dosyasi
+
+Bu işlemler, güvenli ve kolay uzak erişim sağlamak için önemlidir.
+
+
+
+
+
+</pre></div></body>
