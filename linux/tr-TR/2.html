@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>Linux1</title>
+<meta charset="utf-8">
+<link href="./style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="txtdiv"><pre>
+                                                                                           
+ #     #    #    ######  #     # #     #    ####### #     # ####### ######  
+ #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
+ #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
+ ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
+ #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
+ #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
+ #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+
+
+  ----{ CodeREALSEC @ harunoner.com <*> }----
+
+    
+2 / X
+
+Linux İşletim Sisteminde Girdi-Çıktı Yönlendirmesi
+Linux işletim sistemi, girdi ve çıktı yönlendirmesi gibi güçlü özellikler sunar, bu da kullanıcıların komut sonuçlarını dosyalara kaydetmesine, komutlar arasında veri akışını yönlendirmesine ve hataları işlemesine olanak tanır. Bu yazıda, Linux'da kullanılan girdi-çıktı yönlendirme işlemlerini inceleyeceğiz.
+
+Temel Girdi-Çıktı Yönlendirmesi İşaretçeleri
+> (Çıktı Yönlendirmesi): Bu işaretçe, bir komutun çıktısını bir dosyaya yazmak için kullanılır. Örneğin:
+
+
+ls -l > dosya_listesi.txt
+Bu komut, "dosya_listesi.txt" adlı bir dosyaya "ls -l" komutunun çıktısını yazar.
+
+>> (Çıktıyı Ekleme): Bu işaretçe, bir komutun çıktısını bir dosyanın sonuna eklemek için kullanılır. Örneğin:
+b
+date >> tarihler.txt
+Bu komut, "tarihler.txt" adlı dosyanın sonuna geçerli tarihi ekler.
+
+< (Girdi Yönlendirmesi): Bu işaretçe, bir dosyanın içeriğini bir komuta girdi olarak vermek için kullanılır. Örneğin:
+
+
+C
+sort < veriler.txt
+Bu komut, "veriler.txt" dosyasındaki verileri "sort" komutunun girdisi olarak kullanır.
+
+(Pipe) İşareti: |
+Boru hattı (|), bir komutun çıktısını başka bir komutun girdisine yönlendirmek için kullanılır. Örneğin:
+
+
+cat dosya.txt | grep "anahtar_kelime"
+Bu komut, "dosya.txt" dosyasının içeriğini okur ve içinde "anahtar_kelime" geçen satırları filtreler.
+
+Hata Yönlendirmesi
+2> (Hata Çıktısı Yönlendirmesi): Bu işaretçe, bir komutun hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:
+
+
+komut_yok 2> hatalar.txt
+Bu komut, "komut_yok" adlı bir komutun hata çıktılarını "hatalar.txt" dosyasına yazar.
+
+&> (Hata ve Çıktıyı Yönlendirmesi): Bu işaretçe, bir komutun hem standart çıktısını hem de hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:
+
+
+komut &> cikti_hata.txt
+Bu komut, "komut"un çıktı ve hata çıktılarını "cikti_hata.txt" dosyasına yazar.
+
+
+Linux işletim sisteminde girdi-çıktı yönlendirmesi, komut sonuçlarını yönlendirmek, veri akışını değiştirmek ve hataları işlemek için güçlü bir araçtır. Bu yazıda ele aldığımız temel işaretçeler ve boru hattı ile işletim sistemini daha verimli bir şekilde kullanabilirsiniz. Girdi-çıktı yönlendirmesini kullanarak komutlarınızın sonuçlarını analiz etmek ve işlemek daha kolay ve etkili hale gelir.
+
+</pre></div></body>
