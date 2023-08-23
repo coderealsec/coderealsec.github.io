@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Linux1</title>
+<meta charset="utf-8">
+<link href="./style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="txtdiv"><pre>
+                                                                                           
+ #     #    #    ######  #     # #     #    ####### #     # ####### ######  
+ #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
+ #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
+ ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
+ #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
+ #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
+ #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+
+
+  ----{ CodeREALSEC @ harunoner.com <*> }----
+  
+  6 / X
+
+Sembolik bağlantılar nedir ve ne işe yarar?
+Sembolik bağlantılar bir dosyanın veya dizinin adını içeren referans dosyalardır. 
+Bu referanslar, dosya veya dizini işaret eder ve güncellenirse sembolik bağlantı da otomatik olarak güncellenir.
+Özet olarak sembolik bağlantılar hedef dizin için sembolik bağlantılar otomatik olarak güncellenir.
+
+
+Sembolik bağlantı oluşturabilmemiz için hangi komutu kullanmamız gerekir derseniz;
+ln -s kaynak hedefdizin
+Peki mantığa döktüğümüzde gerçekci olursak nasıl yapabiliriz?
+ln -s /home/harunoner/dosya.txt /home/dosya.txt komutunu kullanabiliriz burdaki "-s" parametresi bizim için symbolic olduğunu ifade eder.
+
+Hardlink için peki ne yapmamız gerekir ve Hardlink bizim için neyi ifade eder?
+Hard Link, kaynak ve hedef dosya arasında doğrudan bir bağlantıdır. Sert bağlantılar, 
+kaynak dosya silinse bile hedef dosya hala mevcut olur çünkü dosya verileri paylaşılır.
+Yine aynı mantık ile düşünürsek;
+ln kaynak hedef
+Gerçekci duruma dönüştürdüğümüzde ise 
+ln /home/harunoner/dosya.txt /home/dosya.txt bizim için hardlink oluşturacaktır.
+
+Burdaki en önemli nüyans ise bizler için şu olacaktır, biz neden symbolic ve hardlink ihtiyaç duyuyoruz bunun asıl amacı ise;
+
+Sembolik bağlantılar, farklı dosya sistemleri veya farklı cihazlar arasında bağlantı kurmanız gerektiğinde tercih edilir.
+Sert bağlantılar, aynı dosya sistemine sahipseniz ve dosyanın silinmesi durumunda bile hedefin mevcut olmasını istediğinizde tercih edilir.
+
+
+
+
+
+</pre></div></body>
