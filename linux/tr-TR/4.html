@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>Linux1</title>
+<meta charset="utf-8">
+<link href="./style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="txtdiv"><pre>
+                                                                                           
+ #     #    #    ######  #     # #     #    ####### #     # ####### ######  
+ #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
+ #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
+ ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
+ #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
+ #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
+ #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+
+
+  ----{ CodeREALSEC @ harunoner.com <*> }----
+
+Bu yazıda, Linux işletim sisteminde dosyaların nasıl arşivlendiğini, sıkıştırıldığını ve açıldığını inceleyeceğiz.
+
+tar: Dosyaları Arşivleme ve Ayıklama
+tar komutu, dosyaları bir arşiv dosyasına toplamak veya arşivden çıkarmak için kullanılır. Kullanımı şu şekildedir:
+
+Dosyaları bir arşiv dosyasına toplamak için aşağıdaki örneği inceleyebilirsiniz:
+
+
+tar -cvf harunoner.tar dosya1 dosya2 etc/
+
+Arşivden dosyaları çıkarmak için:
+tar -xvf harunoner.tar komutu kullanabilinirsiniz.
+
+Bir diğer örnek olarak ise bzip2 ve gzip2 kullanılabilinir.
+gzip ve bzip2 komutları, dosyaları sıkıştırmak ve açmak için kullanılır. Kullanım örnekleri:
+
+touch harunoner.txt
+gzip harunoner.txt
+
+gzip ile sıkıştırılmış dosyayı açmak için ise
+gzip -d harunoner.txt.gz
+-d parametresi bizlere gzip'den çıkarmak anlamını ifade eder.
+
+Yine aynı mantık ile düşünürsek bzip2 ve bzip için kolaylıkla aynı mantığı kurabiliriz.,
+bzip2 harunoner.txt
+bzip2 -d harunoner.txt.bz2
+
+
+
+
+
+</pre></div></body>
