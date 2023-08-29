@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Linux1</title>
+<meta charset="utf-8">
+<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
+<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="txtdiv"><pre>
+                                                                                           
+ #     #    #    ######  #     # #     #    ####### #     # ####### ######  
+ #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
+ #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
+ ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
+ #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
+ #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
+ #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+
+
+  ----{ CodeREALSEC @ harunoner.com <*> }----
+
+  Bugün bakacağımız konu, basit bir bashscript nasıl yazılır ve bashscript nedir?
+  Bashscript linux mantığında basit mantık ile düşünürsek bize büyük olanak sağlar, çünkü baktığımız zaman
+  örneğin basit bir dizinde örnek olarak etc/ dizinin altında bir dosya oluşturmak istiyoruz ve bu dosyanın ismini bashscript yapabiliriz.
+  Bunu sadece tek bir basit shell kabuğuna yazarak yukarıda vermiş olduğum dizinin basit bir şekilde oluşmasına olanak sağlamaktadır.
+
+  ###################
+  #!/bin/bash ---> Bu kısımda linux sistemimizin hangi shell kabuğunda çalışacağının belirtiyoruz örnek olarak /bin/sh kullanıyorsak kabuğu değiştirebiliriz.
+  cd /etc     ---> /etc dizinin içerisine gitmesini sağlıyoruz.
+  touch bashscript  ---> touch komutuyla basit bir bashscript adında dosya oluşturuyoruz.
+  !wq               ---> !wq komutuyla vi editör ile açtığımız dosyanın ismini bashscript.sh olarak kaydederek, basit olan bash script kodumuzu tamamlıyoruz.
+  ###################  
+
+  Bu noktada Bashscript modeli aslında baktığımızda basit programlama diline çok yakın olduğunu söyleyebiliriz.
+
+  Yeniden örneklerden gidecek olursak, bizlere ilerleyen süreçte bakıcağımız cronjob diğer adıyla crontask işlemlerine bakacağız ve bu sayede bu kod bloklaklarını belirli saatlerde çalıştırarak,
+  otomatize hale getirmeye olanak sağlayarak bizlere daha kolaylık sağlayacağını belirtmek isterim.
+
+  Bu noktada en çok sorulan sorular arasında ve en basit bir bash kabuğu oluşturmamızı ve cronjob üzerinde her 3 dakikada bir echo "Hello World" yazmamızı isteyeceklerdir.
+  
+  İlk olarak bashscriptimizi bir dizine oluşturalım ismini ise helloworld.sh olarak kaydedelim:
+  ###################
+  #!/bin/bash
+  echo "Hello World"
+  !wq
+  ###################
+
+  chmod +x helloworld.sh komutu ile daha önce blog sayfamda konu olarak vermiş olduğum, execute(çalıştırma) İzinlerini vermiş oluyoruz.
+  
+  crontab -e -u harun --> Bu komut ile harun kullanıcısına cronjob yani her 3 dakikada bir echo "Hello World" yazmasını sağlayacağız.
+  */3        *       *       *        *    exampledizin/helloworld.sh
+  minute    hour    day     month    day
+                                    (week)
+   
+                                    !wq --> kaydederek çıkıyoruz.
+
+  Yukarıda girmiş olduğum cronjob sayesinde, harun kullanıcısını her 3 dakikada bir echo "Hello World" yazmasını otomatik olarak sağlayacaktır.
+  more /var/log/cronjob dizininden cronjob loglarını görüntüleyebilir, girmiş olduğumuz cronjobun çalışıp/çalışmadığını yada hata alıyorsak görüntüleyebiliriz.
+
+  
+
+  
+</pre></div></body>
