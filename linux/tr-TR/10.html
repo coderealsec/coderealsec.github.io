@@ -1,0 +1,43 @@
+html>
+<head>
+<title>Linux1</title>
+<meta charset="utf-8">
+<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
+<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="txtdiv"><pre>
+                                                                                           
+ #     #    #    ######  #     # #     #    ####### #     # ####### ######  
+ #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
+ #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
+ ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
+ #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
+ #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
+ #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+
+
+  ----{ CodeREALSEC @ harunoner.com <*> }----
+
+    10 / X
+
+Önceki konuyu okuduğunuzu varsayarak, bashscript ile devam ettiğimizde biraz daha derinlere inebiliriz.
+for, while ve loop döngülerine bakacağız.
+
+While döngüsüne örneklendirerek, bakacak olursak;
+
+###################
+
+#!/bin/bash --> Bash betiğini burda belirtiyoruz.
+
+counter=1 --> sayaç olarak counter değeri veriyoruz. --> Counter değerini 1 veriyoruz. Enviroment olarak 1 değerini burada 1 vermemizin sebebi ise değişken mantığı ile düşünebiliriz.
+
+while [ $counter -le 10 ]; do --> while döngüsüne sokarak  counter değerini 1'den 10 kadar saymasını sağlamak için burada yapılacak işlemi belirtiyoruz.
+    echo $counter             --> echo $counter ile input değerini ekranda görmesini sağlıyoruz.
+    ((counter++))             --> counter++ ile sayacın her adımda artmasını sağlıyoruz.
+done                          --> done komutu ile komutu sonlandırıyoruz.
+
+###################
+
+
+</pre></div></body>

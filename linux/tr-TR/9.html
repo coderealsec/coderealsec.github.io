@@ -19,16 +19,21 @@
 
   ----{ CodeREALSEC @ harunoner.com <*> }----
 
+
+  9 / X
+
   Bugün bakacağımız konu, basit bir bashscript nasıl yazılır ve bashscript nedir?
   Bashscript linux mantığında basit mantık ile düşünürsek bize büyük olanak sağlar, çünkü baktığımız zaman
   örneğin basit bir dizinde örnek olarak etc/ dizinin altında bir dosya oluşturmak istiyoruz ve bu dosyanın ismini bashscript yapabiliriz.
   Bunu sadece tek bir basit shell kabuğuna yazarak yukarıda vermiş olduğum dizinin basit bir şekilde oluşmasına olanak sağlamaktadır.
 
   ###################
+
   #!/bin/bash ---> Bu kısımda linux sistemimizin hangi shell kabuğunda çalışacağının belirtiyoruz örnek olarak /bin/sh kullanıyorsak kabuğu değiştirebiliriz.
   cd /etc     ---> /etc dizinin içerisine gitmesini sağlıyoruz.
   touch bashscript  ---> touch komutuyla basit bir bashscript adında dosya oluşturuyoruz.
   !wq               ---> !wq komutuyla vi editör ile açtığımız dosyanın ismini bashscript.sh olarak kaydederek, basit olan bash script kodumuzu tamamlıyoruz.
+  
   ###################  
 
   Bu noktada Bashscript modeli aslında baktığımızda basit programlama diline çok yakın olduğunu söyleyebiliriz.
@@ -40,9 +45,11 @@
   
   İlk olarak bashscriptimizi bir dizine oluşturalım ismini ise helloworld.sh olarak kaydedelim:
   ###################
+
   #!/bin/bash
   echo "Hello World"
   !wq
+  
   ###################
 
   chmod +x helloworld.sh komutu ile daha önce blog sayfamda konu olarak vermiş olduğum, execute(çalıştırma) İzinlerini vermiş oluyoruz.
@@ -57,7 +64,7 @@
   Yukarıda girmiş olduğum cronjob sayesinde, harun kullanıcısını her 3 dakikada bir echo "Hello World" yazmasını otomatik olarak sağlayacaktır.
   more /var/log/cronjob dizininden cronjob loglarını görüntüleyebilir, girmiş olduğumuz cronjobun çalışıp/çalışmadığını yada hata alıyorsak görüntüleyebiliriz.
 
-  
+
 
   
 </pre></div></body>
