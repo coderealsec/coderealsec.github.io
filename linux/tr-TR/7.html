@@ -1,87 +1,106 @@
-<html>
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-<title>Linux1</title>
-<meta charset="utf-8">
-<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
-<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux İşletim Sistemi: Dosya ve Dizin İzinleri</title>
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="txtdiv"><pre>
-                                                                                           
- #     #    #    ######  #     # #     #    ####### #     # ####### ######  
- #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
- #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
- ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
- #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
- #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
- #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+    <div class="container">
+        <div class="content">
+            <div>
+                <h2>Linux İşletim Sistemi: Dosya ve Dizin İzinleri</h2>
+                <p>Linux işletim sistemi, güçlü bir yapı ve esneklik sunar. Linux mantığında en önemli olay permission kontrolleridir, kullanıcıların, grupların special permissionların linux dosya hiyerarşisinde önemli yere sahiptir.</p>
 
+                <h3>İzin Türleri ve Temsil Edilen Sayısal Değerler</h3>
+                <p>Linux dosya ve dizinlerinde izinleri temsil etmek için octal (sekizlik) sistem kullanılır. İzin türleri ve temsil ettikleri sayısal değerler aşağıdaki gibidir:</p>
+                <ul>
+                    <li><strong>Okuma (Read):</strong> Dosya veya dizinin içeriğini okuma yetkisini ifade eder. Sayısal değeri: 4</li>
+                    <li><strong>Yazma (Write):</strong> Dosya veya dizini değiştirme ve içeriğine yeni veri ekleme yetkisini ifade eder. Sayısal değeri: 2</li>
+                    <li><strong>Çalıştırma (Execute):</strong> Dosya veya dizini çalıştırma yetkisini ifade eder. Sayısal değeri: 1</li>
+                </ul>
 
-  ----{ CodeREALSEC @ harunoner.com <*> }----
-  
-  7 / X
-  Linux işletim sistemi, güçlü bir yapı ve esneklik sunar. Linux mantığında en önemli olay permission kontrolleridir,
-  kullanıcıların, grupların special permissionların linux dosya hiyerarşisinde önemli yere sahiptir.
-
-  Dosya veya dizinin izinlerini listeleyebilirsiniz. ls -l komutunu kullanarak bir dizindeki dosya ve dizinlerin izinlerini görüntüleyebiliriz.
-
-  ls -l 
-
-  En basitinden düşünürsek örnek olarak çıktı, -rwxr-xr-- olacaktır.
-
-  İzinleri sayılarla ayarlamak için chmod komutunu kullanabiliriz. İzinleri belirli bir sayıyla temsil etmek için octal (sekizlik) dediğimiz form kullanılır.
-
-  chmod 755 harun.txt komutunu koştuğumuzda, Bu komut, sahibin rwx, grup üyelerinin rx ve diğerlerinin rx izinlerine sahip olduğunu belirtir.
-  chmod u+x harun.sh
-
-  Bu komut, sahibin izinlerine (+x) çalıştırma yetkisi ekler.
-
-  Şimdi gelelim detaylarına;
- 
-Linux yetkilerini 3 ana başlıkta inceleyecek olursak;
-
-    Sahip (Owner): Dosyanın veya dizinin sahibi, bu dosyanın izinlerini değiştirme yetkisine sahiptir. Sahip, dosyayı oluşturan kullanıcıdır. Sahip, dosya izinlerini değiştirebilir, dosyayı silip düzenleyebilir.
-
-    Grup (Group): Dosya veya dizin bir grup ile ilişkilendirilmişse, grup üyeleri bu dosyanın izinlerini etkileyebilir. Grup, belirli bir kullanıcı grubunu ifade eder. Grup üyeleri, 
-    dosyanın sahibi olmasalar bile dosya üzerinde belli düzeyde kontrol sahibi olabilirler.
-
-    Diğer (Others): Diğer kullanıcılar, dosyanın veya dizinin sahibi veya grup üyesi değilseler bile bu dosyaya erişebilirler. Diğer kullanıcılar, sistemdeki tüm diğer kullanıcıları ifade eder.
-
-İzin türleri ise şunlardır;
-Okuma (Read): Dosya veya dizinin içeriğini okuma yetkisini ifade eder. Bir kullanıcı bu izne sahipse, dosyanın veya dizinin içeriğini görüntüleyebiliriz.
-
-Yazma (Write): Dosya veya dizini değiştirme ve içeriğine yeni veri ekleme yetkisini ifade eder. Bu izne sahip bir kullanıcı, dosyanın veya dizinin içeriğini değiştirebilir veya dosyayı silip yerine yenilerini kolaylıkla oluşturabiliriz.
-
-Çalıştırma (Execute): Dosya veya dizini çalıştırma yetkisini ifade eder. Dizinlerde, bu izne sahip olmak dizinin içine girebilme yetkisini sağlar. Dosyalarda, bu izne sahip olmak dosyanın çalıştırılabilir olduğu anlamına gelir.
-
-Örnek olarak harun.txt adında bir dosya düşünelim bu dosyayı /home/harunoner altında olduğunu varsayarsak;
-Yukarıda bahsetmiş olduğum octal matematik hesabına göre, 
-
-Okuma (Read): 4
-Yazma (Write): 2
-Çalıştırma (Execute): 1
-Her izin türünün farklı bir sayıya denk geldiği bu sistemden anlayabiliriz
-
-
-Sahip (Owner): 1. basamak
-Grup (Group): 2. basamak
-Diğer (Others): 3. basamak
-Izin türlerini ve sayısal değerlerini kullanarak 755 izinini matematiksel olarak açıklayalım:
-
-Sahip (Owner): Tüm izin türleri (4 + 2 + 1 = 7). Sahip, dosyayı okuyabilir (4), yazabilir (2) ve çalıştırabilir (1).
-Grup (Group): Sadece okuma ve çalıştırma izinleri (4 + 1 = 5). Grup üyeleri dosyayı okuyabilir (4) ve çalıştırabilir (1), ancak dosyayı düzenleyemez (yazma izni yok).
-Diğer (Others): Sadece okuma ve çalıştırma izinleri (4 + 1 = 5). Diğer kullanıcılar dosyayı okuyabilir (4) ve çalıştırabilir (1), ancak dosyayı düzenleyemez (yazma izni yok).
-Bu nedenle, 755 izni aşağıdaki gibi açıklanır:
-
-
-
-Yani harun.txt dosyasına 755 verdiğimizde 
-
-Sahip, dosyayı okuyabilir, yazabilir ve çalıştırabilir (7).
-Grup üyeleri, dosyayı okuyabilir ve çalıştırabilir, ancak düzenleyemez (5).
-Diğer kullanıcılar, dosyayı okuyabilir ve çalıştırabilir, ancak düzenleyemez (5).
-
-
-
-    
-</pre></div></body>
+                <h3>Linux Yetkileri ve Örnekler</h3>
+                <p>Linux yetkilerini 3 ana başlıkta inceleyecek olursak:</p>
+                <ol>
+                    <li><strong>Sahip (Owner):</strong> Dosyanın veya dizinin sahibi, bu dosyanın izinlerini değiştirme yetkisine sahiptir. Sahip, dosya izinlerini değiştirebilir, dosyayı silip düzenleyebilir.</li>
+                    <li><strong>Grup (Group):</strong> Dosya veya dizin bir grup ile ilişkilendirilmişse, grup üyeleri bu dosyanın izinlerini etkileyebilir. Grup, belirli bir kullanıcı grubunu ifade eder. Grup üyeleri, dosyanın sahibi olmasalar bile dosya üzerinde belli düzeyde kontrol sahibi olabilirler.</li>
+                    <li><strong>Diğer (Others):</strong> Diğer kullanıcılar, dosyanın veya dizinin sahibi veya grup üyesi değilseler bile bu dosyaya erişebilirler. Diğer kullanıcılar, sistemdeki tüm diğer kullanıcıları ifade eder.</li>
+                </ol>
+                <p>İzin türlerini ve sayısal değerlerini kullanarak dosya ve dizin izinlerini ayarlamak mümkündür. Örneğin, <code>chmod 755 harun.txt</code> komutu ile dosya <em>harun.txt</em>'ye aşağıdaki izinler verilir:</p>
+                <ul>
+                    <li>Sahip (Owner): Tüm izinler (4 + 2 + 1 = 7)</li>
+                    <li>Grup (Group): Okuma ve çalıştırma izinleri (4 + 1 = 5)</li>
+                    <li>Diğer (Others): Okuma ve çalıştırma izinleri (4 + 1 = 5)</li>
+                </ul>
+                <p>Bu izinlerin anlamı:</p>
+                <ul>
+                    <li>Sahip, dosyayı okuyabilir, yazabilir ve çalıştırabilir (7).</li>
+                    <li>Grup üyeleri, dosyayı okuyabilir ve çalıştırabilir, ancak düzenleyemez (5).</li>
+                    <li>Diğer kullanıcılar, dosyayı okuyabilir ve çalıştırabilir, ancak düzenleyemez (5).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
