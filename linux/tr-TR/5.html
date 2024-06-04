@@ -1,69 +1,108 @@
-<html>
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-<title>Linux1</title>
-<meta charset="utf-8">
-<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
-<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux İşletim Sistemi: Dosya ve Dizin İşlemleri</title>
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="txtdiv"><pre>
-                                                                                           
- #     #    #    ######  #     # #     #    ####### #     # ####### ######  
- #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
- #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
- ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
- #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
- #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
- #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+    <div class="container">
+        <div class="content">
+            <div>
+                <h2>Linux İşletim Sistemi: Dosya ve Dizin İşlemleri</h2>
+                <p>Bu yazıda, Linux işletim sisteminde dosya ve dizin oluşturma, kopyalama, taşıma ve silme gibi işlemleri inceleyeceğiz.</p>
 
+                <h3>touch Komutu: Dosya Oluşturma</h3>
+                <p><code>touch</code> komutu, yeni bir dosya oluşturmak için kullanılır. Örneğin:</p>
+                <pre><code>
+                    touch harunoner
+                </code></pre>
 
-  ----{ CodeREALSEC @ harunoner.com <*> }----
-  
-  5 / X
+                <h3>mkdir Komutu: Dizin Oluşturma</h3>
+                <p><code>mkdir</code> komutu, yeni bir dizin oluşturmak için kullanılır. Örneğin:</p>
+                <pre><code>
+                    mkdir harun
+                </code></pre>
 
-Bu yazıda ise Dosya ve Dizin Oluşturma işlemlerine bakacağız.
+                <h3>rm Komutu: Dosya ve Dizin Silme</h3>
+                <p><code>rm</code> komutu, dosyaları veya dizinleri silmek için kullanılır. Dizinler için <code>-r</code> (recursive) parametresi gereklidir. Örneğin:</p>
+                <pre><code>
+                    rm -rf harun
+                </code></pre>
 
-Basit bir dosya oluşturabilmek için touch komutunu kullanabiliriz, örnek olarak yer verecek olursak
-touch harunoner komutunu kullandığımızda mevcut dizinimizde harunoner dosyasını oluştuğunu görebiliriz.
+                <h3>cp Komutu: Dosya ve Dizin Kopyalama</h3>
+                <p><code>cp</code> komutu, dosyaları veya dizinleri kopyalamak için kullanılır. Dizinler için <code>-r</code> (recursive) parametresi gereklidir. Örneğin:</p>
+                <pre><code>
+                    cp -r harun/harun2 etc/
+                </code></pre>
 
-Peki bir dizin oluşturmak istediğimizde ne yapmamız gerekir
-mkdir komutunu kullanmak en sağlıklısı olacaktır. mkdir komutu ile mevcut dizinimizde director yani dizini başarıyla oluşturabiliriz.
-
-pwd komutu ile hangi dizinde olduğumuzu görüntüleyebiliriz. Örnek olarak yer verecek olursak
-
-Girdi >> pwd
-Çıktı >> /home/harunoner
-mkdir test komutunu koştuğumuzda, ls -la komutunu çalıştırabiliriz. Göreceğimiz görüntüde harunoner dizininin oluştuğunu görebiliriz.
-Peki en basitinden oluşturduğumuz dizini silmek istiyoruz fakat içerisinde recursive dediğimiz dosyalar mevcut, peki recursive bizim için ne anlam ifade ediyor.
-Dizin ve dosyalar konusunda en önemli yere sahip olan recursive ifadesi dosyaların iç içe olması geleceğinden endişeniz olmasın.
-
-Yani demek istediğim şu olacaktır. Örnek olarak bir dizin oluşturduk ismi ise harun olsun, mkdir harun ile dizini oluşturabiliriz mkdir -p harun/harun2 yani içerisine harun2 adında,
-klasör oluşturabilmemiz için -p parametresi bizim için kullanışlı olacaktır. Recursive en basit anlamıyla bir dizinde bulunan klasörlerin iç içe dosyalara veya klasörlere yer verilmesini ifade eder.
-
-Peki biz bu klasörü silmek istediğimizde nasıl sileceğiz. rm komutunu kullanabiliriz rm harun kullandığımızda hata çıktısı alacağız, çünkü iç içe yer verilen dosyalar maalesef ki linux dizinlerinde kolaylıkla
-silinemez.
-
-O zaman rm -rf "-r" parametresi recursive ifade etmektedir "-f" ise dosyayı zorla sileceğini anlam ifade eder, böylelikle dizini hızlıca silebiliriz.
-
-
-
-Dosyaları kopyalamak için ise cp komutunu kullanırız fakat cp komutunda yukarıda yer vermiş olduğum recursive muhabbetini yine aynı şekilde görebiliriz.
-cp harun.txt /etc dizinine kolaylıkla kopyalabiliriz fakat dizin kopyalamaya çalıştığımızda ve içerisindeki dosyalar ile kopyalamak istersek -r parametresine yer vermemiz önemlidir.
-
-Yani örnek olarak inceleyecek olursak;
-
-harun/harun2 adında dosya olduğunu varsayalım bu dizini etc/ dizinine kopyalamak istiyorum ne yapmam gerekir "-r" parametresi kullanarak harun/ klasörünün içerisinde yer alan dosyalarıda alabiliriz.
-
-Cevabı şu olmaktadır;
-
-cp -r harun/harun2 etc/ ile başarılı bir şekilde harun klasörünü etc/ dizinine kopyalayabiliriz.
-
-
-Dizin taşıma işlemlerinde ise mv komutunu kullanabiliriz.
-
-harunoner dosyasını etc/ dizinine taşıyabilmek için;
-
-mv harunoner etc/ komutunu kullanabiliriz eğer recursive mantığını anladıysanız ne yapacağınızı siz benden iyi biliyorusnuz.
-
-  
-</pre></div></body>
+                <h3>mv Komutu: Dosya ve Dizin Taşıma</h3>
+                <p><code>mv</code> komutu, dosyaları veya dizinleri taşımak için kullanılır. Örneğin:</p>
+                <pre><code>
+                    mv harunoner etc/
+                </code></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
