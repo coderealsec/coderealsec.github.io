@@ -1,265 +1,134 @@
-<!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js ayu">
-    
+<!DOCTYPE html>
+<html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <title>HARUN ÖNER - Cloud Core Network & Security Researcher</title>
-        
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harun ONER - Blog Page</title>
+    <link href="./style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
 
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin: 0;
+            padding: 10px 0;
+        }
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
 
-        <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        .subheader {
+            color: #fff;
+            font-size: 14px;
+        }
 
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
 
-        
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
 
-        
-    </head>
-    <body>
-        <!-- Provide site root to javascript -->
-        <script type="text/javascript">
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
-        </script>
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-        <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
-            try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
 
-                if (theme.startsWith('"') && theme.endsWith('"')) {
-                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
-                }
+        li {
+            padding: 5px 0;
+        }
 
-                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
-                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
-                }
-            } catch (e) { }
-        </script>
+        a {
+            color: #333;
+            text-decoration: none;
+        }
 
-        <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
-            var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-            if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
-            html.classList.remove('ayu')
-            html.classList.add(theme);
-            html.classList.add('js');
-        </script>
+        a:hover {
+            text-decoration: underline;
+        }
 
-    <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
-            if (document.body.clientWidth >= 1080) {
-                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
-                sidebar = sidebar || 'visible';
+        @keyframes bb0 { 0% {color:#000000;} 10% {color:#FEFEFE;}}
+        @keyframes bb1 { 0% {color:#000000;} 10% {color:#000000;} 20% {color:#FEFEFE;}}
+        @keyframes bb2 { 0% {color:#000000;} 20% {color:#000000;} 30% {color:#FEFEFE;}}
+        @keyframes bb3 { 0% {color:#000000;} 30% {color:#000000;} 40% {color:#FEFEFE;}}
+        @keyframes bl0 { 0% {color:#000000;} 50% {color:#000000;} 55% {color:#FEFEFE;}}
+        @keyframes bl1 { 0% {color:#000000;} 55% {color:#000000;} 60% {color:#FEFEFE;}}
+        @keyframes bl2 { 0% {color:#000000;} 60% {color:#000000;} 65% {color:#FEFEFE;}}
+        @keyframes bl3 { 0% {color:#000000;} 65% {color:#000000;} 70% {color:#FEFEFE;}}
+        @keyframes bl4 { 0% {color:#000000;} 70% {color:#000000;} 75% {color:#FEFEFE;}}
+        @keyframes bl5 { 0% {color:#000000;} 75% {color:#000000;} 80% {color:#FEFEFE;}}
+        @keyframes bl6 { 0% {color:#000000;} 80% {color:#000000;} 85% {color:#FEFEFE;}}
+        @keyframes bl7 { 0% {color:#000000;} 85% {color:#000000;} 90% {color:#FEFEFE;}}
+        @keyframes bl8 { 0% {color:#000000;} 90% {color:#000000;} 95% {color:#FEFEFE;}}
+        @keyframes bl9 { 0% {color:#000000;} 95% {color:#000000;} 100% {color:#FEFEFE;}}
+        @keyframes bla { 0% {color:#000000;} 90% {color:#000000;} 95% {color:#FEFEFE;}}
+        @keyframes blb { 0% {color:#000000;} 85% {color:#000000;} 90% {color:#FEFEFE;}}
+        @keyframes blc { 0% {color:#000000;} 80% {color:#000000;} 85% {color:#FEFEFE;}}
+        @keyframes bld { 0% {color:#000000;} 75% {color:#000000;} 80% {color:#FEFEFE;}}
+        @keyframes ble { 0% {color:#000000;} 70% {color:#000000;} 75% {color:#FEFEFE;}}
+        @keyframes blf { 0% {color:#000000;} 65% {color:#000000;} 70% {color:#FEFEFE;}}
+        @keyframes blg { 0% {color:#000000;} 60% {color:#000000;} 65% {color:#FEFEFE;}}
+        @keyframes blh { 0% {color:#000000;} 55% {color:#000000;} 60% {color:#FEFEFE;}}
+        @keyframes blj { 0% {color:#000000;} 50% {color:#000000;} 55% {color:#FEFEFE;}}
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
-        </script>
-        
-
-
-        <div id="page-wrapper" class="page-wrapper">
-
-            <div class="page">
-                
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                      
-
-                     
-                         <a class="navbar-brand" href="index.html">
-
-  <nav class="navbar navbar-transparent navbar-fixed-top" role="navigation">
-    <section class="container">
-      <section>
-        <a class="navbar-brand" href="index.html">
-        
-                            
-                             </button>
-                          
-                             
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
-                            </ul>
-                            
-                            <button align="right" id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i align="right" class="fa fa-search"></i>
-                                
-                            </button>
-                    
-       <img src="img/logo.png" style="width:100%;max-width:200px;" alt="logo">
-        </a>
-        <br>
-
-   
-                        </div>
-
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="#whois">
-                <strong aria-hidden="true">1.</strong> Who is Harun ÖNER
-                    </a></li>
-                <li class="expanded "><a href="#local-installation" class="active">
-
-                <ol class="chapter"><li class="expanded "><a href="https://harunoner.com/blog.html">
-                <strong aria-hidden="true">1.</strong>My Blog Page</a></li>
-             
-            
-                
-                
- 
-            </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
-        </nav>
-
-                
-      
-                            
-                        </div>
-                    </div>
-                </div>
-                <div id="search-wrapper" class="hidden">
-                    <form align="right" id="searchbar-outer" class="searchbar-outer">
-                        <input align="right" type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
-                    </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
-                        </ul>
-                    </div>
-                </div>
-                
-
-                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-               <!-- <script type="text/javascript">
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
-                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : 0);
-                    });
-                </script>
--->
-                <div id="content" class="content">
-                    <main>
-                        <h1>
-                        <a class="header" href="#coderealsec">Who is Harun ONER</a></h1>
-                        
-<h2><a class="header" href="#whois" id="whois">Who is</a></h2>
-<p>
-First of all, I have been doing research in the cyber security community for a long time.
-I'm dealing with reverse engineering and assembly, ARM, MIPS processors.
-I know about Fuzzing and how to write secure code. Please contact me from the contact section to reach me.</p>
-<p>Contact E-Mail : </a href="mailto:coderealsec@gmail.com"><a/>cyber@harunoner.com</p>
-
-<h2><a class="header" href="#local-installation" id="local-installation">How did I get started?</a></h2>
-<p>
-If you are desperate and cant find work to do and you really like to deal with technology, you will feel that dealing with reverse engineering really gives you a taste.
-We know that life conditions are tough, but starting somewhere will really be great for you.
-Thinking about this, I started out, I am someone who likes to use linux since the past.
-I was doing research in lab libraries.
-If you really like to research, you will be much more successful in this business.
-    
-
-
-
-</p>
-
-<pre></code> <a class="header" href="blog.html"You can access my blog page here." </a> <b><code>You can access my blog page here. </code></b></code>
-
-
-                    </main>
-                   <nav class="nav-wrapper" aria-label="Page navigation">
-                        <!-- Mobile navigation buttons -->
-                        
-                            <a rel="prev" href="#comingsoon" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                        
-
-                        
-                            <a rel="next" href="#" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        
-
-                        <div style="clear: both"></div>
-                    </nav>
-                </div>
-            </div>
-
-            <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
-                    <a href="#" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
-
-                
-                    <a href="#" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
-            </nav>
-
-        </div>
-
-        
-
-        
-
-        
-        
-        
-        <script type="text/javascript">
-            window.playpen_copyable = true;
-        </script>
-        
-
-        
-
-        
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
-
-
-        
-
-        
-
-    </body>
-
-</html>
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Harun ONER - Blog Page</h1>
+    </div>
+    <div class="container">
+        <div class="content">
+            <p>Merhaba! Bu benim basit blog sayfam. Aşağıda bazı ilginç yazılara yönlendiren linkler bulabilirsiniz.</p>
+            <ul>
+                <li><span class="bb3">─┐</span></li>
+                <li><span class="l0"> ┌─VOLUME1─┐ </span></li>                                                                                 
+                <li>[00] <a href="https://harunoner.com/linux/tr-TR/1.html">Shell İşlemine Erişim ve Doğru Komut Sözdizimi Kullanımı</a></li>
+                <li>[01] <a href="https://harunoner.com/linux/tr-TR/2.html">Linux İşletim Sisteminde Girdi-Çıktı Yönlendirmesi</a></li>
+                <li>[02] <a href="https://harunoner.com/linux/tr-TR/3.html">SSH Nedir, SSH-keygen nasıl kullanılır?</a></li>
+                <li>[03] <a href="https://harunoner.com/linux/tr-TR/4.html">Dosyaların tar, gzip ve bzip2 İle Arşivlenmesi, Sıkıştırılması ve Açılması</a></li>
+                <li>[04] <a href="https://harunoner.com/linux/tr-TR/5.html">Dosya ve Dizin Oluşturma, Silme, Kopyalama ve Taşıma İşlemleri</a></li>
+                <li>[05] <a href="https://harunoner.com/linux/tr-TR/6.html">Hardlink Softlink nedir?</a></li>
+                <li>[06] <a href="https://harunoner.com/linux/tr-TR/7.html">UGO/RWX İzinlerini Listeleme, Ayarlama ve Değiştirme</a></li
