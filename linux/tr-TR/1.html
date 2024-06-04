@@ -1,14 +1,77 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Linux1</title>
-<meta charset="utf-8">
-<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
-<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux1</title>
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="txtdiv"><pre>
-                                                                                           
+    <div class="header">
+        <h1>Linux1</h1>
+    </div>
+    <div class="container">
+        <div class="content">
+            <pre>
  #     #    #    ######  #     # #     #    ####### #     # ####### ######  
  #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
  #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
@@ -20,47 +83,39 @@
 
   ----{ CodeREALSEC @ harunoner.com <*> }----
 
-    
-1 / X
-
-
-
-Shell İşlemine Erişim ve Doğru Komut Sözdizimi Kullanımı
-Bilgisayarlarımızı daha etkili bir şekilde yönetmemize yardımcı olan shell (komut satırı) işlemi, doğru sözdizimi ile komut kullanımını gerektirir. 
-Shell, kullanıcıların işletim sistemine doğrudan komutlar girerek dosyaları yönetmesine, 
-uygulamaları çalıştırmasına ve sistemle etkileşimde bulunmasına olanak tanır. 
-Bu yazıda, shell işlemine nasıl erişileceğini ve doğru komut sözdizimini nasıl kullanacağınızı ele alacağız.
-
-Komutlar genellikle şu şekilde görünür:
-
-<code>
-komut [seçenekler] [argümanlar]
-</code>
-    
-Boşluklar komutları, seçenekleri ve argümanları birbirinden ayırır.
-Komutlar: İşletim sistemine ne yapması gerektiğini söyler. Örneğin: ls (dizin içeriğini listele), mkdir (klasör oluştur).
-Seçenekler: Komutun nasıl davranması gerektiğini belirler. Kısa (-h) veya uzun (--help) olabilir.
-Argümanlar: Komuta gereken ek bilgileri sağlar. Örneğin, bir dosya adı veya klasör yolu.
-
-Örnekler
-Dizin içeriğini listeleyen bir komut:
-    
-<code>
-bash
-Copy code
-ls -l /home/harunoner olarak belirtebiliriz.
-</code>
-    
-<code>    
-Klasör oluşturan bir komut:
-harunoner
-mkdir harunoner
-</code>
-Dosya kopyalayan bir komut:
-
-bash
-cp kaynakdosya.txt etc/ olarak belirttiğimizde kaynakdosya.txt dosyasını etc/ dizinine kopyalamış oluruz.
-   
-
-  
-</pre></div></body>
+            </pre>
+            <div>
+                <h2>Shell İşlemine Erişim ve Doğru Komut Sözdizimi Kullanımı</h2>
+                <p>Bilgisayarlarımızı daha etkili bir şekilde yönetmemize yardımcı olan shell (komut satırı) işlemi, doğru sözdizimi ile komut kullanımını gerektirir. Shell, kullanıcıların işletim sistemine doğrudan komutlar girerek dosyaları yönetmesine, uygulamaları çalıştırmasına ve sistemle etkileşimde bulunmasına olanak tanır. Bu yazıda, shell işlemine nasıl erişileceğini ve doğru komut sözdizimini nasıl kullanacağınızı ele alacağız.</p>
+                
+                <h3>Komutlar genellikle şu şekilde görünür:</h3>
+                <code>
+                    komut [seçenekler] [argümanlar]
+                </code>
+                <p>Boşluklar komutları, seçenekleri ve argümanları birbirinden ayırır.</p>
+                <ul>
+                    <li><strong>Komutlar:</strong> İşletim sistemine ne yapması gerektiğini söyler. Örneğin: ls (dizin içeriğini listele), mkdir (klasör oluştur).</li>
+                    <li><strong>Seçenekler:</strong> Komutun nasıl davranması gerektiğini belirler. Kısa (-h) veya uzun (--help) olabilir.</li>
+                    <li><strong>Argümanlar:</strong> Komuta gereken ek bilgileri sağlar. Örneğin, bir dosya adı veya klasör yolu.</li>
+                </ul>
+                
+                <h3>Örnekler</h3>
+                <p>Dizin içeriğini listeleyen bir komut:</p>
+                <code>
+                    ls -l /home/harunoner
+                </code>
+                
+                <p>Klasör oluşturan bir komut:</p>
+                <code>
+                    mkdir harunoner
+                </code>
+                
+                <p>Dosya kopyalayan bir komut:</p>
+                <code>
+                    cp kaynakdosya.txt /etc/
+                </code>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
