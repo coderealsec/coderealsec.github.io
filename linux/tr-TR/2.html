@@ -1,70 +1,118 @@
-<html>
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-<title>Linux1</title>
-<meta charset="utf-8">
-<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
-<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Girdi-Çıktı Yönlendirmesi</title>
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="txtdiv"><pre>
-                                                                                           
- #     #    #    ######  #     # #     #    ####### #     # ####### ######  
- #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
- #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
- ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
- #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
- #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
- #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+    <div class="container">
+        <div class="content">
+            <div>
+                <h2>Linux İşletim Sisteminde Girdi-Çıktı Yönlendirmesi</h2>
+                <p>Linux işletim sistemi, girdi ve çıktı yönlendirmesi gibi güçlü özellikler sunar, bu da kullanıcıların komut sonuçlarını dosyalara kaydetmesine, komutlar arasında veri akışını yönlendirmesine ve hataları işlemesine olanak tanır. Bu yazıda, Linux'da kullanılan girdi-çıktı yönlendirme işlemlerini inceleyeceğiz.</p>
 
+                <h3>Temel Girdi-Çıktı Yönlendirmesi İşaretçeleri</h3>
+                <p><strong>> (Çıktı Yönlendirmesi):</strong> Bu işaretçe, bir komutun çıktısını bir dosyaya yazmak için kullanılır. Örneğin:</p>
+                <code>
+                    ls -l &gt; dosya_listesi.txt
+                </code>
+                <p>Bu komut, "dosya_listesi.txt" adlı bir dosyaya "ls -l" komutunun çıktısını yazar.</p>
 
-  ----{ CodeREALSEC @ harunoner.com <*> }----
+                <p><strong>>> (Çıktıyı Ekleme):</strong> Bu işaretçe, bir komutun çıktısını bir dosyanın sonuna eklemek için kullanılır. Örneğin:</p>
+                <code>
+                    date &gt;&gt; tarihler.txt
+                </code>
+                <p>Bu komut, "tarihler.txt" adlı dosyanın sonuna geçerli tarihi ekler.</p>
 
-    
-2 / X
+                <p><strong>< (Girdi Yönlendirmesi):</strong> Bu işaretçe, bir dosyanın içeriğini bir komuta girdi olarak vermek için kullanılır. Örneğin:</p>
+                <code>
+                    sort &lt; veriler.txt
+                </code>
+                <p>Bu komut, "veriler.txt" dosyasındaki verileri "sort" komutunun girdisi olarak kullanır.</p>
 
-Linux İşletim Sisteminde Girdi-Çıktı Yönlendirmesi
-Linux işletim sistemi, girdi ve çıktı yönlendirmesi gibi güçlü özellikler sunar, bu da kullanıcıların komut sonuçlarını dosyalara kaydetmesine, 
-komutlar arasında veri akışını yönlendirmesine ve hataları işlemesine olanak tanır. Bu yazıda, Linux'da kullanılan girdi-çıktı yönlendirme işlemlerini inceleyeceğiz.
+                <p><strong>| (Pipe) İşareti:</strong> Boru hattı (|), bir komutun çıktısını başka bir komutun girdisine yönlendirmek için kullanılır. Örneğin:</p>
+                <code>
+                    cat dosya.txt | grep "anahtar_kelime"
+                </code>
+                <p>Bu komut, "dosya.txt" dosyasının içeriğini okur ve içinde "anahtar_kelime" geçen satırları filtreler.</p>
 
-Temel Girdi-Çıktı Yönlendirmesi İşaretçeleri
-> (Çıktı Yönlendirmesi): Bu işaretçe, bir komutun çıktısını bir dosyaya yazmak için kullanılır. Örneğin:
+                <h3>Hata Yönlendirmesi</h3>
+                <p><strong>2> (Hata Çıktısı Yönlendirmesi):</strong> Bu işaretçe, bir komutun hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:</p>
+                <code>
+                    komut_yok 2&gt; hatalar.txt
+                </code>
+                <p>Bu komut, "komut_yok" adlı bir komutun hata çıktılarını "hatalar.txt" dosyasına yazar.</p>
 
+                <p><strong>&> (Hata ve Çıktıyı Yönlendirmesi):</strong> Bu işaretçe, bir komutun hem standart çıktısını hem de hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:</p>
+                <code>
+                    komut &amp;&gt; cikti_hata.txt
+                </code>
+                <p>Bu komut, "komut"un çıktı ve hata çıktılarını "cikti_hata.txt" dosyasına yazar.</p>
 
-ls -l > dosya_listesi.txt
-Bu komut, "dosya_listesi.txt" adlı bir dosyaya "ls -l" komutunun çıktısını yazar.
-
->> (Çıktıyı Ekleme): Bu işaretçe, bir komutun çıktısını bir dosyanın sonuna eklemek için kullanılır. Örneğin:
-b
-date >> tarihler.txt
-Bu komut, "tarihler.txt" adlı dosyanın sonuna geçerli tarihi ekler.
-
-< (Girdi Yönlendirmesi): Bu işaretçe, bir dosyanın içeriğini bir komuta girdi olarak vermek için kullanılır. Örneğin:
-
-
-C
-sort < veriler.txt
-Bu komut, "veriler.txt" dosyasındaki verileri "sort" komutunun girdisi olarak kullanır.
-
-(Pipe) İşareti: |
-Boru hattı (|), bir komutun çıktısını başka bir komutun girdisine yönlendirmek için kullanılır. Örneğin:
-
-
-cat dosya.txt | grep "anahtar_kelime"
-Bu komut, "dosya.txt" dosyasının içeriğini okur ve içinde "anahtar_kelime" geçen satırları filtreler.
-
-Hata Yönlendirmesi
-2> (Hata Çıktısı Yönlendirmesi): Bu işaretçe, bir komutun hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:
-
-
-komut_yok 2> hatalar.txt
-Bu komut, "komut_yok" adlı bir komutun hata çıktılarını "hatalar.txt" dosyasına yazar.
-
-&> (Hata ve Çıktıyı Yönlendirmesi): Bu işaretçe, bir komutun hem standart çıktısını hem de hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:
-
-
-komut &> cikti_hata.txt
-Bu komut, "komut"un çıktı ve hata çıktılarını "cikti_hata.txt" dosyasına yazar.
-
-
-Linux işletim sisteminde girdi-çıktı yönlendirmesi, komut sonuçlarını yönlendirmek, veri akışını değiştirmek ve hataları işlemek için güçlü bir araçtır. 
-</pre></div></body>
+                <p>Linux işletim sisteminde girdi-çıktı yönlendirmesi, komut sonuçlarını yönlendirmek, veri akışını değiştirmek ve hataları işlemek için güçlü bir araçtır.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
