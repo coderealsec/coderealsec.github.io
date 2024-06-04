@@ -1,47 +1,87 @@
-<html>
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-<title>Linux1</title>
-<meta charset="utf-8">
-<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
-<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux İşletim Sistemi: Sistem Belgelerini Bulma, Okuma ve Kullanma</title>
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="txtdiv"><pre>
-                                                                                           
- #     #    #    ######  #     # #     #    ####### #     # ####### ######  
- #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
- #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
- ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
- #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
- #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
- #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+    <div class="container">
+        <div class="content">
+            <div>
+                <h2>Linux İşletim Sistemi: Sistem Belgelerini Bulma, Okuma ve Kullanma</h2>
+                <p>Sistem belgelerine erişmek ve kullanmak için Linux işletim sistemi çeşitli kaynaklar sunar. Bu kaynaklar arasında <code>man</code>, <code>info</code> ve <code>/usr/share/doc</code> gibi yaygın kullanılanlardır.</p>
 
+                <h3><code>man</code> Komutu</h3>
+                <p><code>man</code> komutu, Linux sistemindeki komutların ve araçların kullanımını açıklayan manuel sayfaları görüntülemek için kullanılır. Örneğin, <code>man ls</code> komutu ile <code>ls</code> komutunun detaylarını görüntüleyebilirsiniz.</p>
 
-  ----{ CodeREALSEC @ harunoner.com <*> }----
+                <h3><code>info</code> Komutu</h3>
+                <p><code>info</code> komutu da benzer şekilde komutların ve araçların kullanımını açıklayan belgeleri görüntülemek için kullanılır. Eğer GNU sistemi kullanıyorsanız, <code>info</code> komutu ile daha görsel bir şekilde belgelere erişebilirsiniz. Örneğin, <code>info ls</code> komutunu kullanarak <code>ls</code> komutunun detaylarını görsel bir şekilde görebilirsiniz.</p>
 
-
-  8 / X
-
-
-  Sistem Belgelerini Bulma, Okuma ve Kullanma nasıl yapılır?: man, info ve /usr/share/doc
-
-Manual page aslında user command için hemde programming için kullanabilmemize olanak sağlamaktadır. Man page linux programcıların ve kullanıcıların bir nevi takip etmesi gereken,
-bilmediği bir parametre ve kullandığı komutun detaylarını öğrenebilmemiz için man page linux için önemli bir yere sahiptir.
-
-
-Bu yazıda, man, info ve /usr/share/doc gibi kaynakları kullanarak sistem belgelerine nasıl erişebileceğinizi inceleyeceğiz.
-
-man komutu, Linux sistemindeki komutların ve araçların kullanımını açıklayan manuel sayfaları görüntülemek için kullanılır. Kullanımı oldukça basittir:
-Örnek olarak man komutunu çalıştıracak olursak;
-
-man ls komutu ile ls komutunun detaylarını okuyarak sağlayabiliriz.
-Eğer GNU sistemimiz kurulu ise info kullanarak görsel olarak güzelleştirerek, info komutundan yararlanabiliriz.
-
-info ls yazdığımızda GNU sistemimiz kurulu ise sayfa HTML bazlı açılacağını görebilirsiniz.
-
-Dökümanları /usr/share/doc dizininden sistemin belgelerine erişebilir ve indirebiliriz.
-
-
-
-
-</pre></div></body>
+                <h3><code>/usr/share/doc</code> Dizini</h3>
+                <p><code>/usr/share/doc</code> dizininden ise sistem belgelerine erişebilir ve indirebilirsiniz. Bu dizin genellikle sistemde yüklü paketlerle birlikte gelen belgeleri içerir.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
