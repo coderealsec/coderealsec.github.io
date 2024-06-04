@@ -1,55 +1,106 @@
-<html>
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-<title>Linux1</title>
-<meta charset="utf-8">
-<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
-<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux İşletim Sistemi: Dosya Arşivleme ve Sıkıştırma</title>
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="txtdiv"><pre>
-                                                                                           
- #     #    #    ######  #     # #     #    ####### #     # ####### ######  
- #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
- #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
- ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
- #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
- #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
- #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
+    <div class="container">
+        <div class="content">
+            <div>
+                <h2>Linux İşletim Sistemi: Dosya Arşivleme ve Sıkıştırma</h2>
+                <p>Bu yazıda, Linux işletim sisteminde dosyaların nasıl arşivlendiğini, sıkıştırıldığını ve açıldığını inceleyeceğiz.</p>
 
+                <h3>tar: Dosyaları Arşivleme ve Ayıklama</h3>
+                <p><code>tar</code> komutu, dosyaları bir arşiv dosyasına toplamak veya arşivden çıkarmak için kullanılır. Kullanımı şu şekildedir:</p>
+                <p>Dosyaları bir arşiv dosyasına toplamak için aşağıdaki örneği inceleyebilirsiniz:</p>
+                <pre><code>
+                    tar -cvf harunoner.tar dosya1 dosya2 etc/
+                </code></pre>
+                <p>Arşivden dosyaları çıkarmak için:</p>
+                <pre><code>
+                    tar -xvf harunoner.tar
+                </code></pre>
 
-  ----{ CodeREALSEC @ harunoner.com <*> }----
-  
-  4 / X
-
-Bu yazıda, Linux işletim sisteminde dosyaların nasıl arşivlendiğini, sıkıştırıldığını ve açıldığını inceleyeceğiz.
-
-tar: Dosyaları Arşivleme ve Ayıklama
-tar komutu, dosyaları bir arşiv dosyasına toplamak veya arşivden çıkarmak için kullanılır. Kullanımı şu şekildedir:
-
-Dosyaları bir arşiv dosyasına toplamak için aşağıdaki örneği inceleyebilirsiniz:
-
-
-tar -cvf harunoner.tar dosya1 dosya2 etc/
-
-Arşivden dosyaları çıkarmak için:
-tar -xvf harunoner.tar komutu kullanabilinirsiniz.
-
-Bir diğer örnek olarak ise bzip2 ve gzip2 kullanılabilinir.
-gzip ve bzip2 komutları, dosyaları sıkıştırmak ve açmak için kullanılır. Kullanım örnekleri:
-
-touch harunoner.txt
-gzip harunoner.txt
-
-gzip ile sıkıştırılmış dosyayı açmak için ise
-gzip -d harunoner.txt.gz
--d parametresi bizlere gzip'den çıkarmak anlamını ifade eder.
-
-Yine aynı mantık ile düşünürsek bzip2 ve bzip için kolaylıkla aynı mantığı kurabiliriz.,
-bzip2 harunoner.txt
-bzip2 -d harunoner.txt.bz2
-
-
-
-
-
-</pre></div></body>
+                <h3>gzip ve bzip2: Dosyaları Sıkıştırma ve Açma</h3>
+                <p><code>gzip</code> ve <code>bzip2</code> komutları, dosyaları sıkıştırmak ve açmak için kullanılır.</p>
+                <p>Örnek kullanımları:</p>
+                <pre><code>
+                    touch harunoner.txt
+                    gzip harunoner.txt
+                </code></pre>
+                <p>Gzip ile sıkıştırılmış dosyayı açmak için:</p>
+                <pre><code>
+                    gzip -d harunoner.txt.gz
+                </code></pre>
+                <p>Aynı mantıkla <code>bzip2</code> ve <code>bzip</code> için de sıkıştırma ve açma işlemleri yapılabilir:</p>
+                <pre><code>
+                    bzip2 harunoner.txt
+                    bzip2 -d harunoner.txt.bz2
+                </code></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
