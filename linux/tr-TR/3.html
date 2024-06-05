@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSH Nedir?</title>
+    <title>Linux Girdi-Çıktı Yönlendirmesi</title>
     <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
     <style>
         body {
@@ -31,6 +31,11 @@
             color: #fff;
             padding: 10px 0;
             text-align: center;
+        }
+
+        .header a {
+            color: #fff;
+            text-decoration: none;
         }
 
         pre {
@@ -66,32 +71,56 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <a href="https://harunoner.com">Linux</a>
+    </div>
     <div class="container">
         <div class="content">
             <div>
-                <h2>SSH Nedir?</h2>
-                <p>SSH (Secure Shell), ağ üzerinden güvenli ve şifrelenmiş bir bağlantı oluşturmanıza olanak tanıyan bir ağ protokolüdür. Bu protokol sayesinde uzak sunuculara güvenli bir şekilde bağlanabilir, dosya transferi yapabilir ve komutlar gönderebilirsiniz.</p>
+                <h2>Linux İşletim Sisteminde Girdi-Çıktı Yönlendirmesi</h2>
+                <p>Linux işletim sistemi, girdi ve çıktı yönlendirmesi gibi güçlü özellikler sunar, bu da kullanıcıların komut sonuçlarını dosyalara kaydetmesine, komutlar arasında veri akışını yönlendirmesine ve hataları işlemesine olanak tanır. Bu yazıda, Linux'da kullanılan girdi-çıktı yönlendirme işlemlerini inceleyeceğiz.</p>
 
-                <h3>SSH Bağlantısı Oluşturma:</h3>
-                <p>Uzak bir sunucuya SSH ile bağlanmak için aşağıdaki komutu kullanabilirsiniz:</p>
-                <pre><code>
-                    ssh kullanici@harunoner.com
-                </code></pre>
-                <p><em>kullanici</em> sizin kullanıcı adınızı, <em>harunoner.com</em> ise uzak sunucunun IP adresini temsil eder.</p>
+                <h3>Temel Girdi-Çıktı Yönlendirmesi İşaretçeleri</h3>
+                <p><strong>> (Çıktı Yönlendirmesi):</strong> Bu işaretçe, bir komutun çıktısını bir dosyaya yazmak için kullanılır. Örneğin:</p>
+                <code>
+                    ls -l &gt; dosya_listesi.txt
+                </code>
+                <p>Bu komut, "dosya_listesi.txt" adlı bir dosyaya "ls -l" komutunun çıktısını yazar.</p>
 
-                <h3>Şifre Doğrulaması veya Anahtar Tabanlı Kimlik Doğrulama:</h3>
-                <p>SSH bağlantısını oluştururken genellikle şifrenizi girmeniz istenir. Ancak daha güvenli bir seçenek olan anahtar tabanlı kimlik doğrulama da tercih edilebilir. Bu yöntemde, bir anahtar çifti oluşturur ve genel anahtarı uzak sunucuya eklersiniz.</p>
-                <pre><code>
-                    scp dosya.txt kullanici@harunoner.com:/dizin/
-                </code></pre>
-                <p>Bu komut, <em>dosya.txt</em> dosyasını belirttiğiniz uzak dizine kopyalar.</p>
+                <p><strong>>> (Çıktıyı Ekleme):</strong> Bu işaretçe, bir komutun çıktısını bir dosyanın sonuna eklemek için kullanılır. Örneğin:</p>
+                <code>
+                    date &gt;&gt; tarihler.txt
+                </code>
+                <p>Bu komut, "tarihler.txt" adlı dosyanın sonuna geçerli tarihi ekler.</p>
 
-                <h3>SSH keygen nasıl kullanılır ve SSH keygen genel olarak baktığımızda ise:</h3>
-                <pre><code>
-                    ssh-keygen komutu;
-                </code></pre>
-                <p>Bu komutu çalıştırdığınızda, varsayılan olarak <em>~/.ssh/id_rsa</em> adlı bir özel anahtar ve <em>~/.ssh/id_rsa.pub</em> adlı bir genel anahtar oluşturulacaktır.</p>
-                <pre><code>
-                    ssh-copy-id kullanici@harunoner.com
-                </code></pre>
-                <p><code>ssh-copy-id</code> komutu, genel anahtarın uzak sunucuya kopyalanmasını kolaylaştırır. Bu, anahtar tabanlı kim
+                <p><strong>< (Girdi Yönlendirmesi):</strong> Bu işaretçe, bir dosyanın içeriğini bir komuta girdi olarak vermek için kullanılır. Örneğin:</p>
+                <code>
+                    sort &lt; veriler.txt
+                </code>
+                <p>Bu komut, "veriler.txt" dosyasındaki verileri "sort" komutunun girdisi olarak kullanır.</p>
+
+                <p><strong>| (Pipe) İşareti:</strong> Boru hattı (|), bir komutun çıktısını başka bir komutun girdisine yönlendirmek için kullanılır. Örneğin:</p>
+                <code>
+                    cat dosya.txt | grep "anahtar_kelime"
+                </code>
+                <p>Bu komut, "dosya.txt" dosyasının içeriğini okur ve içinde "anahtar_kelime" geçen satırları filtreler.</p>
+
+                <h3>Hata Yönlendirmesi</h3>
+                <p><strong>2> (Hata Çıktısı Yönlendirmesi):</strong> Bu işaretçe, bir komutun hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:</p>
+                <code>
+                    komut_yok 2&gt; hatalar.txt
+                </code>
+                <p>Bu komut, "komut_yok" adlı bir komutun hata çıktılarını "hatalar.txt" dosyasına yazar.</p>
+
+                <p><strong>&> (Hata ve Çıktıyı Yönlendirmesi):</strong> Bu işaretçe, bir komutun hem standart çıktısını hem de hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:</p>
+                <code>
+                    komut &amp;&gt; cikti_hata.txt
+                </code>
+                <p>Bu komut, "komut"un çıktı ve hata çıktılarını "cikti_hata.txt" dosyasına yazar.</p>
+
+                <p>Linux işletim sisteminde girdi-çıktı yönlendirmesi, komut sonuçlarını yönlendirmek, veri akışını değiştirmek ve hataları işlemek için güçlü bir araçtır.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
