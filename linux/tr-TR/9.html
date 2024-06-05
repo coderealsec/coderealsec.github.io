@@ -1,27 +1,74 @@
-<html>
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-<title>Linux1</title>
-<meta charset="utf-8">
-<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
-<link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux1</title>
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="txtdiv"><pre>
-                                                                                           
- #     #    #    ######  #     # #     #    ####### #     # ####### ######  
- #     #   # #   #     # #     # ##    #    #     # ##    # #       #     # 
- #     #  #   #  #     # #     # # #   #    #     # # #   # #       #     # 
- ####### #     # ######  #     # #  #  #    #     # #  #  # #####   ######  
- #     # ####### #   #   #     # #   # #    #     # #   # # #       #   #   
- #     # #     # #    #  #     # #    ##    #     # #    ## #       #    #  
- #     # #     # #     #  #####  #     #    ####### #     # ####### #     # 
-
-
-  ----{ CodeREALSEC @ harunoner.com <*> }----
-
-
-  9 / X
-
+    <div class="container">
+        <div class="content">
+            <h1>Linux1</h1>
   Bugün bakacağımız konu, basit bir bashscript nasıl yazılır ve bashscript nedir?
   Bashscript linux mantığında basit mantık ile düşünürsek bize büyük olanak sağlar, çünkü baktığımız zaman
   örneğin basit bir dizinde örnek olarak etc/ dizinin altında bir dosya oluşturmak istiyoruz ve bu dosyanın ismini bashscript yapabiliriz.
@@ -63,8 +110,8 @@
 
   Yukarıda girmiş olduğum cronjob sayesinde, harun kullanıcısını her 3 dakikada bir echo "Hello World" yazmasını otomatik olarak sağlayacaktır.
   more /var/log/cronjob dizininden cronjob loglarını görüntüleyebilir, girmiş olduğumuz cronjobun çalışıp/çalışmadığını yada hata alıyorsak görüntüleyebiliriz.
-
-
-
-  
-</pre></div></body>
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
