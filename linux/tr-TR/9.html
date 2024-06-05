@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linux1</title>
+    <title>Linux Bash Scripting</title>
     <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
     <style>
         body {
@@ -21,20 +21,21 @@
             padding: 20px;
         }
 
-        h1 {
+        h1, h2, h3 {
             text-align: center;
             color: #333;
         }
 
-        .header {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         pre {
-            background: #fff;
+            background: #f4f4f4;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -50,12 +51,8 @@
             color: #333;
         }
 
-        .content {
-            background: #fff;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        p {
+            margin-bottom: 20px;
         }
 
         @media (max-width: 600px) {
@@ -68,49 +65,46 @@
 <body>
     <div class="container">
         <div class="content">
-            <h1>Linux1</h1>
-  Bugün bakacağımız konu, basit bir bashscript nasıl yazılır ve bashscript nedir?
-  Bashscript linux mantığında basit mantık ile düşünürsek bize büyük olanak sağlar, çünkü baktığımız zaman
-  örneğin basit bir dizinde örnek olarak etc/ dizinin altında bir dosya oluşturmak istiyoruz ve bu dosyanın ismini bashscript yapabiliriz.
-  Bunu sadece tek bir basit shell kabuğuna yazarak yukarıda vermiş olduğum dizinin basit bir şekilde oluşmasına olanak sağlamaktadır.
+            <h1>Linux Bash Scripting</h1>
+            <p>
+                Bugün bakacağımız konu, basit bir bash script'in nasıl yazıldığı ve bash script'in ne olduğudur. 
+                Bash scriptleri, Linux mantığında basit programlama mantığı ile düşünüldüğünde bize büyük olanaklar sağlar. 
+                Örneğin, basit bir dizinde, örnek olarak /etc/ dizini altında bir dosya oluşturmak istiyoruz ve bu dosyanın ismini "bashscript" yapmak istiyoruz.
+            </p>
 
-  ###################
+            <h3>Bash Script Örneği</h3>
+            <pre><code>#!/bin/bash</code></pre>
+            <pre><code>cd /etc</code></pre>
+            <pre><code>touch bashscript</code></pre>
+            <pre><code>!wq</code></pre>
 
-  #!/bin/bash ---> Bu kısımda linux sistemimizin hangi shell kabuğunda çalışacağının belirtiyoruz örnek olarak /bin/sh kullanıyorsak kabuğu değiştirebiliriz.
-  cd /etc     ---> /etc dizinin içerisine gitmesini sağlıyoruz.
-  touch bashscript  ---> touch komutuyla basit bir bashscript adında dosya oluşturuyoruz.
-  !wq               ---> !wq komutuyla vi editör ile açtığımız dosyanın ismini bashscript.sh olarak kaydederek, basit olan bash script kodumuzu tamamlıyoruz.
-  
-  ###################  
+            <p>
+                Yukarıdaki kod parçaları bir bash script'in basit bir örneğini göstermektedir. 
+                İlk satırda bash betiğinin hangi shell kabuğunda çalışacağı belirtilir. 
+                Sonraki satırlar, /etc/ dizinine gitmeyi ve "bashscript" adında bir dosya oluşturmayı içerir. 
+                Son olarak, vi editörünü kullanarak dosyayı "bashscript.sh" olarak kaydederiz.
+            </p>
 
-  Bu noktada Bashscript modeli aslında baktığımızda basit programlama diline çok yakın olduğunu söyleyebiliriz.
+            <h3>Cron Job Örneği</h3>
+            <pre><code>#!/bin/bash</code></pre>
+            <pre><code>echo "Hello World"</code></pre>
+            <pre><code>!wq</code></pre>
 
-  Yeniden örneklerden gidecek olursak, bizlere ilerleyen süreçte bakıcağımız cronjob diğer adıyla crontask işlemlerine bakacağız ve bu sayede bu kod bloklaklarını belirli saatlerde çalıştırarak,
-  otomatize hale getirmeye olanak sağlayarak bizlere daha kolaylık sağlayacağını belirtmek isterim.
+            <p>
+                Yeniden örneklerden gidecek olursak, ilerleyen süreçte cron job (veya crontask) işlemlerine bakacağız. 
+                Bu, belirli kod bloklarını belirli saatlerde çalıştırarak işlerimizi otomatik hale getirmemize olanak sağlar. 
+                Örneğin, bash script'imizi bir dizine oluşturup "helloworld.sh" olarak adlandıralım:
+            </p>
 
-  Bu noktada en çok sorulan sorular arasında ve en basit bir bash kabuğu oluşturmamızı ve cronjob üzerinde her 3 dakikada bir echo "Hello World" yazmamızı isteyeceklerdir.
-  
-  İlk olarak bashscriptimizi bir dizine oluşturalım ismini ise helloworld.sh olarak kaydedelim:
-  ###################
+            <pre><code>chmod +x helloworld.sh</code></pre>
+            <pre><code>crontab -e -u harun</code></pre>
+            <pre><code>*/3 * * * * exampledizin/helloworld.sh</code></pre>
+            <pre><code>!wq</code></pre>
 
-  #!/bin/bash
-  echo "Hello World"
-  !wq
-  
-  ###################
-
-  chmod +x helloworld.sh komutu ile daha önce blog sayfamda konu olarak vermiş olduğum, execute(çalıştırma) İzinlerini vermiş oluyoruz.
-  
-  crontab -e -u harun --> Bu komut ile harun kullanıcısına cronjob yani her 3 dakikada bir echo "Hello World" yazmasını sağlayacağız.
-  */3        *       *       *        *    exampledizin/helloworld.sh
-  minute    hour    day     month    day
-                                    (week)
-   
-                                    !wq --> kaydederek çıkıyoruz.
-
-  Yukarıda girmiş olduğum cronjob sayesinde, harun kullanıcısını her 3 dakikada bir echo "Hello World" yazmasını otomatik olarak sağlayacaktır.
-  more /var/log/cronjob dizininden cronjob loglarını görüntüleyebilir, girmiş olduğumuz cronjobun çalışıp/çalışmadığını yada hata alıyorsak görüntüleyebiliriz.
-            </pre>
+            <p>
+                Yukarıdaki cron job örneği, "harun" kullanıcısına her 3 dakikada bir "Hello World" yazmasını sağlar. 
+                Ayrıca, "/var/log/cronjob" dizininden cron job loglarını görüntüleyebiliriz, böylece cron job'un düzgün çalışıp çalışmadığını kontrol edebiliriz.
+            </p>
         </div>
     </div>
 </body>
