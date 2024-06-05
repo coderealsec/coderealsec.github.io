@@ -13,6 +13,7 @@
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -56,9 +57,50 @@
                 padding: 10px;
             }
         }
+
+        /* Dark theme styles */
+        body.dark {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        body.dark .content {
+            background: #444;
+            color: #f4f4f4;
+        }
+
+        body.dark pre {
+            background: #555;
+            color: #f4f4f4;
+            border-color: #666;
+        }
+
+        body.dark code {
+            background: #444;
+            border-left-color: #f4f4f4;
+        }
+
+        /* Theme toggle button */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #444;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .theme-toggle-btn.light {
+            background: #f4f4f4;
+            color: #333;
+        }
     </style>
 </head>
 <body>
+    <button class="theme-toggle-btn">Siyah Tema</button>
     <div class="container">
         <div class="content">
             <div>
@@ -94,5 +136,20 @@
             </div>
         </div>
     </div>
+    <script>
+        const toggleBtn = document.querySelector('.theme-toggle-btn');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                toggleBtn.textContent = 'Beyaz Tema';
+                toggleBtn.classList.remove('light');
+            } else {
+                toggleBtn.textContent = 'Siyah Tema';
+                toggleBtn.classList.add('light');
+            }
+        });
+    </script>
 </body>
 </html>
