@@ -177,13 +177,15 @@ deploy:
   script:
     - echo "Deploying the project..."
     - npm run deploy
-                </code>
+
+</code>
 
                 </pre>
 
                 <h4>Gitlab Runner Deployment Örnek</h4>
-                <code>
-                    image: alpine
+                <pre>
+<code>
+image: alpine
 
 stages:
   - build
@@ -205,7 +207,8 @@ build:
 
     # push the image
     docker push "$CI_PROJECT_PATH_SLUG:$CI_COMMIT_SHA"
-                </code>
+</code>
+            </pre>
 
                 <p>Yukarıdaki deployment örneğinden gidecek olursak, iki adet stage aşamasından oluşmaktadır. Bunlar; build ve deploy aşamalarıdır. <code> GIT_DEPT: 0</code> komutu mevcut repomuzun tam olarak klonlanmasını sağlamaktadır. </p>
                 <p>Script kısmında projemizi build etme işlemini -t parametresi ile gerçekleştirmektedir. <p>
