@@ -178,8 +178,38 @@ deploy:
     - echo "Deploying the project..."
     - npm run deploy
                 </code>
+
                 </pre>
 
+                <h4>Gitlab Runner Deployment Örnek</h4>
+                <code>
+                    image: alpine
+
+stages:
+  - build
+  - deploy
+
+variables:
+  GIT_DEPTH: 0
+
+build:
+  stage: build
+  only:
+    - main
+  script: |
+    # build the image
+    docker build -t "$CI_PROJECT_PATH_SLUG:$CI_COMMIT_SHA" .
+
+    # login to docker hub
+    echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+
+    # push the image
+    docker push "$CI_PROJECT_PATH_SLUG:$CI_COMMIT_SHA"
+                </code>
+
+                <p>Yukarıdaki deployment örneğinden gidecek olursak, iki adet stage aşamasından oluşmaktadır. Bunlar; build ve deploy aşamalarıdır. <code> GIT_DEPT: 0</code> komutu mevcut repomuzun tam olarak klonlanmasını sağlamaktadır. </p>
+                <p>Script kısmında projemizi build etme işlemini -t parametresi ile gerçekleştirmektedir. <p>
+                <p> Docker hub'a login olduktan sonra oluşturulan image son aşamada push işlemiyle sonlanır. Gitlab-Runner'ın oluşturmuş olduğu container silinir ve task tamamlanmış olur.</p>
                 <h3>4. GitLab Runner Avantajları</h3>
                 <ul>
                     <li><strong>Esneklik:</strong> Docker, shell gibi farklı ortamlarda çalışabilir.</li>
