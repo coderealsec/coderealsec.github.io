@@ -1,0 +1,14 @@
+blog_posts:
+  - title: "İlk Blog Yazısı"
+    date: "2024-10-20"
+    tags: 
+      - "web development"
+      - "tech"
+    content: "Bu benim ilk blog yazım. İçeriği burada detaylandırabilirsin."
+
+  - title: "İkinci Blog Yazısı"
+    date: "2024-10-21"
+    tags: 
+      - "yazılım"
+      - "programlama"
+    content: "İkinci yazımın içeriği burada yer alıyor."
