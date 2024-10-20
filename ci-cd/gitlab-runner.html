@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitLab Runner</title>
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        pre {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            color: #333;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+
+        /* Dark theme styles */
+        body.dark {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        body.dark .content {
+            background: #444;
+            color: #f4f4f4;
+        }
+
+        body.dark pre {
+            background: #555;
+            color: #f4f4f4;
+            border-color: #666;
+        }
+
+        body.dark code {
+            background: #444;
+            border-left-color: #f4f4f4;
+            color: #f4f4f4;
+        }
+
+        body.dark h1, body.dark h2, body.dark h3 {
+            color: #f4f4f4;
+        }
+
+        body.dark ul li {
+            color: #f4f4f4;
+        }
+
+        /* Theme toggle button */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #444;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle-btn.light {
+            background: #f4f4f4;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn">Siyah Tema</button>
+    <div class="container">
+        <div class="content">
+            <div>
+                <h2>GitLab Runner Nedir? Nasıl Kurulur ve Yapılandırılır?</h2>
+                <p><strong>GitLab Runner</strong>, GitLab CI/CD süreçlerinde kullanılan, projelerimizdeki kodların derlenmesi, test edilmesi ve deploy edilmesi gibi işlemleri gerçekleştiren bir uygulamadır. GitLab Runner, GitLab sunucusuna bağlı olarak çalışır ve CI/CD pipeline'ında tanımlanan aşamaları çalıştırır.</p>
+
+                <h3>1. GitLab Runner Nedir?</h3>
+                <p>GitLab Runner, CI/CD'nin arka planda çalışan bileşenidir. Pipeline aşamaları runner tarafından gerçekleştirilir ve bu aşamalar, kodun test edilmesi, derlenmesi veya dağıtılması gibi işlemleri içerir. GitLab Runner, shared ya da specific olabilir.</p>
+
+                <h3>2. GitLab Runner Kurulumu</h3>
+                <h4>2.1. Depoyu Ekleme</h4>
+                <p>İlk adımda GitLab Runner deposunu ekleyip güncelleyin:</p>
+                <code>
+                    curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
+                    chmod +x /usr/local/bin/gitlab-runner
+                </code>
+
+                <h4>2.2. GitLab Runner'ı Offline Kurma</h4>
+                <p>GitLab Runner'ı kurmak için aşağıdaki komutu çalıştırın:</p>
+                <code>
+                    sudo gitlab-runner install
+                    sudo gitlab-runner start
+                </code>
+                <h4>2.3. GitLab Runner'ı Online Kurma</h4>
+                <p>Gitlab Runner'ı online kurabilmemiz için Debian altyapılı linux dağıtımları için <code> apt install gitlab-runner </code> kullanabiliriz.</p>
+                <p>Bir diğer yum paket dağıtıcısı kullanan linux dağıtımları için ise dnf veya yum paketlerini kullanabiliriz. Örnek; <code> dnf install gitlab-runner veya yum install gitlab-runner </code></p>
+                <p>Diğer adımları uygulayarak sürece devam edebiliriz.</p>
+                <h4>2.4. GitLab Runner'ı Kayıt Ettirme</h4>
+                <p>Runner'ı GitLab projenize bağlamak için aşağıdaki komutu kullanarak kaydedin:</p>
+                <code>
+                    sudo gitlab-runner register
+                </code>
+                <p>Bu işlem sırasında GitLab'deki projeden bir "token" almanız gerekir ve kayıt sırasında aşağıdaki bilgileri girmeniz istenir:</p>
+                <ul>
+                    <li>GitLab instance URL: https://gitlab.com</li>
+                    <li>Token: GitLab'den aldığınız kayıt token'ı</li>
+                    <li>Executor: docker, shell gibi bir çalıştırma ortamı seçin</li>
+                </ul>
+
+                <h3>3. CI/CD Pipeline Çalıştırma</h3>
+                <p>GitLab Runner'ı kurduktan sonra, projenizin kök dizininde <strong>.gitlab-ci.yml</strong> dosyasını oluşturabilirsiniz.</p>
+                <h4>Örnek .gitlab-ci.yml Dosyası:</h4>
+                <pre>
+                <code>
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - echo "Building the project..."
+    - npm install
+
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - npm test
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying the project..."
+    - npm run deploy
+                </code>
+                </pre>
+
+                <h3>4. GitLab Runner Avantajları</h3>
+                <ul>
+                    <li><strong>Esneklik:</strong> Docker, shell gibi farklı ortamlarda çalışabilir.</li>
+                    <li><strong>Otomatik CI/CD Süreci:</strong> Kodu her push ettiğinizde pipeline çalışır.</li>
+                    <li><strong>Özelleştirilebilir:</strong> Proje bazında farklı runner'lar ayarlayabilirsiniz.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.querySelector('.theme-toggle-btn');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                toggleBtn.textContent = 'Beyaz Tema';
+                toggleBtn.classList.remove('light');
+            } else {
+                toggleBtn.textContent = 'Siyah Tema';
+                toggleBtn.classList.add('light');
+            }
+        });
+    </script>
+</body>
+</html>
