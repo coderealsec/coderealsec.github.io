@@ -77,16 +77,16 @@
 
             <h4>1.1. Yapılandırma Dosyasını Açın</h4>
             <div class="code-block">
-                sudo nano /etc/gitlab/gitlab.rb
+            sudo nano /etc/gitlab/gitlab.rb
             </div>
 
             <h4>1.2. Registry Yapılandırmasını Etkinleştirin</h4>
             <p>Registry’yi etkinleştirmek için aşağıdaki ayarları yapılandırma dosyasına ekleyin:</p>
             <div class="code-block">
-                registry['enable'] = true<br>
-                registry_external_url 'https://registry.harunoner.com'<br>
-                registry_nginx['ssl_certificate'] = "/etc/gitlab/ssl/registry.harunoner.com.crt"<br>
-                registry_nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/registry.harunoner.com.key"
+            registry['enable'] = true<br>
+            registry_external_url 'https://registry.harunoner.com'<br>
+            registry_nginx['ssl_certificate'] = "/etc/gitlab/ssl/registry.harunoner.com.crt"<br>
+            registry_nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/registry.harunoner.com.key"
             </div>
 
             <p>Yukarıdaki ayarlarla, GitLab Registry’nin dışarıdan erişilebileceği URL’yi belirtmiş olduk. SSL sertifikaları ile güvenli bağlantılar sağlamak için TLS sertifikası ayarlarını yapmanız gerekebilir.</p>
@@ -94,13 +94,13 @@
             <h4>1.3. Harici Bağlantı Noktasını Yapılandırma</h4>
             <p>Registry için bağlantı noktasını yapılandırmak isterseniz, şu ayarı ekleyebilirsiniz:</p>
             <div class="code-block">
-                registry['registry_http_addr'] = "0.0.0.0:5005"
+            registry['registry_http_addr'] = "0.0.0.0:5005"
             </div>
 
             <h3>2. Yapılandırma Değişikliklerini Uygulama</h3>
             <p>Yapılandırma dosyasını kaydettikten sonra, değişikliklerin etkin olması için GitLab’ı yeniden yapılandırmanız gerekmektedir:</p>
             <div class="code-block">
-                sudo gitlab-ctl reconfigure
+            sudo gitlab-ctl reconfigure
             </div>
 
             <h2>Docker CLI ile GitLab Registry’ye Bağlanma</h2>
@@ -108,33 +108,33 @@
             <h3>1. Docker CLI Üzerinden Giriş Yapma</h3>
             <p>GitLab Registry’yi kullanmaya başlamak için Docker CLI ile giriş yapmanız gerekir. Aşağıdaki komutla giriş yapabilirsiniz:</p>
             <div class="code-block">
-                docker login registry.harunoner.com
+            docker login registry.harunoner.com
             </div>
             <p>GitLab kullanıcı adı ve kişisel erişim belirteciniz (token) ile giriş yapın.</p>
 
             <h3>2. Docker İmajlarını GitLab Registry’ye Gönderme</h3>
             <p>Docker imajlarını GitLab Registry’ye göndermek için imajı uygun etiketle yeniden etiketleyip, push işlemi yapmanız gerekir:</p>
             <div class="code-block">
-                docker tag &lt;local-image&gt; registry.harunoner.com/group/project:tag<br>
-                docker push registry.harunoner.com/group/project:tag
+            docker tag &lt;local-image&gt; registry.harunoner.com/group/project:tag<br>
+            docker push registry.harunoner.com/group/project:tag
             </div>
 
             <h2>GitLab CI/CD ile Otomatik Registry Kullanımı</h2>
             <h3>1. .gitlab-ci.yml Dosyasını Yapılandırma</h3>
             <p>GitLab CI/CD ile Docker imajlarını otomatik olarak Registry’ye gönderebilirsiniz. Bunun için .gitlab-ci.yml dosyasını aşağıdaki şekilde yapılandırabilirsiniz:</p>
             <div class="code-block">
-                stages:<br>
-                &nbsp;&nbsp;- build<br>
-                &nbsp;&nbsp;- deploy<br><br>
+            stages:<br>
+            &nbsp;&nbsp;- build<br>
+            &nbsp;&nbsp;- deploy<br><br>
 
-                variables:<br>
-                &nbsp;&nbsp;IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"<br><br>
+            variables:<br>
+            &nbsp;&nbsp;IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"<br><br>
 
-                build:<br>
-                &nbsp;&nbsp;stage: build<br>
-                &nbsp;&nbsp;script:<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;- docker build -t $IMAGE_TAG .<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;- docker push $IMAGE_TAG
+            build:<br>
+            &nbsp;&nbsp;stage: build<br>
+            &nbsp;&nbsp;script:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;- docker build -t $IMAGE_TAG .<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;- docker push $IMAGE_TAG
             </div>
 
             <h2>GitLab Registry’nin Avantajları</h2>
