@@ -108,6 +108,9 @@ gitlab/gitlab-ce:latest</code></pre>
             <h3>2. Adım: GitLab’ı Kurun</h3>
             <p>GitLab EE sürümünü kurarak <code>EXTERNAL_URL</code> belirtin:</p>
             <pre><code>sudo EXTERNAL_URL="http://gitlab.harunoner.com" apt-get install gitlab-ee</code></pre>
+
+            <p>Red Hat tabanlı sistemler için GitLab deposunu ekleyin:</p>
+            <pre><code>curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash</code></pre>
             <p>Rocky Linux, Red Hat gibi dağıtımlara kurmak için dnf veya yum paketlerini kullanın:</p>
             <pre><code>yum install gitlab-ee</code></pre>  
             <pre><code>dnf install gitlab-ee</code></pre>
@@ -125,6 +128,35 @@ gitlab/gitlab-ce:latest</code></pre>
             <h3>Sonuç</h3>
             <p>Bu rehber, GitLab kurulumları için ihtiyaçlarınıza uygun seçenekleri değerlendirebilmeniz için hazırlanmıştır.</p>
         </div>
+
+        <h3>Gitlab LDAP Bağlantısı/h3>
+            <p>Aşağıda örnek bir LDAP yapılandırması bulunmaktadır:</p>
+            <pre><code>
+gitlab_rails['ldap_enabled'] = true
+gitlab_rails['ldap_servers'] = YAML.load &lt;&lt;-EOS
+main:
+  label: 'LDAP'                              # LDAP sunucusu için görünen isim
+  host: '_LDAP_SERVER_IP_'                   # LDAP sunucusunun IP adresi veya host ismi
+  port: 389                                  # LDAP sunucusu portu (varsayılan 389)
+  uid: 'sAMAccountName'                      # LDAP kullanıcı adı olarak kullanılacak özellik
+  bind_dn: 'cn=admin,dc=example,dc=com'      # LDAP sunucusunda kullanıcı doğrulaması için kullanılacak bind DN
+  password: '_LDAP_PASSWORD_'                # Bind DN kullanıcısının şifresi
+  encryption: 'plain'                        # Şifreleme türü (TLS, SSL, veya plain)
+  verify_certificates: true                  # Sertifika doğrulama (false ile devre dışı bırakabilirsiniz)
+  active_directory: true                     # Active Directory kullanıyorsanız true olarak bırakın
+  base: 'dc=example,dc=com'                  # LDAP taban dizini
+EOS
+            </code></pre>
+
+            <h3>2. Adım: Yapılandırmayı Uygula</h3>
+            <p>LDAP ayarlarını tamamladıktan sonra GitLab konfigürasyonunu yeniden yapılandırın:</p>
+            <pre><code>sudo gitlab-ctl reconfigure</code></pre>
+            <p>Eğer restart ile kontrol edebilmek için, gitlab-ctl restart çalıştırabiliriz.</p>
+
+            <h3>Özet</h3>
+            <p>Bu ayarlarla GitLab, LDAP sunucunuza bağlanarak kullanıcı doğrulamasını LDAP üzerinden yapacaktır.</p>
+        </div>
+    </div>
     </div>
 
     <script>
