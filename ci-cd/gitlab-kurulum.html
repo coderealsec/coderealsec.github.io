@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitLab Container ve Yerel Kurulum Rehberi</title>
-    <meta name="description" content="GitLab'ın en güncel sürümünü konteyner ve yerel kurulum olarak nasıl yapacağınızı adım adım öğrenin.">
+    <meta name="description" content="GitLab'ın en güncel sürümünü container ve yerel kurulum olarak nasıl yapacağınızı adım adım öğrenin.">
     <meta name="keywords" content="GitLab, GitLab Kurulumu, Docker, Yerel Kurulum, CI/CD, DevOps, GitLab Runner">
     <meta name="robots" content="index, follow">
     <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
@@ -23,12 +23,19 @@
             margin: auto;
             padding: 20px;
         }
-        h1, h2, h3, h4 {
+        h1 {
             color: #333;
             text-align: center;
+            margin-bottom: 20px;
         }
-        p, ul, code, pre {
+        h2, h3 {
+            color: #444;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p, ul, pre {
             text-align: left;
+            margin-bottom: 15px;
         }
         .content {
             background: #fff;
@@ -41,9 +48,9 @@
             background: #f4f4f4;
             border-radius: 5px;
             padding: 10px;
-            margin: 10px 0;
             color: #333;
             overflow-x: auto;
+            display: block;
         }
         .theme-toggle-btn {
             position: fixed;
@@ -52,64 +59,64 @@
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            background-color: #444;
+            color: #f4f4f4;
+            border: none;
         }
         /* Dark theme */
         body.dark { background-color: #333; color: #f4f4f4; }
         body.dark .content { background: #444; }
+        body.dark .theme-toggle-btn { background-color: #f4f4f4; color: #444; }
     </style>
 </head>
 <body>
     <button class="theme-toggle-btn">Siyah Tema</button>
     <div class="container">
-        <h1>GitLab Konteyner ve Yerel Kurulum Rehberi</h1>
+        <h1>GitLab Container ve Yerel Kurulum Rehberi</h1>
         <div class="content">
-            <h2>GitLab Konteyner Kurulumu (Docker ile)</h2>
+            <h2>GitLab Container Kurulumu (Docker ile)</h2>
 
             <h3>1. Adım: GitLab Görselini İndirin</h3>
             <p>GitLab’ın Enterprise veya Community sürümünü Docker ile indirin:</p>
-            <code>
-                docker pull gitlab/gitlab-ce:latest
-                <br>docker pull gitlab/gitlab-ee:latest
-            </code>
+            <pre><code>docker pull gitlab/gitlab-ce:latest
+docker pull gitlab/gitlab-ee:latest</code></pre>
 
             <h3>2. Adım: Container Çalıştırın</h3>
-            <p>Konteyneri çalıştırarak veri ve log dosyalarını mount edin:</p>
-            <code>
-                docker run --detach \
-                <br>--hostname gitlab.harunoner.com \
-                <br>--publish 443:443 --publish 80:80 --publish 22:22 \
-                <br>--name gitlab \
-                <br>--restart always \
-                <br>--volume /srv/gitlab/config:/etc/gitlab \
-                <br>--volume /srv/gitlab/logs:/var/log/gitlab \
-                <br>--volume /srv/gitlab/data:/var/opt/gitlab \
-                <br>gitlab/gitlab-ce:latest
-            </code>
+            <p>Container çalıştırarak veri ve log dosyalarını mount edin:</p>
+            <pre><code>docker run --detach \
+--hostname gitlab.harunoner.com \
+--publish 443:443 --publish 80:80 --publish 22:22 \
+--name gitlab \
+--restart always \
+--volume /srv/gitlab/config:/etc/gitlab \
+--volume /srv/gitlab/logs:/var/log/gitlab \
+--volume /srv/gitlab/data:/var/opt/gitlab \
+gitlab/gitlab-ce:latest</code></pre>
 
             <h3>3. Adım: GitLab Yapılandırmasını Özelleştirin</h3>
-            <p>GitLab’ın yapılandırma dosyasını, <code>/srv/gitlab/config/gitlab.rb</code> üzerinde düzenleyin.</p>
+            <p>GitLab’ın yapılandırma dosyasını <code>/srv/gitlab/config/gitlab.rb</code> üzerinde düzenleyin.</p>
 
             <h3>4. Adım: Yapılandırmayı Uygula</h3>
-            <code>docker exec -it gitlab gitlab-ctl reconfigure</code>
+            <pre><code>docker exec -it gitlab gitlab-ctl reconfigure</code></pre>
 
             <h2>GitLab Yerel Kurulumu (Native Installation)</h2>
 
             <h3>1. Adım: GitLab Depolarını Ekleyin</h3>
             <p>Debian tabanlı sistemler için GitLab deposunu ekleyin:</p>
-            <code>curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash</code>
+            <pre><code>curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash</code></pre>
 
             <h3>2. Adım: GitLab’ı Kurun</h3>
             <p>GitLab EE sürümünü kurarak <code>EXTERNAL_URL</code> belirtin:</p>
-            <code>sudo EXTERNAL_URL="http://gitlab.harunoner.com" apt-get install gitlab-ee</code>
-
-            <p>Rocky Linux, Red Hat gibi dağıtımlara kurmak için dnf veya yum paketleri kullanın. <code>yum install gitlab-ee</code>  veya
-            <code>dnf install gitlab-ee</code>
+            <pre><code>sudo EXTERNAL_URL="http://gitlab.harunoner.com" apt-get install gitlab-ee</code></pre>
+            <p>Rocky Linux, Red Hat gibi dağıtımlara kurmak için dnf veya yum paketlerini kullanın:</p>
+            <pre><code>yum install gitlab-ee</code></pre>  
+            <pre><code>dnf install gitlab-ee</code></pre>
 
             <h3>3. Adım: GitLab Yapılandırmasını Güncelleyin</h3>
             <p><code>/etc/gitlab/gitlab.rb</code> üzerinde gerekli ayarları yapabilirsiniz.</p>
 
             <h3>4. Adım: Yapılandırmayı Uygula</h3>
-            <code>sudo gitlab-ctl reconfigure</code>
+            <pre><code>sudo gitlab-ctl reconfigure</code></pre>
 
             <h2>Hangi Yöntemi Tercih Etmelisiniz?</h2>
             <p><strong>Container Kurulumu:</strong> İzolasyon sağlar, taşınabilirlik sunar, güncelleme ve yedekleme kolaydır.</p>
