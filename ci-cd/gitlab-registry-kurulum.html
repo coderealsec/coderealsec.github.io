@@ -17,6 +17,7 @@
             background-color: #f4f4f4;
             color: #333;
             transition: background-color 0.3s, color 0.3s;
+            text-align: center;
         }
         .container {
             max-width: 800px;
@@ -25,10 +26,11 @@
         }
         h1, h2, h3, h4 {
             color: #333;
-            text-align: center;
+            margin-bottom: 10px;
         }
-        p, ul, code, pre {
+        p, ul, pre, code {
             text-align: left;
+            margin-bottom: 15px;
         }
         .content {
             background: #fff;
@@ -44,6 +46,7 @@
             margin: 10px 0;
             color: #333;
             overflow-x: auto;
+            white-space: pre-wrap;
         }
         .theme-toggle-btn {
             position: fixed;
@@ -72,7 +75,7 @@
             <p>GitLab Registry’yi kurmadan önce, GitLab’ın Docker ile çalıştığından emin olun. Aşağıdaki adımlarla GitLab Registry’yi etkinleştirebilirsiniz:</p>
             
             <h4>1.1. Yapılandırma Dosyasını Açın</h4>
-            <code>sudo nano /etc/gitlab/gitlab.rb</code>
+            <pre><code>sudo nano /etc/gitlab/gitlab.rb</code></pre>
 
             <h4>1.2. Registry Yapılandırmasını Etkinleştirin</h4>
             <p>Registry'yi etkinleştirmek için aşağıdaki ayarları ekleyin:</p>
@@ -93,13 +96,13 @@ registry['registry_http_addr'] = "0.0.0.0:5005"
 
             <h3>2. Yapılandırma Değişikliklerini Uygulama</h3>
             <p>Yapılandırma dosyasını kaydettikten sonra, GitLab’ı yeniden yapılandırarak değişiklikleri uygulayın:</p>
-            <code>sudo gitlab-ctl reconfigure</code>
+            <pre><code>sudo gitlab-ctl reconfigure</code></pre>
 
             <h2>Docker CLI ile GitLab Registry’ye Bağlanma</h2>
 
             <h3>1. Docker CLI Üzerinden Giriş Yapma</h3>
             <p>GitLab Registry’yi kullanmaya başlamak için, Docker CLI ile giriş yapmanız gerekir:</p>
-            <code>docker login registry.harunoner.com</code>
+            <pre><code>docker login registry.harunoner.com</code></pre>
             <p>GitLab kullanıcı adı ve kişisel erişim belirteciniz (token) ile giriş yapın.</p>
 
             <h3>2. Docker İmajlarını GitLab Registry’ye Gönderme</h3>
