@@ -109,8 +109,8 @@ gitlab/gitlab-ce:latest</code></pre>
             <p>GitLab EE sürümünü kurarak <code>EXTERNAL_URL</code> belirtin:</p>
             <pre><code>sudo EXTERNAL_URL="http://gitlab.harunoner.com" apt-get install gitlab-ee</code></pre>
 
-            <p>Red Hat tabanlı sistemler için GitLab deposunu ekleyin:</p>
-            <pre><code>curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash</code></pre>
+            <p>RPM tabanlı sistemler için GitLab deposunu ekleyin:</p>
+            <pre><code>curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | sudo bash</code></pre>
             <p>Rocky Linux, Red Hat gibi dağıtımlara kurmak için dnf veya yum paketlerini kullanın:</p>
             <pre><code>yum install gitlab-ee</code></pre>  
             <pre><code>dnf install gitlab-ee</code></pre>
@@ -127,7 +127,7 @@ gitlab/gitlab-ce:latest</code></pre>
 
             <h3>Sonuç</h3>
             <p>Bu rehber, GitLab kurulumları için ihtiyaçlarınıza uygun seçenekleri değerlendirebilmeniz için hazırlanmıştır.</p>
-            
+
             <h3>Gitlab LDAP Bağlantısı</h3>
             <p>Aşağıda örnek bir LDAP yapılandırması bulunmaktadır:</p>
             <pre><code>
