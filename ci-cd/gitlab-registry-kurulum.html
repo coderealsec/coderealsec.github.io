@@ -44,6 +44,7 @@
             margin: 10px 0;
             color: #333;
             overflow-x: auto;
+            white-space: pre-wrap;
         }
         .theme-toggle-btn {
             position: fixed;
@@ -68,37 +69,30 @@
 
             <h3>1. GitLab Registry Etkinleştirme</h3>
             <p>İlk olarak, GitLab'ın registry özelliğini etkinleştirmeniz gerekiyor. GitLab config dosyasına erişerek registry özelliğini aşağıdaki gibi etkinleştirin:</p>
-            <pre>
-<code>
+            <pre><code>
 registry['enable'] = true
 registry_external_url 'https://registry.harunoner.com'
 registry_nginx['ssl_certificate'] = "/etc/gitlab/ssl/registry.harunoner.com.crt"
 registry_nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/registry.harunoner.com.key"
-</code>
-            </pre>
+            </code></pre>
 
             <h3>2. SSL Sertifikalarını Yapılandırma</h3>
             <p>Registry'yi HTTPS ile kullanabilmek için SSL sertifikalarını yapılandırmanız gerekmektedir. Sertifikalarınızı aşağıdaki dizinde tutun:</p>
-            <pre>
-<code>
+            <pre><code>
 /etc/gitlab/ssl/registry.harunoner.com.crt
 /etc/gitlab/ssl/registry.harunoner.com.key
-</code>
-            </pre>
+            </code></pre>
 
             <h3>3. GitLab'ı Yapılandırma</h3>
             <p>Yapılandırmayı güncelledikten sonra, GitLab'ı yeniden yapılandırmanız gerekecek. Aşağıdaki komutla bunu yapabilirsiniz:</p>
-            <pre>
-<code>
+            <pre><code>
 sudo gitlab-ctl reconfigure
-</code>
-            </pre>
+            </code></pre>
 
             <h2>GitLab Registry'yi Docker ile Kurma</h2>
             <h3>1. Adım: GitLab Registry Container'ını Çalıştırma</h3>
             <p>GitLab Registry'yi Docker container olarak çalıştırmak için aşağıdaki komutu kullanabilirsiniz:</p>
-            <pre>
-<code>
+            <pre><code>
 docker run -d \
 --hostname registry.harunoner.com \
 --name gitlab-registry \
@@ -107,26 +101,21 @@ docker run -d \
 --volume /srv/gitlab/registry/data:/var/lib/registry \
 --volume /srv/gitlab/registry/config:/etc/registry \
 registry:2
-</code>
-            </pre>
+            </code></pre>
 
             <h3>2. Adım: Docker Registry Yapılandırması</h3>
             <p>Docker Registry'nin güvenliğini sağlamak için uygun SSL sertifikalarını ve yapılandırma dosyasını düzenlemeniz gerekir. Bu dosyaları Docker registry container'ına bağlamayı unutmayın.</p>
-            <pre>
-<code>
+            <pre><code>
 --volume /etc/gitlab/ssl:/etc/ssl
-</code>
-            </pre>
+            </code></pre>
 
             <h3>3. Adım: GitLab Container ile İletişim Kurma</h3>
             <p>GitLab Registry ile Docker'ı bağlamak için GitLab'daki <code>gitlab.rb</code> dosyasını düzenleyin ve aşağıdaki komutu kullanarak yapılandırmayı uygulayın:</p>
-            <pre>
-<code>
+            <pre><code>
 gitlab_rails['registry_enabled'] = true
 gitlab_rails['registry_host'] = "registry.harunoner.com"
 gitlab_rails['registry_port'] = "5000"
-</code>
-            </pre>
+            </code></pre>
 
             <h2>Sonuç</h2>
             <p>GitLab Registry'yi Docker veya yerel kurulum kullanarak başarıyla kurabilirsiniz. Registry, projelerinizin Docker imajlarını saklamak ve yönetmek için güçlü bir araçtır.</p>
