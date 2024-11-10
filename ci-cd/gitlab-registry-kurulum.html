@@ -17,7 +17,6 @@
             background-color: #f4f4f4;
             color: #333;
             transition: background-color 0.3s, color 0.3s;
-            text-align: center;
         }
         .container {
             max-width: 800px;
@@ -27,6 +26,7 @@
         h1, h2, h3, h4 {
             color: #333;
             margin-bottom: 10px;
+            text-align: left; /* Başlıkları sola yasla */
         }
         p, ul, pre, code {
             text-align: left;
@@ -67,18 +67,18 @@
         <h1>GitLab Registry Kurulumu ve Yapılandırma Rehberi</h1>
         <div class="content">
             <h2>GitLab Registry Nedir?</h2>
-            <p>GitLab Registry, GitLab’a entegre bir Docker container registry hizmetidir. Bu özellik, projeleriniz için Docker imajlarını depolamanıza, sürüm yönetimi yapmanıza ve CI/CD süreçlerinde doğrudan kullanmanıza olanak tanır.</p>
+            <p>GitLab Registry, GitLab’a entegre bir Docker container registry hizmetidir. Bu özellik, Docker imajlarını GitLab projelerinizle entegre bir şekilde depolamanıza, sürüm yönetimi yapmanıza ve CI/CD süreçlerinde doğrudan kullanmanıza olanak tanır.</p>
 
             <h2>GitLab Registry’yi Etkinleştirme</h2>
 
             <h3>1. GitLab Yapılandırma Dosyasını Düzenleme</h3>
-            <p>GitLab Registry’yi kurmadan önce, GitLab’ın Docker ile çalıştığından emin olun. Aşağıdaki adımlarla GitLab Registry’yi etkinleştirebilirsiniz:</p>
-            
+            <p>GitLab Registry’yi kurmadan önce, GitLab’ın Docker ile çalıştığından emin olun. GitLab Registry’yi etkinleştirmek için aşağıdaki adımları izleyin:</p>
+
             <h4>1.1. Yapılandırma Dosyasını Açın</h4>
             <pre><code>sudo nano /etc/gitlab/gitlab.rb</code></pre>
 
             <h4>1.2. Registry Yapılandırmasını Etkinleştirin</h4>
-            <p>Registry'yi etkinleştirmek için aşağıdaki ayarları ekleyin:</p>
+            <p>Registry’yi etkinleştirmek için aşağıdaki ayarları yapılandırma dosyasına ekleyin:</p>
             <pre><code>
 registry['enable'] = true
 registry_external_url 'https://registry.harunoner.com'
@@ -86,7 +86,7 @@ registry_nginx['ssl_certificate'] = "/etc/gitlab/ssl/registry.harunoner.com.crt"
 registry_nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/registry.harunoner.com.key"
             </code></pre>
 
-            <p>Burada, <code>registry_external_url</code> kısmı GitLab Registry’nin dışarıdan erişileceği URL’yi belirtir. SSL sertifikaları ile güvenli bağlantılar sağlamak için TLS sertifikası ayarlarını yapmanız gerekebilir.</p>
+            <p>Yukarıdaki ayarlarla, GitLab Registry’nin dışarıdan erişilebileceği URL’yi belirtmiş olduk. SSL sertifikaları ile güvenli bağlantılar sağlamak için TLS sertifikası ayarlarını yapmanız gerekebilir.</p>
 
             <h4>1.3. Harici Bağlantı Noktasını Yapılandırma</h4>
             <p>Registry için bağlantı noktasını yapılandırmak isterseniz, şu ayarı ekleyebilirsiniz:</p>
@@ -95,18 +95,18 @@ registry['registry_http_addr'] = "0.0.0.0:5005"
             </code></pre>
 
             <h3>2. Yapılandırma Değişikliklerini Uygulama</h3>
-            <p>Yapılandırma dosyasını kaydettikten sonra, GitLab’ı yeniden yapılandırarak değişiklikleri uygulayın:</p>
+            <p>Yapılandırma dosyasını kaydettikten sonra, değişikliklerin etkin olması için GitLab’ı yeniden yapılandırmanız gerekmektedir:</p>
             <pre><code>sudo gitlab-ctl reconfigure</code></pre>
 
             <h2>Docker CLI ile GitLab Registry’ye Bağlanma</h2>
 
             <h3>1. Docker CLI Üzerinden Giriş Yapma</h3>
-            <p>GitLab Registry’yi kullanmaya başlamak için, Docker CLI ile giriş yapmanız gerekir:</p>
+            <p>GitLab Registry’yi kullanmaya başlamak için Docker CLI ile giriş yapmanız gerekir. Aşağıdaki komutla giriş yapabilirsiniz:</p>
             <pre><code>docker login registry.harunoner.com</code></pre>
             <p>GitLab kullanıcı adı ve kişisel erişim belirteciniz (token) ile giriş yapın.</p>
 
             <h3>2. Docker İmajlarını GitLab Registry’ye Gönderme</h3>
-            <p>Docker imajlarını GitLab Registry’ye göndermek için imajı doğru etikete göre yeniden etiketleyin:</p>
+            <p>Docker imajlarını GitLab Registry’ye göndermek için imajı uygun etiketle yeniden etiketleyip, push işlemi yapmanız gerekir:</p>
             <pre><code>
 docker tag <local-image> registry.harunoner.com/group/project:tag
 docker push registry.harunoner.com/group/project:tag
@@ -114,7 +114,7 @@ docker push registry.harunoner.com/group/project:tag
 
             <h2>GitLab CI/CD ile Otomatik Registry Kullanımı</h2>
             <h3>1. .gitlab-ci.yml Dosyasını Yapılandırma</h3>
-            <p>GitLab CI/CD ile imajları otomatik olarak Registry’ye gönderebilirsiniz. Aşağıdaki gibi bir yapı ekleyerek CI/CD pipeline’ınızı oluşturun:</p>
+            <p>GitLab CI/CD ile Docker imajlarını otomatik olarak Registry’ye gönderebilirsiniz. Bunun için .gitlab-ci.yml dosyasını aşağıdaki şekilde yapılandırabilirsiniz:</p>
             <pre><code>
 stages:
   - build
@@ -132,13 +132,13 @@ build:
 
             <h2>GitLab Registry’nin Avantajları</h2>
             <ul>
-                <li><strong>CI/CD entegrasyonu:</strong> Docker imajlarınızı doğrudan GitLab pipelineları ile yönetebilirsiniz.</li>
+                <li><strong>CI/CD entegrasyonu:</strong> Docker imajlarını doğrudan GitLab pipelineları ile yönetebilirsiniz.</li>
                 <li><strong>Özelleştirilebilir erişim kontrolü:</strong> Güvenli bir ortam sağlar.</li>
                 <li><strong>Versiyon kontrolü:</strong> Docker imajlarının sürüm takibi kolayca yapılabilir.</li>
             </ul>
 
             <h3>Sonuç</h3>
-            <p>GitLab Registry, Docker imajlarınızı GitLab ile kolayca yönetmenize olanak tanır. CI/CD süreçlerinizi optimize ederek projelerinizi daha verimli bir şekilde geliştirebilirsiniz.</p>
+            <p>GitLab Registry, Docker imajlarını kolayca yönetmenize olanak tanır. CI/CD süreçlerinizi optimize ederek projelerinizi daha verimli bir şekilde geliştirebilirsiniz. Bu yazıda GitLab Registry'nin kurulumunu ve yapılandırmasını adım adım açıkladık.</p>
         </div>
     </div>
 
