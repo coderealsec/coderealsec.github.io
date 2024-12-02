@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELK Stack Kurulumu</title>
+    <title>ELK Stack Docker veya Native Kurulumu</title>
     <meta name="description" content="Elasticsearch, Logstash ve Kibana (ELK) kurulumu adım adım öğrenin. Docker'dan native kurulumuna kadar her aşama.">
     <meta name="keywords" content="ELK, Elasticsearch, Logstash, Kibana, Kurulum, Docker">
     <meta name="robots" content="index, follow">
@@ -64,11 +64,10 @@
     <button class="theme-toggle-btn">Siyah Tema</button>
     <div class="container">
         <h1>ELK Stack Kurulumu</h1>
-        <div class="content">
-            <h2>1. Elasticsearch Kurulumu</h2>
-            <p>Elasticsearch, verilerinizi depolamak, aramak ve analiz etmek için kullanılan güçlü bir arama motorudur. ELK stack'in en önemli bileşenidir. Elasticsearch'i Docker veya native olarak kurabilirsiniz. Aşağıda her iki yöntemle kurulum adımlarını bulabilirsiniz.</p>
 
-            <h3>Adım 1: Elasticsearch Docker ile Kurulum</h3>
+        <!-- Docker Kurulumları -->
+        <div class="content">
+            <h2>1. Elasticsearch Kurulumu (Docker)</h2>
             <p>Docker kullanarak Elasticsearch'i kurmak için aşağıdaki adımları takip edin:</p>
             <pre><code>docker pull elasticsearch:8.10.0</code></pre>
             <p>Elasticsearch container’ını başlatın:</p>
@@ -79,23 +78,8 @@ docker run -d --name elasticsearch \
 elasticsearch:8.10.0
             </code></pre>
 
-            <h3>Adım 2: Elasticsearch Native Kurulumu</h3>
-            <p>Elasticsearch'i doğrudan işletim sisteminize kurmak için aşağıdaki adımları izleyin:</p>
-            <pre><code>sudo apt update
-sudo apt install elasticsearch
-sudo systemctl start elasticsearch
-sudo systemctl enable elasticsearch</code></pre>
-
-<p>RHEL dağıtımları için yum paketi kullanmalıyız.</p>
-<pre><code>sudo yum update
-    sudo yum install elasticsearch
-    sudo systemctl start elasticsearch
-    sudo systemctl enable elasticsearch</code></pre>
-
-            <h2>2. Kibana Kurulumu</h2>
-            <p>Kibana, Elasticsearch ile etkileşim kurmanıza ve verilerinizi görselleştirmenize olanak tanır. Kibana'yı Docker ile veya native olarak kurabilirsiniz.</p>
-
-            <h3>Adım 1: Kibana Docker ile Kurulum</h3>
+            <h2>2. Kibana Kurulumu (Docker)</h2>
+            <p>Kibana, Elasticsearch ile etkileşim kurmanıza ve verilerinizi görselleştirmenize olanak tanır. Docker kullanarak Kibana'yı kurmak için şu adımları takip edin:</p>
             <pre><code>
 docker pull kibana:8.10.0
 docker run -d --name kibana \
@@ -104,21 +88,8 @@ docker run -d --name kibana \
 kibana:8.10.0
             </code></pre>
 
-            <h3>Adım 2: Kibana Native Kurulumu</h3>
-            <p>Elasticsearch ile birlikte çalışan Kibana'yı native olarak kurmak için şu komutları kullanın:</p>
-            <pre><code>sudo apt install kibana
-sudo systemctl start kibana
-sudo systemctl enable kibana</code></pre>
-
-<p>RHEL dağıtımları için yum paketi kullanmalıyız.</p>
-<pre><code>sudo yum install kibana
-    sudo systemctl start kibana
-    sudo systemctl enable kibana</code></pre>
-
-            <h2>3. Logstash Kurulumu</h2>
-            <p>Logstash, verileri çeşitli kaynaklardan alır, işler ve Elasticsearch'e gönderir. Logstash, sistemler arasında veri entegrasyonu sağlamak için çok kullanışlıdır.</p>
-
-            <h3>Adım 1: Logstash Docker ile Kurulum</h3>
+            <h2>3. Logstash Kurulumu (Docker)</h2>
+            <p>Logstash, verileri çeşitli kaynaklardan alır, işler ve Elasticsearch'e gönderir. Docker kullanarak Logstash’i kurmak için şu komutları kullanın:</p>
             <pre><code>
 docker pull logstash:8.10.0
 docker run -d --name logstash \
@@ -126,19 +97,32 @@ docker run -d --name logstash \
 -v /path/to/logstash/config:/usr/share/logstash/config \
 logstash:8.10.0
             </code></pre>
+        </div>
 
-            <h3>Adım 2: Logstash Native Kurulumu</h3>
+        <!-- Native Kurulumlar -->
+        <div class="content">
+            <h2>4. Elasticsearch Kurulumu (Native)</h2>
+            <p>Elasticsearch'i doğrudan işletim sisteminize kurmak için aşağıdaki adımları izleyin:</p>
+            <pre><code>sudo apt update && sudo apt install elasticsearch && sudo systemctl start elasticsearch && sudo systemctl enable elasticsearch</code></pre>
+
+            <p>RHEL dağıtımları için yum paketi kullanmalıyız.</p>
+            <pre><code>sudo yum update && sudo yum install elasticsearch && sudo systemctl start elasticsearch && sudo systemctl enable elasticsearch</code></pre>
+
+            <h2>5. Kibana Kurulumu (Native)</h2>
+            <p>Elasticsearch ile birlikte çalışan Kibana'yı native olarak kurmak için şu komutları kullanın:</p>
+            <pre><code>sudo apt install kibana && sudo systemctl start kibana && sudo systemctl enable kibana</code></pre>
+
+            <p>RHEL dağıtımları için yum paketi kullanmalıyız.</p>
+            <pre><code>sudo yum install kibana && sudo systemctl start kibana && sudo systemctl enable kibana</code></pre>
+
+            <h2>6. Logstash Kurulumu (Native)</h2>
             <p>Logstash'i doğrudan işletim sisteminize kurmak için aşağıdaki komutları kullanabilirsiniz:</p>
-            <pre><code>sudo apt install logstash
-sudo systemctl start logstash
-sudo systemctl enable logstash</code></pre>
+            <pre><code>sudo apt install logstash && sudo systemctl start logstash && sudo systemctl enable logstash</code></pre>
 
-<p>RHEL dağıtımları için yum paketi kullanmalıyız.</p>
-<pre><code>sudo yum install logstash
-    sudo systemctl start logstash
-    sudo systemctl enable logstash</code></pre>
+            <p>RHEL dağıtımları için yum paketi kullanmalıyız.</p>
+            <pre><code>sudo yum install logstash && sudo systemctl start logstash && sudo systemctl enable logstash</code></pre>
 
-            <h2>4. ELK Stack Entegrasyonu</h2>
+            <h2>7. ELK Stack Entegrasyonu</h2>
             <p>ELK Stack'inizi başarıyla kurduktan sonra, Logstash’i Elasticsearch ile entegre etmek için aşağıdaki yapılandırmayı kullanabilirsiniz. Bu yapılandırma, Logstash'ten gelen verilerin Elasticsearch'e iletilmesini sağlar.</p>
             <pre><code>
 input {
@@ -161,6 +145,8 @@ output {
 }
             </code></pre>
             <p>Bu adımlarla Elasticsearch, Logstash ve Kibana'yı başarıyla kurmuş olacaksınız. Artık log verilerinizi toplamak, analiz etmek ve görselleştirmek için ELK stack'i kullanabilirsiniz. Bu kurulum hem yerel hem de Docker ortamlarında rahatlıkla yapılabilir.</p>
+            <p> COMBINEDAPACHELOG Örnek olarak alacağınız Log aşağıdaki gibi olacaktır.</p>
+            <pre><code>127.0.0.1 - - [10/Dec/2024:14:23:01 +0000] "GET /index.html HTTP/1.1" 200 1234 "http://harunoner.com/" "Mozilla/5.0"<pre></code>
         </div>
     </div>
 
