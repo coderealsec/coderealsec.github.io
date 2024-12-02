@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elasticsearch Kurulumu: Rocky Linux ve Docker</title>
-    <meta name="description" content="Rocky Linux üzerinde Elasticsearch kurulumunu kolayca öğrenin. Adım adım rehber ve Docker için hızlı kurulum kılavuzu.">
-    <meta name="keywords" content="Elasticsearch, Rocky Linux, Docker, Kurulum, DevOps, Log Yönetimi">
+    <title>Elasticsearch Kurulum Rehberi</title>
+    <meta name="description" content="Elasticsearch'in Rocky Linux ve Docker üzerinde nasıl kurulduğunu öğrenmek için rehberimizi inceleyin.">
+    <meta name="keywords" content="Elasticsearch, Rocky Linux, Docker, Elastic Stack, Kurulum">
     <meta name="robots" content="index, follow">
-    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
+            line-height: 1.8;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
@@ -23,12 +22,15 @@
             margin: auto;
             padding: 20px;
         }
-        h1, h2, h3, h4 {
-            color: #333;
-            text-align: left;
+        h1, h2, h3 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
         }
-        p, ul {
-            text-align: left;
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            color: #555;
         }
         .content {
             background: #fff;
@@ -38,12 +40,14 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         pre, code {
-            background: #f4f4f4;
-            border-radius: 5px;
-            margin: 10px 0;
-            color: #333;
+            display: block;
+            background: #f9f9f9;
+            padding: 10px;
+            margin: 15px 0;
+            border-left: 3px solid #007BFF;
             overflow-x: auto;
-            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            color: #333;
         }
         .theme-toggle-btn {
             position: fixed;
@@ -52,100 +56,73 @@
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
         }
         /* Dark theme */
-        body.dark { background-color: #333; color: #f4f4f4; }
-        body.dark .content { background: #444; }
+        body.dark { background-color: #222; color: #ccc; }
+        body.dark .content { background: #333; color: #ccc; }
+        body.dark pre { background: #444; border-color: #FFAA00; }
+        body.dark .theme-toggle-btn { background-color: #FFAA00; color: #222; }
     </style>
 </head>
 <body>
     <button class="theme-toggle-btn">Siyah Tema</button>
     <div class="container">
-        <h1>Elasticsearch Kurulumu: Rocky Linux ve Docker</h1>
+        <h1>Elasticsearch Kurulum Rehberi</h1>
         <div class="content">
-            <h2</h2>
-            <p>Eburada her şeyi adım adım ve basit bir şekilde anlatacağım. İster Rocky Linux kullanın ister Docker; bu rehber sayesinde kısa sürede sisteminizi ayağa kaldırabileceksiniz!</p>
+            <h2>1. Elasticsearch Native Kurulumu (Rocky Linux)</h2>
+            <p>Rocky Linux için Elasticsearch'in native kurulumunu gerçekleştirmek için aşağıdaki adımları izleyebilirsiniz:</p>
 
-            <h2>Rocky Linux'ta Elasticsearch Kurulumu</h2>
-            <p>Rocky Linux üzerinde Elasticsearch kurulumuna başlamadan önce sisteminizin güncel olduğundan emin olun. Güncellemeleri yaptıysanız, hemen başlayalım!</p>
+            <h3>Adım 1: Java Yükleme</h3>
+            <p>Elasticsearch, Java’ya ihtiyaç duyar. Bu nedenle gerekli Java JDK sürümünü yükleyin:</p>
+            <pre><code>sudo dnf install java-11-openjdk</code></pre>
 
-            <h3>1. Elasticsearch Deposu Ekle</h3>
-            <p>Elasticsearch’i sisteminize tanıtmak için Elastic’in resmi deposunu ekliyoruz. İşte komutlar:</p>
-            <pre><code>
-sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-cat <<EOF | sudo tee /etc/yum.repos.d/elasticsearch.repo
-[elasticsearch-8.x]
-name=Elasticsearch repository for 8.x packages
+            <h3>Adım 2: Elasticsearch Deposu Ekleme</h3>
+            <p>Elasticsearch için resmi Elastic deposunu sisteminize ekleyin:</p>
+            <pre><code>sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+sudo tee /etc/yum.repos.d/elasticsearch.repo <<EOF
+[elasticsearch]
+name=Elasticsearch Repository
 baseurl=https://artifacts.elastic.co/packages/8.x/yum
 gpgcheck=1
 gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
 enabled=1
 autorefresh=1
 type=rpm-md
-EOF
-sudo dnf update
-            </code></pre>
-            <p><strong>Not:</strong> Bu ayarlar Elasticsearch'in 8.x serisi içindir. Daha yeni sürümleri tercih ediyorsanız Elastic'in <a href="https://github.com/elastic/elasticsearch/releases" target="_blank">GitHub sürüm sayfasını</a> kontrol edin.</p>
+EOF</code></pre>
 
-            <h3>2. Elasticsearch'i Kur</h3>
-            <p>Depoyu eklediğimize göre şimdi Elasticsearch’i kurabiliriz:</p>
-            <pre><code>
-sudo dnf install elasticsearch
-            </code></pre>
-            <p>Kurulum hızlı bir şekilde tamamlanacaktır.</p>
+            <h3>Adım 3: Elasticsearch’i Kurun</h3>
+            <p>Aşağıdaki komutları kullanarak Elasticsearch’i yükleyin ve başlatın:</p>
+            <pre><code>sudo dnf install elasticsearch
+sudo systemctl enable --now elasticsearch</code></pre>
 
-            <h3>3. Servisi Başlat ve Aktif Hale Getir</h3>
-            <p>Elasticsearch artık kurulu! Şimdi bunu çalıştırmamız gerekiyor:</p>
-            <pre><code>
-sudo systemctl enable elasticsearch
-sudo systemctl start elasticsearch
-            </code></pre>
-            <p>Servisin başladığından emin olmak için şu komutla durumunu kontrol edebilirsiniz:</p>
-            <pre><code>
-sudo systemctl status elasticsearch
-            </code></pre>
+            <h3>Adım 4: Yapılandırma</h3>
+            <p>Elasticsearch’in çalışma davranışını düzenlemek için <code>/etc/elasticsearch/elasticsearch.yml</code> dosyasını açarak aşağıdaki gibi yapılandırma yapabilirsiniz:</p>
+            <pre><code>network.host: 0.0.0.0
+discovery.type: single-node</code></pre>
 
-            <h3>4. Bağlantıyı Kontrol Et</h3>
-            <p>Son olarak, Elasticsearch’ün düzgün çalıştığından emin olmak için şu komutu çalıştırın:</p>
-            <pre><code>
-curl -X GET "localhost:9200/?pretty"
-            </code></pre>
-            <p>Eğer her şey yolundaysa, JSON formatında bir çıktı göreceksiniz. Tebrikler, Elasticsearch çalışıyor!</p>
+            <h2>2. Elasticsearch Docker Kurulumu</h2>
+            <p>Docker kullanarak Elasticsearch’i izole bir ortamda çalıştırmak oldukça kolaydır. İşte adımlar:</p>
 
-            <h2>Docker ile Elasticsearch Kurulumu</h2>
-            <p>Docker mı kullanıyorsunuz? Harika! İşte Docker ile Elasticsearch kurulumunun hızlı bir yolu:</p>
+            <h3>Adım 1: Elasticsearch Docker Image’ını Çekin</h3>
+            <p>Docker Hub’dan Elasticsearch image’ını çekmek için şu komutu kullanın:</p>
+            <pre><code>docker pull elasticsearch:8.10.0</code></pre>
 
-            <h3>1. Docker Compose Dosyasını Hazırla</h3>
-            <p>Elasticsearch için bir <code>docker-compose.yml</code> dosyası oluşturun ve aşağıdaki içeriği ekleyin:</p>
-            <pre><code>
-version: '3.7'
-services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.x
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-    volumes:
-      - es_data:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-volumes:
-  es_data:
-    driver: local
-            </code></pre>
+            <h3>Adım 2: Elasticsearch Container’ını Başlatın</h3>
+            <p>Elasticsearch container’ını aşağıdaki komutla başlatabilirsiniz:</p>
+            <pre><code>docker run -d --name elasticsearch \
+-p 9200:9200 -p 9300:9300 \
+-e "discovery.type=single-node" \
+elasticsearch:8.10.0</code></pre>
 
-            <h3>2. Elasticsearch’i Başlat</h3>
-            <p>Şimdi Docker Compose ile Elasticsearch’i ayağa kaldırabiliriz:</p>
-            <pre><code>
-docker-compose up -d
-            </code></pre>
-            <p>Birkaç saniye bekleyin ve her şeyin düzgün çalıştığından emin olmak için şu komutu deneyin:</p>
-            <pre><code>
-curl -X GET "localhost:9200/?pretty"
-            </code></pre>
+            <h3>Adım 3: Kurulumu Kontrol Edin</h3>
+            <p>Kurulumun başarıyla tamamlanıp tamamlanmadığını şu komutla kontrol edin:</p>
+            <pre><code>curl -X GET "localhost:9200"</code></pre>
 
-            <h2>Son Söz</h2>
-            <p>İster Rocky Linux üzerinde ister Docker kullanarak Elasticsearch kurmuş olun, artık bu güçlü aracı keşfetmeye hazırsınız! Daha fazla bilgi için Elastic’in <a href="https://www.elastic.co/" target="_blank">resmi web sitesine</a> göz atabilirsiniz. Takıldığınız bir yer olursa sormaktan çekinmeyin. Kolay gelsin!</p>
+            <h2>Sonuç</h2>
+            <p>Yukarıdaki yöntemlerden biriyle Elasticsearch kurulumunuzu tamamlayabilirsiniz. Native kurulum performans avantajı sunarken, Docker kurulum taşınabilirlik ve kolaylık sağlar. İhtiyacınıza göre tercihinizi yapabilirsiniz.</p>
         </div>
     </div>
 
