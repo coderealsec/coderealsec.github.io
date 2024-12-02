@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elasticsearch Kurulum Rehberi</title>
+    <title>Elasticsearch RHEL ve Container Kurulumu Nasıl Yapılır?</title>
     <meta name="description" content="Elasticsearch'in Rocky Linux ve Docker üzerinde nasıl kurulduğunu öğrenmek için rehberimizi inceleyin.">
     <meta name="keywords" content="Elasticsearch, Rocky Linux, Docker, Elastic Stack, Kurulum">
     <meta name="robots" content="index, follow">
@@ -72,15 +72,15 @@
     <div class="container">
         <h1>Elasticsearch Kurulum Rehberi</h1>
         <div class="content">
-            <h2>1. Elasticsearch Native Kurulumu (Rocky Linux)</h2>
-            <p>Rocky Linux için Elasticsearch'in native kurulumunu gerçekleştirmek için aşağıdaki adımları izleyebilirsiniz:</p>
+            <h2>1. Elasticsearch Native Kurulumu RHEL Dağıtımları</h2>
+            <p>RHEL Dağıtımları için Elasticsearch'in native kurulumunu gerçekleştirmek için aşağıdaki adımları izleyebilirsiniz:</p>
 
             <h3>Adım 1: Java Yükleme</h3>
-            <p>Elasticsearch, Java’ya ihtiyaç duyar. Bu nedenle gerekli Java JDK sürümünü yükleyin:</p>
+            <p>Elasticsearch, Java’ya bağımlı olarak çalışır. Bu nedenle ilk adım olarak JAVA JDK kurulması gerekmektedir. Aşağıdaki adım ile paketi kurmamız gerekmektedir.</p>
             <pre><code>sudo dnf install java-11-openjdk</code></pre>
 
             <h3>Adım 2: Elasticsearch Deposu Ekleme</h3>
-            <p>Elasticsearch için resmi Elastic deposunu sisteminize ekleyin:</p>
+            <p>Elasticsearch için resmi Elastic deposunu sisteminize eklememiz gerekmektedir. Default Epel veya appstream repositoriyde gelmediğinden dolayı elasticsearch'i aşağıdaki adım ile linux repository ekleyebiliriz.</p>
             <pre><code>sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 sudo tee /etc/yum.repos.d/elasticsearch.repo <<EOF
 [elasticsearch]
@@ -111,9 +111,9 @@ discovery.type: single-node</code></pre>
             <pre><code>docker pull elasticsearch:8.10.0</code></pre>
 
             <h3>Adım 2: Elasticsearch Container’ını Başlatın</h3>
-            <p>Elasticsearch container’ını aşağıdaki komutla başlatabilirsiniz:</p>
+            <p>Elasticsearch container’ını aşağıdaki komutla başlatabilirsiniz: Elasticsearch aşağıdaki image pull edip container başlatacaktır. Güncel sürümü kurabilmek için docker.hub.com adresinden Elasticsearch sürümünü kontrol edebilirsiniz.</p>
             <pre><code>docker run -d --name elasticsearch \
--p 9200:9200 -p 9300:9300 \
+-p 9200:9200 \
 -e "discovery.type=single-node" \
 elasticsearch:8.10.0</code></pre>
 
