@@ -1,1 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elasticsearch Kurulumu: Native ve Docker</title>
+    <meta name="description" content="Elasticsearch kurulumunu adım adım öğrenin. Native ve Docker ortamlarında nasıl kuracağınızı detaylı şekilde keşfedin.">
+    <meta name="keywords" content="Elasticsearch, Docker, Native Kurulum, Elasticsearch Yapılandırma, DevOps, Log Yönetimi">
+    <meta name="robots" content="index, follow">
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #333;
+            text-align: left;
+        }
+        p, ul {
+            text-align: left;
+        }
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        pre, code {
+            background: #f4f4f4;
+            border-radius: 5px;
+            margin: 10px 0;
+            color: #333;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .theme-toggle-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Dark theme */
+        body.dark { background-color: #333; color: #f4f4f4; }
+        body.dark .content { background: #444; }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn">Siyah Tema</button>
+    <div class="container">
+        <h1>Elasticsearch Kurulumu: Native ve Docker</h1>
+        <div class="content">
+            <h2>Native Kurulum</h2>
+            <p>Elasticsearch'i native olarak kurmak için aşağıdaki adımları izleyin. Bu yöntemle, Elasticsearch doğrudan işletim sisteminize kurulur.</p>
+
+            <h3>1. Elasticsearch Deposu Ekleyin</h3>
+            <p>Ubuntu için Elastic deposunu eklemek üzere aşağıdaki komutları çalıştırın:</p>
+            <pre><code>
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elastic.gpg
+echo "deb [signed-by=/usr/share/keyrings/elastic.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+sudo apt update
+            </code></pre>
+
+            <h3>2. Elasticsearch'i Kurun</h3>
+            <p>Depoyu ekledikten sonra Elasticsearch'i kurabilirsiniz:</p>
+            <pre><code>
+sudo apt install elasticsearch
+            </code></pre>
+
+            <h3>3. Elasticsearch Servisini Başlatın</h3>
+            <p>Elasticsearch servisini başlatmak için aşağıdaki komutları çalıştırın:</p>
+            <pre><code>
+sudo systemctl enable elasticsearch
+sudo systemctl start elasticsearch
+            </code></pre>
+
+            <h2>Docker ile Elasticsearch Kurulumu</h2>
+            <h3>1. Docker Compose Dosyası Oluşturun</h3>
+            <p>Elasticsearch'i Docker kullanarak çalıştırmak için bir <code>docker-compose.yml</code> dosyası oluşturun:</p>
+            <pre><code>
+version: '3.7'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.x
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+volumes:
+  es_data:
+    driver: local
+            </code></pre>
+
+            <h3>2. Elasticsearch'i Başlatın</h3>
+            <p>Docker Compose ile Elasticsearch'i çalıştırmak için şu komutu kullanabilirsiniz:</p>
+            <pre><code>
+docker-compose up -d
+            </code></pre>
+
+            <h2>Sonuç</h2>
+            <p>Elasticsearch'i hem native hem de Docker ile kurabilirsiniz. Bu adımlarla hızlıca bir Elasticsearch ortamı oluşturabilirsiniz. Herhangi bir sorun yaşarsanız destek alabilirsiniz.</p>
+        </div>
+    </div>
+
+    <script>
+        const toggleBtn = document.querySelector('.theme-toggle-btn');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            toggleBtn.textContent = body.classList.contains('dark') ? 'Beyaz Tema' : 'Siyah Tema';
+        });
+    </script>
+</body>
+</html>
 
