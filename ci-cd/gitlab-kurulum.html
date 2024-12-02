@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elasticsearch Kurulumu: Rocky Linux ve Docker</title>
-    <meta name="description" content="Elasticsearch'in en güncel sürümünü Rocky Linux ve Docker üzerinde nasıl kuracağınızı adım adım öğrenin.">
-    <meta name="keywords" content="Elasticsearch, Kurulum, Rocky Linux, Docker, Log Yönetimi, Elasticsearch Native, Elastic Stack">
+    <title>GitLab Registry Kurulumu</title>
+    <meta name="description" content="GitLab Registry kurulumunu adım adım öğrenin. Docker container'dan native kurulumuna kadar her aşama.">
+    <meta name="keywords" content="GitLab, Registry, Docker, Kurulum, GitLab Container, DevOps">
     <meta name="robots" content="index, follow">
     <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
     <style>
@@ -23,19 +23,12 @@
             margin: auto;
             padding: 20px;
         }
-        h1 {
+        h1, h2, h3, h4 {
             color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        h2, h3 {
-            color: #444;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        p, ul, pre {
             text-align: left;
-            margin-bottom: 15px;
+        }
+        p, ul {
+            text-align: left;
         }
         .content {
             background: #fff;
@@ -48,9 +41,10 @@
             background: #f4f4f4;
             border-radius: 5px;
             padding: 10px;
+            margin: 10px 0;
             color: #333;
             overflow-x: auto;
-            display: block;
+            white-space: pre-wrap;
         }
         .theme-toggle-btn {
             position: fixed;
@@ -59,70 +53,72 @@
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
-            background-color: #444;
-            color: #f4f4f4;
-            border: none;
         }
         /* Dark theme */
         body.dark { background-color: #333; color: #f4f4f4; }
         body.dark .content { background: #444; }
-        body.dark .theme-toggle-btn { background-color: #f4f4f4; color: #444; }
     </style>
 </head>
 <body>
     <button class="theme-toggle-btn">Siyah Tema</button>
     <div class="container">
-        <h1>Elasticsearch Kurulum Rehberi</h1>
+        <h1>GitLab Registry Kurulumu</h1>
         <div class="content">
-            <h2>Elasticsearch Native Kurulumu (Rocky Linux)</h2>
+            <h2>GitLab Registry'yi Etkinleştirme</h2>
+            <p>GitLab Registry'yi etkinleştirmek için aşağıdaki adımları izleyebilirsiniz. Bu adımlar, GitLab Docker container kurulumunda veya yerel kurulumda geçerlidir.</p>
 
-            <h3>1. Adım: Java Kurulumu</h3>
-            <p>Elasticsearch, Java’ya ihtiyaç duyar. Gerekli JDK sürümünü yükleyin:</p>
-            <pre><code>sudo dnf install java-11-openjdk</code></pre>
+            <h3>1. GitLab Registry Etkinleştirme</h3>
+            <p>İlk olarak, GitLab'ın registry özelliğini etkinleştirmeniz gerekiyor. GitLab config dosyasına erişerek registry özelliğini aşağıdaki gibi etkinleştirin:</p>
+            <pre><code>
+registry['enable'] = true
+registry_external_url 'https://registry.harunoner.com'
+registry_nginx['ssl_certificate'] = "/etc/gitlab/ssl/registry.harunoner.com.crt"
+registry_nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/registry.harunoner.com.key"
+            </code></pre>
 
-            <h3>2. Adım: Elasticsearch Reposunu Ekleyin</h3>
-            <p>Elasticsearch için resmi Elastic deposunu ekleyin:</p>
-            <pre><code>sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-sudo tee /etc/yum.repos.d/elasticsearch.repo <<EOF
-[elasticsearch]
-name=Elasticsearch Repository
-baseurl=https://artifacts.elastic.co/packages/8.x/yum
-gpgcheck=1
-gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
-enabled=1
-autorefresh=1
-type=rpm-md
-EOF</code></pre>
+            <h3>2. SSL Sertifikalarını Yapılandırma</h3>
+            <p>Registry'yi HTTPS ile kullanabilmek için SSL sertifikalarını yapılandırmanız gerekmektedir. Sertifikalarınızı aşağıdaki dizinde tutun:</p>
+            <pre><code>
+/etc/gitlab/ssl/registry.harunoner.com.crt
+/etc/gitlab/ssl/registry.harunoner.com.key
+            </code></pre>
 
-            <h3>3. Adım: Elasticsearch Yükleyin</h3>
-            <p>Elasticsearch’i yükleyin ve çalıştırın:</p>
-            <pre><code>sudo dnf install elasticsearch
-sudo systemctl enable --now elasticsearch</code></pre>
+            <h3>3. GitLab'ı Yapılandırma</h3>
+            <p>Yapılandırmayı güncelledikten sonra, GitLab'ı yeniden yapılandırmanız gerekecek. Aşağıdaki komutla bunu yapabilirsiniz:</p>
+            <pre><code>
+sudo gitlab-ctl reconfigure
+            </code></pre>
 
-            <h3>4. Adım: Elasticsearch Yapılandırması</h3>
-            <p><code>/etc/elasticsearch/elasticsearch.yml</code> dosyasını düzenleyerek gerekli ayarları yapın:</p>
-            <pre><code>network.host: 0.0.0.0
-discovery.type: single-node</code></pre>
+            <h2>GitLab Registry'yi Docker ile Kurma</h2>
+            <h3>1. Adım: GitLab Registry Container'ını Çalıştırma</h3>
+            <p>GitLab Registry'yi Docker container olarak çalıştırmak için aşağıdaki komutu kullanabilirsiniz:</p>
+            <pre><code>
+docker run -d \
+--hostname registry.harunoner.com \
+--name gitlab-registry \
+--publish 5000:5000 \
+--restart always \
+--volume /srv/gitlab/registry/data:/var/lib/registry \
+--volume /srv/gitlab/registry/config:/etc/registry \
+registry:2
+            </code></pre>
 
-            <h2>Elasticsearch Docker Kurulumu</h2>
+            <h3>2. Adım: Docker Registry Yapılandırması</h3>
+            <p>Docker Registry'nin güvenliğini sağlamak için uygun SSL sertifikalarını ve yapılandırma dosyasını düzenlemeniz gerekir. Bu dosyaları Docker registry container'ına bağlamayı unutmayın.</p>
+            <pre><code>
+--volume /etc/gitlab/ssl:/etc/ssl
+            </code></pre>
 
-            <h3>1. Adım: Elasticsearch Docker Image’ını İndirin</h3>
-            <p>Elasticsearch için en güncel Docker image’ını indirin:</p>
-            <pre><code>docker pull elasticsearch:8.10.0</code></pre>
-
-            <h3>2. Adım: Elasticsearch Container Çalıştırın</h3>
-            <p>Elasticsearch container’ını çalıştırın:</p>
-            <pre><code>docker run -d --name elasticsearch \
--p 9200:9200 -p 9300:9300 \
--e "discovery.type=single-node" \
-elasticsearch:8.10.0</code></pre>
-
-            <h3>3. Adım: Kontrol</h3>
-            <p>Kurulumun başarıyla tamamlandığından emin olun:</p>
-            <pre><code>curl -X GET "localhost:9200"</code></pre>
+            <h3>3. Adım: GitLab Container ile İletişim Kurma</h3>
+            <p>GitLab Registry ile Docker'ı bağlamak için GitLab'daki <code>gitlab.rb</code> dosyasını düzenleyin ve aşağıdaki komutu kullanarak yapılandırmayı uygulayın:</p>
+            <pre><code>
+gitlab_rails['registry_enabled'] = true
+gitlab_rails['registry_host'] = "registry.harunoner.com"
+gitlab_rails['registry_port'] = "5000"
+            </code></pre>
 
             <h2>Sonuç</h2>
-            <p>Elasticsearch’i ister yerel ister Docker ile kolayca kurabilirsiniz. Her iki yöntem de güçlü log yönetimi ve analiz ihtiyaçlarınız için uygundur.</p>
+            <p>GitLab Registry'yi Docker veya yerel kurulum kullanarak başarıyla kurabilirsiniz. Registry, projelerinizin Docker imajlarını saklamak ve yönetmek için güçlü bir araçtır.</p>
         </div>
     </div>
 

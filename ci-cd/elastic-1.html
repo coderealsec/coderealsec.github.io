@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elasticsearch RHEL ve Docker Kurulumu</title>
-    <meta name="description" content="Elasticsearch'in Rocky Linux ve Docker üzerinde nasıl kurulduğunu öğrenmek için rehberimizi inceleyin.">
-    <meta name="keywords" content="Elasticsearch, Rocky Linux, Docker, Elastic Stack, Kurulum">
+    <title>Elasticsearch Kurulumu</title>
+    <meta name="description" content="Elasticsearch'in RHEL dağıtımları ve Docker üzerinde nasıl kurulduğunu öğrenin.">
+    <meta name="keywords" content="Elasticsearch, RHEL, Docker, Kurulum, Elastic Stack">
+    <meta name="robots" content="index, follow">
 </head>
 <body>
     <h1>Elasticsearch Kurulum Rehberi</h1>
-    <h2>1. Elasticsearch Native Kurulumu (RHEL Dağıtımları)</h2>
+    
+    <h2>1. Elasticsearch Native Kurulumu RHEL Dağıtımları</h2>
     <p>RHEL Dağıtımları için Elasticsearch'in native kurulumunu gerçekleştirmek için aşağıdaki adımları izleyebilirsiniz:</p>
 
     <h3>Adım 1: Java Yükleme</h3>
-    <p>Elasticsearch, Java’ya bağımlı olarak çalışır. Bu nedenle ilk adım olarak JAVA JDK kurulması gerekmektedir. Aşağıdaki adım ile paketi kurmamız gerekmektedir.</p>
+    <p>Elasticsearch, Java’ya bağımlı olarak çalışır. Bu nedenle ilk adım olarak JAVA JDK kurulması gerekmektedir. Aşağıdaki komutla JAVA'yı kurabilirsiniz:</p>
     <pre><code>sudo dnf install java-11-openjdk</code></pre>
 
     <h3>Adım 2: Elasticsearch Deposu Ekleme</h3>
-    <p>Elasticsearch için resmi Elastic deposunu sisteminize eklememiz gerekmektedir. Default Epel veya AppStream repositoriyde gelmediğinden dolayı Elasticsearch'i aşağıdaki adım ile Linux repository ekleyebiliriz.</p>
-    <pre><code>sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    <p>Elasticsearch için resmi Elastic deposunu sisteminize eklememiz gerekmektedir. Aşağıdaki komutları kullanarak repository ekleyebilirsiniz:</p>
+    <pre><code>
+sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 sudo tee /etc/yum.repos.d/elasticsearch.repo <<EOF
 [elasticsearch]
 name=Elasticsearch Repository
@@ -28,7 +31,8 @@ gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
 enabled=1
 autorefresh=1
 type=rpm-md
-EOF</code></pre>
+EOF
+    </code></pre>
 
     <h3>Adım 3: Elasticsearch’i Kurun</h3>
     <p>Aşağıdaki komutları kullanarak Elasticsearch’i yükleyin ve başlatın:</p>
@@ -37,8 +41,10 @@ sudo systemctl enable --now elasticsearch</code></pre>
 
     <h3>Adım 4: Yapılandırma</h3>
     <p>Elasticsearch’in çalışma davranışını düzenlemek için <code>/etc/elasticsearch/elasticsearch.yml</code> dosyasını açarak aşağıdaki gibi yapılandırma yapabilirsiniz:</p>
-    <pre><code>network.host: 0.0.0.0
-discovery.type: single-node</code></pre>
+    <pre><code>
+network.host: 0.0.0.0
+discovery.type: single-node
+    </code></pre>
 
     <h2>2. Elasticsearch Docker Kurulumu</h2>
     <p>Docker kullanarak Elasticsearch’i izole bir ortamda çalıştırmak oldukça kolaydır. İşte adımlar:</p>
@@ -48,14 +54,16 @@ discovery.type: single-node</code></pre>
     <pre><code>docker pull elasticsearch:8.10.0</code></pre>
 
     <h3>Adım 2: Elasticsearch Container’ını Başlatın</h3>
-    <p>Elasticsearch container’ını aşağıdaki komutla başlatabilirsiniz. Elasticsearch aşağıdaki image’ı pull edip container başlatacaktır. Güncel sürümü kurabilmek için <code>docker.hub.com</code> adresinden Elasticsearch sürümünü kontrol edebilirsiniz.</p>
-    <pre><code>docker run -d --name elasticsearch \
+    <p>Elasticsearch container’ını başlatmak için aşağıdaki komutu kullanabilirsiniz:</p>
+    <pre><code>
+docker run -d --name elasticsearch \
 -p 9200:9200 \
 -e "discovery.type=single-node" \
-elasticsearch:8.10.0</code></pre>
+elasticsearch:8.10.0
+    </code></pre>
 
     <h3>Adım 3: Kurulumu Kontrol Edin</h3>
-    <p>Kurulumun başarıyla tamamlanıp tamamlanmadığını şu komutla kontrol edin:</p>
+    <p>Kurulumun başarıyla tamamlanıp tamamlanmadığını şu komutla kontrol edebilirsiniz:</p>
     <pre><code>curl -X GET "localhost:9200"</code></pre>
 
     <h2>Sonuç</h2>
