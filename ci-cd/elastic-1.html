@@ -26,6 +26,7 @@
         h1, h2, h3, h4 {
             color: #333;
             text-align: left;
+            font-weight: bold;
         }
         p, ul {
             text-align: left;
@@ -44,6 +45,7 @@
             color: #333;
             overflow-x: auto;
             white-space: pre-wrap;
+            background-color: #f4f4f4;
         }
         .theme-toggle-btn {
             position: fixed;
@@ -56,6 +58,7 @@
         /* Dark theme */
         body.dark { background-color: #333; color: #f4f4f4; }
         body.dark .content { background: #444; }
+        body.dark pre, body.dark code { background-color: #555; color: #f4f4f4; }
     </style>
 </head>
 <body>
@@ -86,15 +89,13 @@ sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main"
             <pre><code>sudo apt update
 sudo apt install elasticsearch</code></pre>
             <p>RHEL dağıtımları için yum paketi kullanın:</p>
-            <pre><code>sudo yum install elasticsearch </code>
-
+            <pre><code>sudo yum install elasticsearch </code></pre>
 
             <h3>Adım 4: Elasticsearch Servisini Başlatma</h3>
             <p>Kurulumdan sonra Elasticsearch'i başlatın:</p>
             <pre><code>sudo systemctl start elasticsearch
 sudo systemctl enable elasticsearch</code></pre>
             <p>Enable yaptığımızda reboot sonrasında otomatik olarak servisi başlatmış olacaktır.</p>
-
 
             <h3>Adım 5: Elasticsearch Yapılandırması</h3>
             <p>Elasticsearch yapılandırma dosyasını düzenleyin:</p>
