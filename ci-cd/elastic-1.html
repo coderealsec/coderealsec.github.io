@@ -38,7 +38,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         pre, code {
-            background: #f4f4f4;
             border-radius: 5px;
             padding: 10px;
             margin: 10px 0;
@@ -68,11 +67,15 @@
             <p>Elasticsearch'i native olarak kurmak için aşağıdaki adımları takip edebilirsiniz.</p>
 
             <h3>Adım 1: Java Yükleme</h3>
-            <p>Elasticsearch, Java'ya bağımlıdır. Bu nedenle Java'yı yükleyin:</p>
+            <p>Elasticsearch, Java ile kodlanmıştır Bu sebepten dolayı javaya bağımlıdır. İlk adım olarak elasticsearch yükleyeceğimiz OS'de java kurulu olmalıdır. </p>
+            <p>Ubuntu için aşağıdaki dağıtımdan JDK'yı kurabiliriz.</p>
             <pre><code>sudo apt install openjdk-11-jre</code></pre>
 
-            <h3>Adım 2: Elasticsearch Depolarını Ekleme</h3>
-            <p>Elasticsearch için gerekli depoyu ekleyin:</p>
+            <p>RHEL dağıtımları için dnf veya yum paketi ile kurmamız gerekmektedir.</p>
+            <pre><code>sudo yum install openjdk-11-jre</code></pre>
+
+            <h3>Adım 2: Elasticsearch Repository Olarak Ekleme</h3>
+            <p>Elasticsearch için gerekli depoyu ekleyin: Elasticsearch default appstream veya baseos'de gelmez bu sebepten dolayı repository olarak eklememiz gerekmektedir.</p>
             <pre><code>
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" > /etc/apt/sources.list.d/elastic-8.x.list'
@@ -82,11 +85,16 @@ sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main"
             <p>Aşağıdaki komutla Elasticsearch’i kurun:</p>
             <pre><code>sudo apt update
 sudo apt install elasticsearch</code></pre>
+            <p>RHEL dağıtımları için yum paketi kullanın:</p>
+            <pre><code>sudo yum install elasticsearch </code>
 
-            <h3>Adım 4: Elasticsearch'i Başlatma</h3>
+
+            <h3>Adım 4: Elasticsearch Servisini Başlatma</h3>
             <p>Kurulumdan sonra Elasticsearch'i başlatın:</p>
             <pre><code>sudo systemctl start elasticsearch
 sudo systemctl enable elasticsearch</code></pre>
+            <p>Enable yaptığımızda reboot sonrasında otomatik olarak servisi başlatmış olacaktır.</p>
+
 
             <h3>Adım 5: Elasticsearch Yapılandırması</h3>
             <p>Elasticsearch yapılandırma dosyasını düzenleyin:</p>
@@ -100,6 +108,7 @@ sudo systemctl enable elasticsearch</code></pre>
             <h3>Adım 1: Elasticsearch Docker Image’ını Çekin</h3>
             <p>Docker Hub’dan Elasticsearch image’ını çekin:</p>
             <pre><code>docker pull elasticsearch:8.10.0</code></pre>
+            <p>Bu adımda elasticsearch 8.10.0 sürümü baz alınmıştır. Güncel sürüm için docker.hub.com'dan kontrol sağlayabilirsiniz.</p>
 
             <h3>Adım 2: Elasticsearch Container’ını Başlatın</h3>
             <p>Elasticsearch container’ını başlatmak için aşağıdaki komutu kullanın:</p>
