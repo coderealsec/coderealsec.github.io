@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitLab Container ve Yerel Kurulum (Native) Rehberi</title>
-    <meta name="description" content="GitLab'ın en güncel sürümünü container ve yerel kurulum olarak nasıl yapacağınızı adım adım öğrenin.">
-    <meta name="keywords" content="GitLab, GitLab Kurulumu, Docker, Yerel Kurulum, CI/CD, DevOps, GitLab Runner">
+    <title>Elasticsearch Kurulumu: Rocky Linux ve Docker</title>
+    <meta name="description" content="Elasticsearch'in en güncel sürümünü Rocky Linux ve Docker üzerinde nasıl kuracağınızı adım adım öğrenin.">
+    <meta name="keywords" content="Elasticsearch, Kurulum, Rocky Linux, Docker, Log Yönetimi, Elasticsearch Native, Elastic Stack">
     <meta name="robots" content="index, follow">
     <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
     <style>
@@ -72,93 +72,58 @@
 <body>
     <button class="theme-toggle-btn">Siyah Tema</button>
     <div class="container">
-        <h1>GitLab Container ve Yerel Kurulum Rehberi</h1>
+        <h1>Elasticsearch Kurulum Rehberi</h1>
         <div class="content">
-            <h2>GitLab Container Kurulumu (Docker ile)</h2>
+            <h2>Elasticsearch Native Kurulumu (Rocky Linux)</h2>
 
-            <h3>1. Adım: GitLab Image İndirin</h3>
-            <p>GitLab’ın Enterprise veya Community sürümünü Docker ile indirin:</p>
-            <pre><code>docker pull gitlab/gitlab-ce:latest
-docker pull gitlab/gitlab-ee:latest</code></pre>
+            <h3>1. Adım: Java Kurulumu</h3>
+            <p>Elasticsearch, Java’ya ihtiyaç duyar. Gerekli JDK sürümünü yükleyin:</p>
+            <pre><code>sudo dnf install java-11-openjdk</code></pre>
 
-            <h3>2. Adım: Container Çalıştırın</h3>
-            <p>Container çalıştırarak veri ve log dosyalarını mount edin:</p>
-            <pre><code>docker run --detach \
---hostname gitlab.harunoner.com \
---publish 443:443 --publish 80:80 --publish 22:22 \
---name gitlab \
---restart always \
---volume /srv/gitlab/config:/etc/gitlab \
---volume /srv/gitlab/logs:/var/log/gitlab \
---volume /srv/gitlab/data:/var/opt/gitlab \
-gitlab/gitlab-ce:latest</code></pre>
+            <h3>2. Adım: Elasticsearch Reposunu Ekleyin</h3>
+            <p>Elasticsearch için resmi Elastic deposunu ekleyin:</p>
+            <pre><code>sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+sudo tee /etc/yum.repos.d/elasticsearch.repo <<EOF
+[elasticsearch]
+name=Elasticsearch Repository
+baseurl=https://artifacts.elastic.co/packages/8.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+EOF</code></pre>
 
-            <h3>3. Adım: GitLab Yapılandırmasını Özelleştirin</h3>
-            <p>GitLab’ın yapılandırma dosyasını <code>/srv/gitlab/config/gitlab.rb</code> üzerinde düzenleyin.</p>
+            <h3>3. Adım: Elasticsearch Yükleyin</h3>
+            <p>Elasticsearch’i yükleyin ve çalıştırın:</p>
+            <pre><code>sudo dnf install elasticsearch
+sudo systemctl enable --now elasticsearch</code></pre>
 
-            <h3>4. Adım: Yapılandırmayı Uygula</h3>
-            <pre><code>docker exec -it gitlab gitlab-ctl reconfigure</code></pre>
+            <h3>4. Adım: Elasticsearch Yapılandırması</h3>
+            <p><code>/etc/elasticsearch/elasticsearch.yml</code> dosyasını düzenleyerek gerekli ayarları yapın:</p>
+            <pre><code>network.host: 0.0.0.0
+discovery.type: single-node</code></pre>
 
-            <h2>GitLab Yerel Kurulumu (Native Installation)</h2>
+            <h2>Elasticsearch Docker Kurulumu</h2>
 
-            <h3>1. Adım: GitLab Depolarını Ekleyin</h3>
-            <p>Debian tabanlı sistemler için GitLab deposunu ekleyin:</p>
-            <pre><code>curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash</code></pre>
+            <h3>1. Adım: Elasticsearch Docker Image’ını İndirin</h3>
+            <p>Elasticsearch için en güncel Docker image’ını indirin:</p>
+            <pre><code>docker pull elasticsearch:8.10.0</code></pre>
 
-            <h3>2. Adım: GitLab’ı Kurun</h3>
-            <p>GitLab EE sürümünü kurarak <code>EXTERNAL_URL</code> belirtin:</p>
-            <pre><code>sudo EXTERNAL_URL="http://gitlab.harunoner.com" apt-get install gitlab-ee</code></pre>
+            <h3>2. Adım: Elasticsearch Container Çalıştırın</h3>
+            <p>Elasticsearch container’ını çalıştırın:</p>
+            <pre><code>docker run -d --name elasticsearch \
+-p 9200:9200 -p 9300:9300 \
+-e "discovery.type=single-node" \
+elasticsearch:8.10.0</code></pre>
 
-            <p>RPM tabanlı sistemler için GitLab deposunu ekleyin:</p>
-            <pre><code>curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | sudo bash</code></pre>
-            <p>Rocky Linux, Red Hat gibi dağıtımlara kurmak için dnf veya yum paketlerini kullanın:</p>
-            <pre><code>yum install gitlab-ee</code></pre>  
-            <pre><code>dnf install gitlab-ee</code></pre>
+            <h3>3. Adım: Kontrol</h3>
+            <p>Kurulumun başarıyla tamamlandığından emin olun:</p>
+            <pre><code>curl -X GET "localhost:9200"</code></pre>
 
-            <h3>3. Adım: GitLab Yapılandırmasını Güncelleyin</h3>
-            <p><code>/etc/gitlab/gitlab.rb</code> üzerinde gerekli ayarları yapabilirsiniz.</p>
-
-            <h3>4. Adım: Yapılandırmayı Uygula</h3>
-            <pre><code>sudo gitlab-ctl reconfigure</code></pre>
-
-            <h2>Hangi Yöntemi Tercih Etmelisiniz?</h2>
-            <p><strong>Container Kurulumu:</strong> İzolasyon sağlar, taşınabilirlik sunar, güncelleme ve yedekleme kolaydır.</p>
-            <p><strong>Yerel Kurulum:</strong> Daha yüksek performans sunar ve tam kontrol sağlar.</p>
-
-            <h3>Sonuç</h3>
-            <p>Bu rehber, GitLab kurulumları için ihtiyaçlarınıza uygun seçenekleri değerlendirebilmeniz için hazırlanmıştır.</p>
-
-            <h3>Gitlab LDAP Bağlantısı</h3>
-            <p>Aşağıda örnek bir LDAP yapılandırması bulunmaktadır:</p>
-            <pre><code>
-gitlab_rails['ldap_enabled'] = true
-gitlab_rails['ldap_servers'] = YAML.load &lt;&lt;-EOS
-main:
-  label: 'LDAP'                              # LDAP sunucusu için görünen isim
-  host: '_LDAP_SERVER_IP_'                   # LDAP sunucusunun IP adresi veya host ismi
-  port: 389                                  # LDAP sunucusu portu (varsayılan 389)
-  uid: 'sAMAccountName'                      # LDAP kullanıcı adı olarak kullanılacak özellik
-  bind_dn: 'cn=admin,dc=example,dc=com'      # LDAP sunucusunda kullanıcı doğrulaması için kullanılacak bind DN
-  password: '_LDAP_PASSWORD_'                # Bind DN kullanıcısının şifresi
-  encryption: 'plain'                        # Şifreleme türü (TLS, SSL, veya plain)
-  verify_certificates: true                  # Sertifika doğrulama (false ile devre dışı bırakabilirsiniz)
-  active_directory: true                     # Active Directory kullanıyorsanız true olarak bırakın
-  base: 'dc=example,dc=com'                  # LDAP taban dizini
-EOS
-            </code></pre>
-
-            <h3>2. Adım: Yapılandırmayı Uygula</h3>
-            <p>LDAP ayarlarını tamamladıktan sonra GitLab konfigürasyonunu yeniden yapılandırın:</p>
-            <pre><code>sudo gitlab-ctl reconfigure</code></pre>
-            <p>Eğer restart ile kontrol edebilmek için, gitlab-ctl restart çalıştırabiliriz.</p>
-
-            <h3>Özet</h3>
-            <p>Bu ayarlarla GitLab, LDAP sunucunuza bağlanarak kullanıcı doğrulamasını LDAP üzerinden yapacaktır.</p>
+            <h2>Sonuç</h2>
+            <p>Elasticsearch’i ister yerel ister Docker ile kolayca kurabilirsiniz. Her iki yöntem de güçlü log yönetimi ve analiz ihtiyaçlarınız için uygundur.</p>
         </div>
-    </div>
-        </div>
-
-       
     </div>
 
     <script>
