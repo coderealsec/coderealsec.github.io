@@ -9,7 +9,7 @@
     <meta name="robots" content="index, follow">
     <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
     <style>
-  body {
+        body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
@@ -40,6 +40,7 @@
         pre, code {
             background: #f4f4f4;
             border-radius: 5px;
+            padding: 10px;
             margin: 10px 0;
             color: #333;
             overflow-x: auto;
@@ -63,50 +64,45 @@
     <div class="container">
         <h1>Elasticsearch Kurulumu</h1>
         <div class="content">
-            <h2>1. Elasticsearch Native Kurulumu RHEL Dağıtımları</h2>
-            <p>RHEL Dağıtımları için Elasticsearch'in native kurulumunu gerçekleştirmek için aşağıdaki adımları izleyebilirsiniz:</p>
+            <h2>1. Elasticsearch Native Kurulumu</h2>
+            <p>Elasticsearch'i native olarak kurmak için aşağıdaki adımları takip edebilirsiniz.</p>
 
             <h3>Adım 1: Java Yükleme</h3>
-            <p>Elasticsearch, Java’ya bağımlıdır. Bu nedenle ilk adım olarak Java'yı kurmanız gerekmektedir. Aşağıdaki komutla Java'yı yükleyebilirsiniz:</p>
-            <pre><code>sudo dnf install java-11-openjdk</code></pre>
+            <p>Elasticsearch, Java'ya bağımlıdır. Bu nedenle Java'yı yükleyin:</p>
+            <pre><code>sudo apt install openjdk-11-jre</code></pre>
 
-            <h3>Adım 2: Elasticsearch Deposu Ekleme</h3>
-            <p>Elasticsearch için resmi Elastic deposunu eklemek için aşağıdaki komutları kullanabilirsiniz:</p>
+            <h3>Adım 2: Elasticsearch Depolarını Ekleme</h3>
+            <p>Elasticsearch için gerekli depoyu ekleyin:</p>
             <pre><code>
-sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-sudo tee /etc/yum.repos.d/elasticsearch.repo <<EOF
-[elasticsearch]
-name=Elasticsearch Repository
-baseurl=https://artifacts.elastic.co/packages/8.x/yum
-gpgcheck=1
-gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
-enabled=1
-autorefresh=1
-type=rpm-md
-EOF
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" > /etc/apt/sources.list.d/elastic-8.x.list'
             </code></pre>
 
-            <h3>Adım 3: Elasticsearch’i Kurun</h3>
-            <p>Aşağıdaki komutla Elasticsearch’i yükleyebilir ve çalıştırabilirsiniz:</p>
-            <pre><code>sudo dnf install elasticsearch
-sudo systemctl enable --now elasticsearch</code></pre>
+            <h3>Adım 3: Elasticsearch Kurulumu</h3>
+            <p>Aşağıdaki komutla Elasticsearch’i kurun:</p>
+            <pre><code>sudo apt update
+sudo apt install elasticsearch</code></pre>
 
-            <h3>Adım 4: Yapılandırma</h3>
-            <p>Elasticsearch’in çalışma ayarlarını düzenlemek için <code>/etc/elasticsearch/elasticsearch.yml</code> dosyasını açın ve aşağıdaki gibi yapılandırın:</p>
-            <pre><code>
-network.host: 0.0.0.0
-discovery.type: single-node
-            </code></pre>
+            <h3>Adım 4: Elasticsearch'i Başlatma</h3>
+            <p>Kurulumdan sonra Elasticsearch'i başlatın:</p>
+            <pre><code>sudo systemctl start elasticsearch
+sudo systemctl enable elasticsearch</code></pre>
 
-            <h2>2. Elasticsearch Docker Kurulumu</h2>
-            <p>Docker kullanarak Elasticsearch’i izole bir ortamda çalıştırmak için aşağıdaki adımları izleyebilirsiniz:</p>
+            <h3>Adım 5: Elasticsearch Yapılandırması</h3>
+            <p>Elasticsearch yapılandırma dosyasını düzenleyin:</p>
+            <pre><code>sudo nano /etc/elasticsearch/elasticsearch.yml</code></pre>
+            <p>Aşağıdaki parametreyi ekleyin veya düzenleyin:</p>
+            <pre><code>network.host: 0.0.0.0</code></pre>
+
+            <h2>2. Docker ile Elasticsearch Kurulumu</h2>
+            <p>Docker kullanarak Elasticsearch'i kurmak için şu adımları takip edebilirsiniz.</p>
 
             <h3>Adım 1: Elasticsearch Docker Image’ını Çekin</h3>
-            <p>Docker Hub’dan Elasticsearch image’ını çekmek için şu komutu kullanın:</p>
+            <p>Docker Hub’dan Elasticsearch image’ını çekin:</p>
             <pre><code>docker pull elasticsearch:8.10.0</code></pre>
 
             <h3>Adım 2: Elasticsearch Container’ını Başlatın</h3>
-            <p>Elasticsearch container’ını başlatmak için şu komutu kullanabilirsiniz:</p>
+            <p>Elasticsearch container’ını başlatmak için aşağıdaki komutu kullanın:</p>
             <pre><code>
 docker run -d --name elasticsearch \
 -p 9200:9200 \
@@ -114,12 +110,12 @@ docker run -d --name elasticsearch \
 elasticsearch:8.10.0
             </code></pre>
 
-            <h3>Adım 3: Kurulumu Kontrol Edin</h3>
-            <p>Elasticsearch kurulumunun başarılı olduğunu kontrol etmek için şu komutu kullanabilirsiniz:</p>
+            <h3>Adım 3: Elasticsearch API Testi</h3>
+            <p>API'yi test etmek için şu komutu kullanabilirsiniz:</p>
             <pre><code>curl -X GET "localhost:9200"</code></pre>
 
             <h2>Sonuç</h2>
-            <p>Bu adımlarla Elasticsearch'i başarıyla kurabilirsiniz. Native kurulum ve Docker kurulum seçenekleri ile sisteminizi esnek bir şekilde yapılandırabilirsiniz.</p>
+            <p>Bu adımlar ile Elasticsearch kurulumu tamamlanmıştır. Hem native hem de Docker kurulum seçenekleriyle Elasticsearch'iniz hazır olacaktır.</p>
         </div>
     </div>
 
