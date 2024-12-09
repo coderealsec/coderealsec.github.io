@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linux Girdi-Çıktı Yönlendirmesi</title>
+    <title>SSH-keygen Nedir ve Nasıl Kullanılır?</title>
+    <meta name="description" content="SSH-keygen nedir, ne işe yarar ve SSH anahtarları nasıl oluşturulur? Adım adım rehber.">
+    <meta name="keywords" content="SSH, SSH-keygen, Linux, Güvenlik, Public Key, Private Key">
+    <meta name="robots" content="index, follow">
     <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
     <style>
         body {
@@ -13,48 +16,21 @@
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
-
         .container {
             max-width: 800px;
             margin: auto;
             padding: 20px;
         }
-
-        h1 {
-            text-align: center;
+        h1, h2, h3, h4 {
             color: #333;
+            text-align: left;
+            font-weight: bold;
         }
-
-        .header {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
+        p, ul {
+            text-align: left;
         }
-
-        .header a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        pre {
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-
-        code {
-            display: block;
-            background: #f4f4f4;
-            padding: 10px;
-            margin: 10px 0;
-            border-left: 3px solid #333;
-            color: #333;
-        }
-
         .content {
             background: #fff;
             padding: 20px;
@@ -62,65 +38,86 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
+        pre, code {
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #333;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .theme-toggle-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Dark theme */
+        body.dark { background-color: #333; }
+        body.dark .content { background: #444; }
+        body.dark pre, body.dark code { background-color: #555;}
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="https://harunoner.com">Linux</a>
-    </div>
+    <button class="theme-toggle-btn">Siyah Tema</button>
     <div class="container">
+        <h1>SSH-keygen Nedir ve Nasıl Kullanılır?</h1>
+
         <div class="content">
-            <div>
-                <h2>Linux İşletim Sisteminde Girdi-Çıktı Yönlendirmesi</h2>
-                <p>Linux işletim sistemi, girdi ve çıktı yönlendirmesi gibi güçlü özellikler sunar, bu da kullanıcıların komut sonuçlarını dosyalara kaydetmesine, komutlar arasında veri akışını yönlendirmesine ve hataları işlemesine olanak tanır. Bu yazıda, Linux'da kullanılan girdi-çıktı yönlendirme işlemlerini inceleyeceğiz.</p>
+            <h2>1. SSH-keygen Nedir?</h2>
+            <p><strong>SSH-keygen</strong>, OpenSSH paketinin bir parçası olan bir araçtır. SSH protokolü için şifreleme anahtar çiftleri (public ve private anahtarlar) oluşturmak için kullanılır. Bu anahtar çiftleri, güvenli bir şekilde sunuculara bağlanmayı sağlar ve parola tabanlı girişlere kıyasla daha güvenlidir.</p>
 
-                <h3>Temel Girdi-Çıktı Yönlendirmesi İşaretçeleri</h3>
-                <p><strong>> (Çıktı Yönlendirmesi):</strong> Bu işaretçe, bir komutun çıktısını bir dosyaya yazmak için kullanılır. Örneğin:</p>
-                <code>
-                    ls -l &gt; dosya_listesi.txt
-                </code>
-                <p>Bu komut, "dosya_listesi.txt" adlı bir dosyaya "ls -l" komutunun çıktısını yazar.</p>
+            <h2>2. SSH Anahtarları Nasıl Çalışır?</h2>
+            <ul>
+                <li>**Public Key (Açık Anahtar):** Sunucuda saklanır ve private key ile eşleşir.</li>
+                <li>**Private Key (Özel Anahtar):** Kendi cihazınızda saklanır ve kimlik doğrulama için kullanılır.</li>
+            </ul>
+            <p>SSH protokolü, bu anahtar çiftleri sayesinde istemci ve sunucu arasındaki bağlantıyı güvenli hale getirir.</p>
 
-                <p><strong>>> (Çıktıyı Ekleme):</strong> Bu işaretçe, bir komutun çıktısını bir dosyanın sonuna eklemek için kullanılır. Örneğin:</p>
-                <code>
-                    date &gt;&gt; tarihler.txt
-                </code>
-                <p>Bu komut, "tarihler.txt" adlı dosyanın sonuna geçerli tarihi ekler.</p>
+            <h2>3. SSH Anahtarı Oluşturma</h2>
+            <p>Aşağıdaki komutla bir SSH anahtarı oluşturabilirsiniz:</p>
+            <pre><code>ssh-keygen -t rsa -b 4096 -C "kullanıcı_adı@örnek.com"</code></pre>
+            <ul>
+                <li><strong>-t rsa:</strong> RSA algoritmasını kullanarak bir anahtar oluşturur.</li>
+                <li><strong>-b 4096:</strong> 4096 bitlik bir anahtar uzunluğu belirler (daha güvenli).</li>
+                <li><strong>-C:</strong> Açıklama eklemek için kullanılır.</li>
+            </ul>
 
-                <p><strong>< (Girdi Yönlendirmesi):</strong> Bu işaretçe, bir dosyanın içeriğini bir komuta girdi olarak vermek için kullanılır. Örneğin:</p>
-                <code>
-                    sort &lt; veriler.txt
-                </code>
-                <p>Bu komut, "veriler.txt" dosyasındaki verileri "sort" komutunun girdisi olarak kullanır.</p>
+            <h3>Komut Çıktısı</h3>
+            <pre><code>
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/kullanıcı/.ssh/id_rsa):
+            </code></pre>
+            <p>Dosya yolu belirtmezseniz, anahtarlar varsayılan olarak <code>~/.ssh/id_rsa</code> ve <code>~/.ssh/id_rsa.pub</code> dosyalarına kaydedilir.</p>
 
-                <p><strong>| (Pipe) İşareti:</strong> Boru hattı (|), bir komutun çıktısını başka bir komutun girdisine yönlendirmek için kullanılır. Örneğin:</p>
-                <code>
-                    cat dosya.txt | grep "anahtar_kelime"
-                </code>
-                <p>Bu komut, "dosya.txt" dosyasının içeriğini okur ve içinde "anahtar_kelime" geçen satırları filtreler.</p>
+            <h2>4. SSH Public Key Sunucuya Ekleme</h2>
+            <p>Oluşturulan public key'i sunucuya aşağıdaki komutla kopyalayabilirsiniz:</p>
+            <pre><code>ssh-copy-id kullanıcı_adı@sunucu_ip</code></pre>
+            <p>Bu komut, public key'inizi sunucudaki <code>~/.ssh/authorized_keys</code> dosyasına ekler.</p>
 
-                <h3>Hata Yönlendirmesi</h3>
-                <p><strong>2> (Hata Çıktısı Yönlendirmesi):</strong> Bu işaretçe, bir komutun hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:</p>
-                <code>
-                    komut_yok 2&gt; hatalar.txt
-                </code>
-                <p>Bu komut, "komut_yok" adlı bir komutun hata çıktılarını "hatalar.txt" dosyasına yazar.</p>
-
-                <p><strong>&> (Hata ve Çıktıyı Yönlendirmesi):</strong> Bu işaretçe, bir komutun hem standart çıktısını hem de hata çıktısını bir dosyaya yönlendirmek için kullanılır. Örneğin:</p>
-                <code>
-                    komut &amp;&gt; cikti_hata.txt
-                </code>
-                <p>Bu komut, "komut"un çıktı ve hata çıktılarını "cikti_hata.txt" dosyasına yazar.</p>
-
-                <p>Linux işletim sisteminde girdi-çıktı yönlendirmesi, komut sonuçlarını yönlendirmek, veri akışını değiştirmek ve hataları işlemek için güçlü bir araçtır.</p>
-            </div>
+            <h2>5. SSH İle Bağlantı</h2>
+            <p>SSH anahtarlarıyla bağlanmak için aşağıdaki komutu kullanın:</p>
+            <pre><code>ssh kullanıcı_adı@sunucu_ip</code></pre>
+            <p>Bu, private key'inizi kullanarak parola girmeden güvenli bir bağlantı sağlar.</p>
         </div>
     </div>
+
+    <script>
+        const toggleBtn = document.querySelector('.theme-toggle-btn');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            toggleBtn.textContent = body.classList.contains('dark') ? 'Beyaz Tema' : 'Siyah Tema';
+        });
+    </script>
 </body>
 </html>
