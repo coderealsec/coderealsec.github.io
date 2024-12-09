@@ -117,7 +117,7 @@ sudo /opt/nexus/bin/nexus start
             <h2>YUM/APT ve Docker Depolarının Yönetimi</h2>
 
             <h3>YUM Proxy Deposu Kurulumu</h3>
-            <p>Nexus Repository üzerinde bir YUM Proxy deposu kurmak için aşağıdaki adımları izleyin:</p>
+            <p>Nexus Repository üzerinde bir YUM Proxy deposu kurmak için aşağıdaki adımları izleyebiliriz:</p>
             <ol>
                 <li>Nexus Repository'nin web arayüzüne giriş yapın: <code>http://&lt;nexus_ip&gt;:8081</code></li>
                 <li>Menüden <strong>Repositories</strong> sekmesine gidin ve <strong>Create Repository</strong> seçeneğine tıklayın.</li>
@@ -139,7 +139,8 @@ docker login <nexus_url>
 docker push <nexus_url>/<repository>/<image_name>
             </code></pre>
 
-            <h3>Rocky Linux Repository'yi İndirme</h3>
+            <h3>Rocky Linux Repository'yi İndirme (Örnek)</h3>
+            <p>Örnek olarak Rocky Linux 9 Repository indirerek, yum (hosted) olarak repository oluşturabiliriz.<p>
             <pre><code>
 sudo yum install -y wget rsync
 mkdir -p /tmp/rocky-repo
