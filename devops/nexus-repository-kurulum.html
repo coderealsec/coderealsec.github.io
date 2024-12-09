@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonatype Nexus Repository Kurulumu</title>
+    <meta name="description" content="Sonatype Nexus Repository'nin RHEL dağıtımlarında nasıl kurulacağını öğrenin. Proxy ve hosted repository yönetimi detaylı rehberi.">
+    <meta name="keywords" content="Nexus Repository, RHEL, Docker, YUM, APT, Proxy Repository, Hosted Repository">
+    <meta name="robots" content="index, follow">
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #333;
+            text-align: left;
+            font-weight: bold;
+        }
+        p, ul {
+            text-align: left;
+        }
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        pre, code {
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #333;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .theme-toggle-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Dark theme */
+        body.dark { background-color: #333; }
+        body.dark .content { background: #444; }
+        body.dark pre, body.dark code { background-color: #555;}
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn">Siyah Tema</button>
+    <div class="container">
+        <h1>Sonatype Nexus Repository RHEL Kurulumu</h1>
+        <img src="/mnt/data/An_illustration_of_a_server_setup_for_Sonatype_Nex.png" alt="Sonatype Nexus Repository Yapılandırması">
+        
+        <div class="content">
+            <h2>Giriş: Nexus Repository Nedir ve Neden Kullanılır?</h2>
+            <p>Sonatype Nexus Repository, yazılım geliştirme ekipleri için bir depo yöneticisi olarak tasarlanmıştır...</p>
+            <p><strong>Avantajları:</strong></p>
+            <ul>
+                <li>Proxy Depolar: Harici kaynaklara hızlı ve güvenli erişim sağlar.</li>
+                <li>Barındırılan Depolar: Şirket içi özel yazılımlarınızı paylaşmak için güvenli bir alan sunar.</li>
+                <li>Docker Depo Yönetimi: Docker imajlarını yönetir ve saklar.</li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <h2>Nexus Repository'nin İndirilmesi ve Kurulması</h2>
+            <p>Nexus Repository'yi indirmek ve kurmak için iki yöntem kullanabilirsiniz: `wget` veya `curl`.</p>
+
+            <h3>Wget ile İndirme ve Kurulum</h3>
+            <p>`wget` komutuyla Nexus Repository'nin son sürümünü indirin ve kurulum adımlarını takip edin:</p>
+            <pre><code>
+sudo yum install -y java-1.8.0-openjdk wget
+wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+tar -zxvf latest-unix.tar.gz
+sudo mv nexus-3* /opt/nexus
+sudo ln -s /opt/nexus/bin/nexus /usr/bin/nexus
+sudo /opt/nexus/bin/nexus start
+            </code></pre>
+
+            <h3>Curl ile İndirme ve Kurulum</h3>
+            <p>Alternatif olarak, `curl` komutuyla Nexus Repository'yi indirip kurabilirsiniz:</p>
+            <pre><code>
+sudo yum install -y java-1.8.0-openjdk curl
+curl -o nexus.tar.gz https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+tar -zxvf nexus.tar.gz
+sudo mv nexus-3* /opt/nexus
+sudo ln -s /opt/nexus/bin/nexus /usr/bin/nexus
+sudo /opt/nexus/bin/nexus start
+            </code></pre>
+
+            <p>Varsayılan giriş bilgilerinizi şu şekilde alabilirsiniz:</p>
+            <pre><code>cat /opt/nexus/sonatype-work/nexus3/admin.password</code></pre>
+        </div>
+
+        <div class="content">
+            <h2>YUM/APT ve Docker Depolarının Yönetimi</h2>
+            <h3>YUM Proxy Deposu Kurulumu</h3>
+            <p>Proxy deposu ayarları için şu adımları izleyin:</p>
+            <pre><code>
+[my-nexus-repo]
+name=Nexus YUM Proxy
+baseurl=http://<nexus_url>:8081/repository/<repository_name>/
+enabled=1
+gpgcheck=0
+            </code></pre>
+            
+            <h3>Docker Hosted Depo Kurulumu</h3>
+            <p>Docker imajlarını Nexus'ta barındırmak için şu komutları kullanabilirsiniz:</p>
+            <pre><code>
+docker login <nexus_url>
+docker push <nexus_url>/<repository>/<image_name>
+            </code></pre>
+        </div>
+    </div>
+
+    <h3>1. Rocky Linux Repository'yi İndirme</h3>
+    <p>`wget` veya `rsync` kullanarak BaseOS deposunu indiriyoruz:</p>
+    <pre><code>
+sudo yum install -y wget rsync
+mkdir -p /tmp/rocky-repo
+cd /tmp/rocky-repo
+
+# BaseOS deposunu indirme
+rsync -avrt rsync://mirror.rockylinux.org/rocky/9/BaseOS/x86_64/os/ .
+    </code></pre>
+    <p>Bu işlem, BaseOS için gerekli dosyaları yerel bir dizine indirecektir.</p>
+
+    <h3>2. Nexus Repository'de Hosted Depo Oluşturma</h3>
+    <p>Nexus arayüzünde hosted bir depo oluşturmak için aşağıdaki adımları izleyin:</p>
+    <ol>
+        <li>Nexus Repository'ye giriş yapın (örneğin: `http://<nexus_ip>:8081`).</li>
+        <li><strong>Repositories</strong> sekmesine gidin ve <strong>Create Repository</strong> seçeneğine tıklayın.</li>
+        <li><strong>YUM (hosted)</strong> seçeneğini işaretleyin.</li>
+        <li>Gerekli alanları doldurun:
+            <ul>
+                <li><strong>Name:</strong> rocky-linux-9-hosted</li>
+                <li><strong>Version Policy:</strong> Release</li>
+                <li><strong>Storage:</strong> Hosted</li>
+            </ul>
+        </li>
+        <li>Değişiklikleri kaydederek hosted repository'i oluşturun.</li>
+    </ol>
+
+    <h3>3. Rocky Linux Dosyalarını Nexus'a Yükleme</h3>
+    <p>Şimdi indirdiğiniz dosyaları Nexus Repository'ye yükleyin:</p>
+    <pre><code>
+cd /tmp/rocky-repo
+curl -u admin:admin123 --upload-file ./Packages/<paket_adı>.rpm http://<nexus_ip>:8081/repository/rocky-linux-9-hosted/
+    </code></pre>
+    <p>Tüm dosyaları yüklemek için bir betik kullanabilirsiniz:</p>
+    <pre><code>
+for file in $(find . -type f -name "*.rpm"); do
+curl -u admin:admin123 --upload-file "$file" http://<nexus_ip>:8081/repository/rocky-linux-9-hosted/
+done
+    </code></pre>
+
+    <p>Bununla birlikte tüm repository dosyalarınızı hosted depo olarak yüklemiş olacaksınız.</p>
+</div>
+</div>
+
+    <script>
+        const toggleBtn = document.querySelector('.theme-toggle-btn');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            toggleBtn.textContent = body.classList.contains('dark') ? 'Beyaz Tema' : 'Siyah Tema';
+        });
+    </script>
+</body>
+</html>
