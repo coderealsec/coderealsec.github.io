@@ -115,6 +115,30 @@ sudo /opt/nexus/bin/nexus start
 
         <div class="content">
             <h2>YUM/APT ve Docker Depolarının Yönetimi</h2>
+
+            <h3>YUM Proxy Deposu Kurulumu</h3>
+            <p>Nexus Repository üzerinde bir YUM Proxy deposu kurmak için aşağıdaki adımları izleyin:</p>
+            <ol>
+                <li>Nexus Repository'nin web arayüzüne giriş yapın: <code>http://&lt;nexus_ip&gt;:8081</code></li>
+                <li>Menüden <strong>Repositories</strong> sekmesine gidin ve <strong>Create Repository</strong> seçeneğine tıklayın.</li>
+                <li><strong>YUM (proxy)</strong> seçeneğini seçin.</li>
+                <li>Gerekli bilgileri doldurun:
+                    <ul>
+                        <li><strong>Name:</strong> rocky-linux-9-proxy</li>
+                        <li><strong>Remote Storage:</strong> <code>http://mirror.centos.org/centos/</code></li>
+                        <li><strong>Version Policy:</strong> Release</li>
+                    </ul>
+                </li>
+                <li>Kaydedin ve Proxy repository'nizi oluşturun.</li>
+            </ol>
+
+            <h3>Docker Hosted Depo Kurulumu</h3>
+            <p>Docker imajlarını Nexus'ta barındırmak için şu komutları kullanabilirsiniz:</p>
+            <pre><code>
+docker login <nexus_url>
+docker push <nexus_url>/<repository>/<image_name>
+            </code></pre>
+
             <h3>Rocky Linux Repository'yi İndirme</h3>
             <pre><code>
 sudo yum install -y wget rsync
@@ -141,6 +165,19 @@ for file in $(find . -type f -name "*.rpm"); do
 done
             </code></pre>
         </div>
+
+        <div class="content">
+            <h2>Nexus Repository'yi Servis Olarak Çalıştırma</h2>
+            <p>Nexus Repository'nin sistem başlatıldığında otomatik olarak çalışması için aşağıdaki adımları izleyin:</p>
+            <pre><code>
+sudo cp /opt/nexus/bin/nexus /etc/init.d/nexus
+sudo chmod +x /etc/init.d/nexus
+sudo chkconfig --add nexus
+sudo chkconfig nexus on
+sudo service nexus start
+            </code></pre>
+        </div>
+
     </div>
 
     <script>
