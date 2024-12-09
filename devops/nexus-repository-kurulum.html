@@ -28,7 +28,7 @@
             text-align: left;
             font-weight: bold;
         }
-        p, ul {
+        p, ul, ol {
             text-align: left;
         }
         .content {
@@ -40,9 +40,11 @@
         }
         img {
             width: 100%;
+            max-width: 600px;
             height: auto;
+            display: block;
+            margin: 20px auto;
             border-radius: 5px;
-            margin-bottom: 20px;
         }
         pre, code {
             border-radius: 5px;
@@ -51,6 +53,7 @@
             color: #333;
             overflow-x: auto;
             white-space: pre-wrap;
+            background-color: #f8f8f8;
         }
         .theme-toggle-btn {
             position: fixed;
@@ -61,7 +64,7 @@
             cursor: pointer;
         }
         /* Dark theme */
-        body.dark { background-color: #333; }
+        body.dark { background-color: #333; color: #f4f4f4; }
         body.dark .content { background: #444; }
         body.dark pre, body.dark code { background-color: #555;}
     </style>
@@ -70,8 +73,8 @@
     <button class="theme-toggle-btn">Siyah Tema</button>
     <div class="container">
         <h1>Sonatype Nexus Repository RHEL Kurulumu</h1>
-        <img src="/mnt/data/An_illustration_of_a_server_setup_for_Sonatype_Nex.png" alt="Sonatype Nexus Repository Yapılandırması">
-        
+        <img src="/devops/img/nexus.webp" alt="Sonatype Nexus Repository Yapılandırması">
+
         <div class="content">
             <h2>Giriş: Nexus Repository Nedir ve Neden Kullanılır?</h2>
             <p>Sonatype Nexus Repository, yazılım geliştirme ekipleri için bir depo yöneticisi olarak tasarlanmıştır...</p>
@@ -85,10 +88,9 @@
 
         <div class="content">
             <h2>Nexus Repository'nin İndirilmesi ve Kurulması</h2>
-            <p>Nexus Repository'yi indirmek ve kurmak için iki yöntem kullanabilirsiniz: `wget` veya `curl`.</p>
+            <p>Nexus Repository'yi indirmek ve kurmak için iki yöntem kullanabilirsiniz: <code>wget</code> veya <code>curl</code>.</p>
 
             <h3>Wget ile İndirme ve Kurulum</h3>
-            <p>`wget` komutuyla Nexus Repository'nin son sürümünü indirin ve kurulum adımlarını takip edin:</p>
             <pre><code>
 sudo yum install -y java-1.8.0-openjdk wget
 wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
@@ -99,7 +101,6 @@ sudo /opt/nexus/bin/nexus start
             </code></pre>
 
             <h3>Curl ile İndirme ve Kurulum</h3>
-            <p>Alternatif olarak, `curl` komutuyla Nexus Repository'yi indirip kurabilirsiniz:</p>
             <pre><code>
 sudo yum install -y java-1.8.0-openjdk curl
 curl -o nexus.tar.gz https://download.sonatype.com/nexus/3/latest-unix.tar.gz
@@ -115,69 +116,33 @@ sudo /opt/nexus/bin/nexus start
 
         <div class="content">
             <h2>YUM/APT ve Docker Depolarının Yönetimi</h2>
-            <h3>YUM Proxy Deposu Kurulumu</h3>
-            <p>Proxy deposu ayarları için şu adımları izleyin:</p>
+            <h3>Rocky Linux Repository'yi İndirme</h3>
             <pre><code>
-[my-nexus-repo]
-name=Nexus YUM Proxy
-baseurl=http://<nexus_url>:8081/repository/<repository_name>/
-enabled=1
-gpgcheck=0
-            </code></pre>
-            
-            <h3>Docker Hosted Depo Kurulumu</h3>
-            <p>Docker imajlarını Nexus'ta barındırmak için şu komutları kullanabilirsiniz:</p>
-            <pre><code>
-docker login <nexus_url>
-docker push <nexus_url>/<repository>/<image_name>
-            </code></pre>
-        </div>
-    </div>
-
-    <h3>1. Rocky Linux Repository'yi İndirme</h3>
-    <p>`wget` veya `rsync` kullanarak BaseOS deposunu indiriyoruz:</p>
-    <pre><code>
 sudo yum install -y wget rsync
 mkdir -p /tmp/rocky-repo
 cd /tmp/rocky-repo
-
-# BaseOS deposunu indirme
 rsync -avrt rsync://mirror.rockylinux.org/rocky/9/BaseOS/x86_64/os/ .
-    </code></pre>
-    <p>Bu işlem, BaseOS için gerekli dosyaları yerel bir dizine indirecektir.</p>
+            </code></pre>
 
-    <h3>2. Nexus Repository'de Hosted Depo Oluşturma</h3>
-    <p>Nexus arayüzünde hosted bir depo oluşturmak için aşağıdaki adımları izleyin:</p>
-    <ol>
-        <li>Nexus Repository'ye giriş yapın (örneğin: `http://<nexus_ip>:8081`).</li>
-        <li><strong>Repositories</strong> sekmesine gidin ve <strong>Create Repository</strong> seçeneğine tıklayın.</li>
-        <li><strong>YUM (hosted)</strong> seçeneğini işaretleyin.</li>
-        <li>Gerekli alanları doldurun:
-            <ul>
-                <li><strong>Name:</strong> rocky-linux-9-hosted</li>
-                <li><strong>Version Policy:</strong> Release</li>
-                <li><strong>Storage:</strong> Hosted</li>
-            </ul>
-        </li>
-        <li>Değişiklikleri kaydederek hosted repository'i oluşturun.</li>
-    </ol>
+            <h3>Nexus Repository'de Hosted Depo Oluşturma</h3>
+            <ol>
+                <li>Nexus Repository'ye giriş yapın.</li>
+                <li>Repositories sekmesine gidin ve "Create Repository" seçeneğine tıklayın.</li>
+                <li>YUM (hosted) seçeneğini seçin ve alanları doldurun:</li>
+                <ul>
+                    <li><strong>Name:</strong> rocky-linux-9-hosted</li>
+                    <li><strong>Version Policy:</strong> Release</li>
+                </ul>
+            </ol>
 
-    <h3>3. Rocky Linux Dosyalarını Nexus'a Yükleme</h3>
-    <p>Şimdi indirdiğiniz dosyaları Nexus Repository'ye yükleyin:</p>
-    <pre><code>
-cd /tmp/rocky-repo
-curl -u admin:admin123 --upload-file ./Packages/<paket_adı>.rpm http://<nexus_ip>:8081/repository/rocky-linux-9-hosted/
-    </code></pre>
-    <p>Tüm dosyaları yüklemek için bir betik kullanabilirsiniz:</p>
-    <pre><code>
+            <h3>Rocky Linux Dosyalarını Nexus'a Yükleme</h3>
+            <pre><code>
 for file in $(find . -type f -name "*.rpm"); do
-curl -u admin:admin123 --upload-file "$file" http://<nexus_ip>:8081/repository/rocky-linux-9-hosted/
+  curl -u admin:admin123 --upload-file "$file" http://<nexus_ip>:8081/repository/rocky-linux-9-hosted/
 done
-    </code></pre>
-
-    <p>Bununla birlikte tüm repository dosyalarınızı hosted depo olarak yüklemiş olacaksınız.</p>
-</div>
-</div>
+            </code></pre>
+        </div>
+    </div>
 
     <script>
         const toggleBtn = document.querySelector('.theme-toggle-btn');
