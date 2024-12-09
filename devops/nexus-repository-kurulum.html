@@ -76,12 +76,12 @@
 
         <div class="content">
             <h2>Giriş: Nexus Repository Nedir ve Neden Kullanılır?</h2>
-            <p>Sonatype Nexus Repository, yazılım geliştirme ekipleri için bir depo yöneticisi olarak tasarlanmıştır...</p>
+            <p>Sonatype Nexus Repository, yazılım geliştirme ekipleri için bir repository yöneticisi olarak tasarlanmıştır...</p>
             <p><strong>Avantajları:</strong></p>
             <ul>
-                <li>Proxy Depolar: Harici kaynaklara hızlı ve güvenli erişim sağlar.</li>
-                <li>Barındırılan Depolar: Şirket içi özel yazılımlarınızı paylaşmak için güvenli bir alan sunar.</li>
-                <li>Docker Depo Yönetimi: Docker imajlarını yönetir ve saklar.</li>
+                <li>Proxy Repository: Harici kaynaklara hızlı ve güvenli erişim sağlar.</li>
+                <li>Barındırılan Repository: Şirket içi özel yazılımlarınızı paylaşmak için güvenli bir alan sunar.</li>
+                <li>Docker Image Yönetimi: Docker imajlarını yönetir ve saklar.</li>
             </ul>
         </div>
 
@@ -114,10 +114,10 @@ sudo /opt/nexus/bin/nexus start
         </div>
 
         <div class="content">
-            <h2>YUM/APT ve Docker Depolarının Yönetimi</h2>
+            <h2>YUM/APT ve Docker Image Repository Yönetimi</h2>
 
-            <h3>YUM Proxy Deposu Kurulumu</h3>
-            <p>Nexus Repository üzerinde bir YUM Proxy deposu kurmak için aşağıdaki adımları izleyebiliriz:</p>
+            <h3>YUM Proxy Repository Kurulumu</h3>
+            <p>Nexus Repository üzerinde bir YUM Proxy Repository kurmak için aşağıdaki adımları izleyebiliriz:</p>
             <ol>
                 <li>Nexus Repository'nin web arayüzüne giriş yapın: <code>http://&lt;nexus_ip&gt;:8081</code></li>
                 <li>Menüden <strong>Repositories</strong> sekmesine gidin ve <strong>Create Repository</strong> seçeneğine tıklayın.</li>
@@ -132,7 +132,7 @@ sudo /opt/nexus/bin/nexus start
                 <li>Kaydedin ve Proxy repository'nizi oluşturun.</li>
             </ol>
 
-            <h3>Docker Hosted Depo Kurulumu</h3>
+            <h3>Docker Hosted Repository Kurulumu</h3>
             <p>Docker imajlarını Nexus'ta barındırmak için şu komutları kullanabilirsiniz:</p>
             <pre><code>
 docker login <nexus_url>
@@ -148,7 +148,7 @@ cd /tmp/rocky-repo
 rsync -avrt rsync://mirror.rockylinux.org/rocky/9/BaseOS/x86_64/os/ .
             </code></pre>
 
-            <h3>Nexus Repository'de Hosted Depo Oluşturma</h3>
+            <h3>Nexus Repository'de Hosted Repository Oluşturma</h3>
             <ol>
                 <li>Nexus Repository'ye giriş yapın.</li>
                 <li>Repositories sekmesine gidin ve "Create Repository" seçeneğine tıklayın.</li>
