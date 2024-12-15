@@ -114,6 +114,7 @@ sudo systemctl status docker
 
         <div class="content">
             <h2>Docker Compose Dosyasını Hazırlama</h2>
+            <p>Docker-compose.yml dosyamıza prometheus, alertmanager, node-exporter için gerekli servis, port ve config file'larımızı yapmamız gerekmektedir.<p>
             <pre><code>
 version: '3.7'
 
@@ -145,7 +146,8 @@ services:
         </div>
 
         <div class="content">
-            <h2>Adım 3: Prometheus Yapılandırması</h2>
+            <h2>Prometheus Yapılandırması</h2>
+            <p>Prometheus'un mevcut alertmanager bağlanacağı port ve A kaydını bu kısımda girmemiz gerekiyor. Örnek olarak aşağıdaki rule file ismini ve hedeflerin ne olacağını görebilirsiniz.</p>
             <pre><code>
 global:
   scrape_interval: 15s
@@ -172,6 +174,7 @@ scrape_configs:
 
         <div class="content">
             <h2>Alertmanager Yapılandırması</h2>
+            <p>Alertmanager ile E-mail ile alert gönderebilmemiz için aşağıdaki gibi alıcı eklememiz gerekmektedir. NOT: Eğer gmail kullanıyorsak auth_password uygulama bazlı şifre oluşturmamız gerekmektedir.</p>
             <pre><code>
 route:
   receiver: "default-receiver"
@@ -189,7 +192,7 @@ receivers:
 
         <div class="content">
             <h2>Alarm Kuralı Tanımlama</h2>
-            <p>Buradaki amaç tanımlayacağımız alarmın alertmanager ile birlikte yml konfigürasyonunu sağlayarak, gerekli rule almasını sağlamaktır.</p>
+            <p>Buradaki amaç tanımlayacağımız alarmın alertmanager ile birlikte yml konfigürasyonunu sağlayarak, gerekli rule almasını sağlamaktır. Alertmanager sayfasına girdiğimizde mevcut alert'ler kısmından girmiş olduğumuz alert'i görebiliriz.</p>
             <pre><code>
 - alert: HighCpuUsage
   expr: node_cpu_seconds_total{mode="idle"} < 20
