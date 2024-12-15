@@ -69,30 +69,38 @@
     </style>
 </head>
 <body>
-    <h1>Prometheus ve Alertmanager Yapılandırması</h1>
+    <div class="container">
+        <h1>Prometheus ve Alertmanager Yapılandırması</h1>
 
-    <h2>Giriş: Prometheus ve Alertmanager Nedir?</h2>
-    <p>Prometheus, açık kaynaklı bir izleme ve alarm sistemi olup, özellikle bulut tabanlı uygulamalar için tasarlanmıştır. Alertmanager ise Prometheus ile entegre çalışan bir bildirim yöneticisidir.</p>
-    <h1>Prometheus'un Temel Özellikleri</h1>
-    <ul>
-        <li>
-            <strong>Veri Toplama:</strong> Prometheus, belirli bir zaman aralığında uygulamalardan ve sistemlerden metrik verilerini toplar. Bu metrikler genellikle HTTP üzerinden "pull" yöntemi ile alınır.
-        </li>
-        <li>
-            <strong>Zaman Serisi Veritabanı:</strong> Toplanan metrikler zaman serileri olarak saklanır, yani her metrik için belirli bir zaman damgası bulunur.
-        </li>
-        <li>
-            <strong>Sorgulama Dili (PromQL):</strong> Kullanıcılar, Prometheus verilerini sorgulamak için PromQL adlı sorgulama dilini kullanabilirler. Bu dil, zaman serisi verileri üzerinde çeşitli hesaplamalar ve analizler yapmayı mümkün kılar.
-        </li>
-        <li>
-            <strong>Uyarılar:</strong> Prometheus, belirli koşullar gerçekleştiğinde uyarılar gönderebilir. Örneğin, CPU kullanımı yüksekse bir uyarı tetiklenebilir. Bu uyarılar genellikle Alertmanager ile yönetilir.
-        </li>
-        <li>
-            <strong>Esneklik ve Ölçeklenebilirlik:</strong> Prometheus, büyük ve dinamik altyapılar için esnek bir şekilde ölçeklendirilebilir.
-        </li>
-    </ul>
-    <h2>RHEL’e Docker Ortamını Hazırlama</h2>
-    <pre><code>
+        <div class="content">
+            <h2>Giriş: Prometheus ve Alertmanager Nedir?</h2>
+            <p>Prometheus, açık kaynaklı bir izleme ve alarm sistemi olup, özellikle bulut tabanlı uygulamalar için tasarlanmıştır. Alertmanager ise Prometheus ile entegre çalışan bir bildirim yöneticisidir.</p>
+        </div>
+
+        <div class="content">
+            <h1>Prometheus'un Temel Özellikleri</h1>
+            <ul>
+                <li>
+                    <strong>Veri Toplama:</strong> Prometheus, belirli bir zaman aralığında uygulamalardan ve sistemlerden metrik verilerini toplar. Bu metrikler genellikle HTTP üzerinden "pull" yöntemi ile alınır.
+                </li>
+                <li>
+                    <strong>Zaman Serisi Veritabanı:</strong> Toplanan metrikler zaman serileri olarak saklanır, yani her metrik için belirli bir zaman damgası bulunur.
+                </li>
+                <li>
+                    <strong>Sorgulama Dili (PromQL):</strong> Kullanıcılar, Prometheus verilerini sorgulamak için PromQL adlı sorgulama dilini kullanabilirler. Bu dil, zaman serisi verileri üzerinde çeşitli hesaplamalar ve analizler yapmayı mümkün kılar.
+                </li>
+                <li>
+                    <strong>Uyarılar:</strong> Prometheus, belirli koşullar gerçekleştiğinde uyarılar gönderebilir. Örneğin, CPU kullanımı yüksekse bir uyarı tetiklenebilir. Bu uyarılar genellikle Alertmanager ile yönetilir.
+                </li>
+                <li>
+                    <strong>Esneklik ve Ölçeklenebilirlik:</strong> Prometheus, büyük ve dinamik altyapılar için esnek bir şekilde ölçeklendirilebilir.
+                </li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <h2>RHEL’e Docker Ortamını Hazırlama</h2>
+            <pre><code>
 sudo yum update -y
 sudo yum install -y docker
 sudo systemctl start docker
@@ -101,10 +109,12 @@ sudo systemctl enable docker
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 sudo systemctl status docker
-    </code></pre>
+            </code></pre>
+        </div>
 
-    <h2>Docker Compose Dosyasını Hazırlama</h2>
-    <pre><code>
+        <div class="content">
+            <h2>Docker Compose Dosyasını Hazırlama</h2>
+            <pre><code>
 version: '3.7'
 
 services:
@@ -131,10 +141,12 @@ services:
     container_name: node-exporter
     ports:
       - "9100:9100"
-    </code></pre>
+            </code></pre>
+        </div>
 
-    <h2>Adım 3: Prometheus Yapılandırması</h2>
-    <pre><code>
+        <div class="content">
+            <h2>Adım 3: Prometheus Yapılandırması</h2>
+            <pre><code>
 global:
   scrape_interval: 15s
 
@@ -155,10 +167,12 @@ scrape_configs:
   - job_name: "node-exporter"
     static_configs:
       - targets: ["node-exporter:9100"]
-    </code></pre>
+            </code></pre>
+        </div>
 
-    <h2>Alertmanager Yapılandırması</h2>
-    <pre><code>
+        <div class="content">
+            <h2>Alertmanager Yapılandırması</h2>
+            <pre><code>
 route:
   receiver: "default-receiver"
 
@@ -170,11 +184,13 @@ receivers:
         smarthost: "smtp.emailserver.com:587"
         auth_username: "kullanici"
         auth_password: "sifre"
-    </code></pre>
+            </code></pre>
+        </div>
 
-    <h2>Alarm Kuralı Tanımlama</h2>
-    <p>Buradaki amaç tanımlayacağımız alarmın alertmanager ile birlikte yml konfigürasyonunu sağlayarak, gerekli rule almasını sağlamaktır.</p>
-    <pre><code>
+        <div class="content">
+            <h2>Alarm Kuralı Tanımlama</h2>
+            <p>Buradaki amaç tanımlayacağımız alarmın alertmanager ile birlikte yml konfigürasyonunu sağlayarak, gerekli rule almasını sağlamaktır.</p>
+            <pre><code>
 - alert: HighCpuUsage
   expr: node_cpu_seconds_total{mode="idle"} < 20
   for: 1m
@@ -183,18 +199,22 @@ receivers:
   annotations:
     summary: "Yüksek CPU kullanımı algılandı."
     description: "Node Exporter'dan alınan verilere göre CPU kullanımı kritik seviyede."
-    </code></pre>
+            </code></pre>
+        </div>
 
-    <h2>Servisleri Başlatma</h2>
-    <pre><code>
+        <div class="content">
+            <h2>Servisleri Başlatma</h2>
+            <pre><code>
 docker-compose up -d
 
 docker ps
-    </code></pre>
-    <p>Prometheus arayüzüne şu adresten ulaşabilirsiniz:</p>
-    <ul>
-        <li><strong>Prometheus UI:</strong> <a href="http://localhost:9090" target="_blank">http://localhost:9090</a></li>
-        <li><strong>Alertmanager UI:</strong> <a href="http://localhost:9093" target="_blank">http://localhost:9093</a></li>
-    </ul>
+            </code></pre>
+            <p>Prometheus arayüzüne şu adresten ulaşabilirsiniz:</p>
+            <ul>
+                <li><strong>Prometheus UI:</strong> <a href="http://localhost:9090" target="_blank">http://localhost:9090</a></li>
+                <li><strong>Alertmanager UI:</strong> <a href="http://localhost:9093" target="_blank">http://localhost:9093</a></li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
