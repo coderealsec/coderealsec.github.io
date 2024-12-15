@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prometheus ve Alertmanager Kurulumu</title>
+    <meta name="description" content="Prometheus, Alertmanager ve Node Exporter'ın RHEL ile Docker üzerinde nasıl kurulacağını ve bağlanacağını öğrenin.">
+    <meta name="keywords" content="Prometheus, Alertmanager, Node Exporter, RHEL, Docker, Monitoring, İzleme">
+    <meta name="robots" content="index, follow">
+    <link href="https://harunoner.com/style.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #333;
+            text-align: left;
+            font-weight: bold;
+        }
+        p, ul, ol {
+            text-align: left;
+        }
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+        pre, code {
+            border-radius: 5px;
+            margin: 10px 0;
+            color: #333;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            background-color: #f8f8f8;
+        }
+        .theme-toggle-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Dark theme */
+        body.dark { background-color: #333; color: #f4f4f4; }
+        body.dark .content { background: #444; }
+        body.dark pre, body.dark code { background-color: #555;}
+    </style>
+</head>
+<body>
+    <h1>Prometheus ve Alertmanager Yapılandırması</h1>
+
+    <h2>Giriş: Prometheus ve Alertmanager Nedir?</h2>
+    <p>Prometheus, açık kaynaklı bir izleme ve alarm sistemi olup, özellikle bulut tabanlı uygulamalar için tasarlanmıştır. Alertmanager ise Prometheus ile entegre çalışan bir bildirim yöneticisidir.</p>
+    <h1>Prometheus'un Temel Özellikleri</h1>
+    <ul>
+        <li>
+            <strong>Veri Toplama:</strong> Prometheus, belirli bir zaman aralığında uygulamalardan ve sistemlerden metrik verilerini toplar. Bu metrikler genellikle HTTP üzerinden "pull" yöntemi ile alınır.
+        </li>
+        <li>
+            <strong>Zaman Serisi Veritabanı:</strong> Toplanan metrikler zaman serileri olarak saklanır, yani her metrik için belirli bir zaman damgası bulunur.
+        </li>
+        <li>
+            <strong>Sorgulama Dili (PromQL):</strong> Kullanıcılar, Prometheus verilerini sorgulamak için PromQL adlı sorgulama dilini kullanabilirler. Bu dil, zaman serisi verileri üzerinde çeşitli hesaplamalar ve analizler yapmayı mümkün kılar.
+        </li>
+        <li>
+            <strong>Uyarılar:</strong> Prometheus, belirli koşullar gerçekleştiğinde uyarılar gönderebilir. Örneğin, CPU kullanımı yüksekse bir uyarı tetiklenebilir. Bu uyarılar genellikle Alertmanager ile yönetilir.
+        </li>
+        <li>
+            <strong>Esneklik ve Ölçeklenebilirlik:</strong> Prometheus, büyük ve dinamik altyapılar için esnek bir şekilde ölçeklendirilebilir.
+        </li>
+    </ul>
+    <h2>RHEL’e Docker Ortamını Hazırlama</h2>
+    <pre><code>
+sudo yum update -y
+sudo yum install -y docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo systemctl status docker
+    </code></pre>
+
+    <h2>Docker Compose Dosyasını Hazırlama</h2>
+    <pre><code>
+version: '3.7'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+    </code></pre>
+
+    <h2>Adım 3: Prometheus Yapılandırması</h2>
+    <pre><code>
+global:
+  scrape_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - "alertmanager:9093"
+
+rule_files:
+  - "alert_rules.yml"
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+    </code></pre>
+
+    <h2>Alertmanager Yapılandırması</h2>
+    <pre><code>
+route:
+  receiver: "default-receiver"
+
+receivers:
+  - name: "default-receiver"
+    email_configs:
+      - to: "ornek@email.com"
+        from: "alertmanager@email.com"
+        smarthost: "smtp.emailserver.com:587"
+        auth_username: "kullanici"
+        auth_password: "sifre"
+    </code></pre>
+
+    <h2>Alarm Kuralı Tanımlama</h2>
+    <p>Buradaki amaç tanımlayacağımız alarmın alertmanager ile birlikte yml konfigürasyonunu sağlayarak, gerekli rule almasını sağlamaktır.</p>
+    <pre><code>
+- alert: HighCpuUsage
+  expr: node_cpu_seconds_total{mode="idle"} < 20
+  for: 1m
+  labels:
+    severity: critical
+  annotations:
+    summary: "Yüksek CPU kullanımı algılandı."
+    description: "Node Exporter'dan alınan verilere göre CPU kullanımı kritik seviyede."
+    </code></pre>
+
+    <h2>Servisleri Başlatma</h2>
+    <pre><code>
+docker-compose up -d
+
+docker ps
+    </code></pre>
+    <p>Prometheus arayüzüne şu adresten ulaşabilirsiniz:</p>
+    <ul>
+        <li><strong>Prometheus UI:</strong> <a href="http://localhost:9090" target="_blank">http://localhost:9090</a></li>
+        <li><strong>Alertmanager UI:</strong> <a href="http://localhost:9093" target="_blank">http://localhost:9093</a></li>
+    </ul>
+</body>
+</html>
